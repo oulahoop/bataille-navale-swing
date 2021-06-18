@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Des cas de tests pour la classe Coord
+ *
+ * @author Arnaud LANOIX
+ * @version 1.0
  */
 
 

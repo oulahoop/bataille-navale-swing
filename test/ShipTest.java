@@ -7,6 +7,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Des cas de tests pour tester les différents bateaux
+ *
+ * @author Arnaud LANOIX
+ * @version 1.0
+ */
+
+
 class ShipTest {
 
     @Test

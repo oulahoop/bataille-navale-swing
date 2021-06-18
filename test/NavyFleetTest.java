@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Des cas de tests pour la classe NavyFleet
+ *
+ * @author Arnaud LANOIX
+ * @version 1.0
  */
 
 public class NavyFleetTest {
