@@ -67,9 +67,10 @@ sur une coordonnée précise.
 
 La classe `Network` est documentée dans la javadoc fournie (documentation/javadoc).
 
-Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md)
+Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md).
 
-La classe de tests `RunningGameTest` illustre également l'utilisation de `info1.network.Network`.
+La classe de tests `RunningGameTest` illustre également l'utilisation de `info1.network.Network` ; elle devrait 
+fonctionner une fois que vous avez correctement implémenter les classes du package `ships.*`.s
 
 ### ... et développement d'une interface graphique
 
