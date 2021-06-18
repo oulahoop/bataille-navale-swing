@@ -8,7 +8,8 @@ Il va s'agir de développer une application cliente permettant de jouer
 en réseau à la bataille navale : https://fr.wikipedia.org/wiki/Bataille_navale_(jeu)
 
 Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
-et une librairie java interfaçant le serveur vous est fournie (en partie).
+ (http://37.187.38.219/api/v0) et une librairie Java 
+ interfaçant le serveur vous est fournie (en partie).
 
 
 ## Travail à faire
@@ -20,7 +21,8 @@ et une librairie java interfaçant le serveur vous est fournie (en partie).
  
 * ajouter comme "developer" votre enseignant-référent et M. Arnaud Lanoix    
 
-* déposer sur votre git les sources récupérées ici :
+* déposer sur votre git, l'ensemble des sources récupérées ici :
+https://gitlab.univ-nantes.fr/iut.info1.project/battleship-student-project-2021/-/archive/master/battleship-student-project-2021-master.zip
 
  **Vous respecterez la structure imposée en terme de dossiers/paquetages**
  
@@ -44,8 +46,13 @@ permettront de valider votre implémentation.
 
 ![package ships](documentation/package_ships.png)
 
+3. vous pouvez maintenant utiliser la classe `info1.network.Network` pour échanger avec le serveur, 
+càd créer ou rejoindre une partie, puis jouer, càd effectuer un tir 
+sur une coordonnée précise.
 
+![package network](documentation/package_network.png)
 
+Plus de détail sur l'usage de la classe Network par ![ici](documentation/HowtoUseNetwork.md)
 
 
 
