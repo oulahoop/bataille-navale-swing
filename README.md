@@ -34,16 +34,15 @@ et une librairie java interfaçant le serveur vous est fournie (en partie).
 
 2. il vous faut (terminer de) développer un modèle de données représentant 
 une flotte de bateaux ; pour cela, il vous faut précisément implémenter 
-les classes suivantes : 
-
-    *  `Coord`
-
+les classes suivantes (dans `src/info1/ships/`) : 
+    *  `Coord` 
     *  `Ship` et (si nécessaire) modifier les classes "filles" fournies
-    
     *  `NavyFleet`
 
-NB :des cas de tests fournis vous permettront de valider votre implémentation.
+NB :des cas de tests écrit en Junit 5.4 vous 
+permettront de valider votre implémentation.
 
+![package ships](documentation/package_ships.png)
 
 
 
