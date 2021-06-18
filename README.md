@@ -1,6 +1,6 @@
 # Projet S2 : Bataille Navale
 
-![French_battleship_Brennus_NH_64443](img/French_battleship_Brennus_NH_64443.jpg =150x)
+![French_battleship_Brennus_NH_64443](img/French_battleship_Brennus_NH_64443.jpg)
 
 ## Présentation rapide 
 
