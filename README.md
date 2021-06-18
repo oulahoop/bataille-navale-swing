@@ -14,14 +14,14 @@ Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
 
 ## Travail à faire
 
-1. initialiser votre projet
+### initialisation du projet
 
-* créer un git spécifique à votre groupe sur le gitlab de l'université : 
+1. créer un git spécifique à votre groupe sur le gitlab de l'université : 
  https://gitlab.univ-nantes.fr/
  
-* ajouter comme "developer" votre enseignant-référent et M. Arnaud Lanoix    
+2. ajouter comme "maintainer" votre enseignant-référent et M. Arnaud Lanoix    
 
-* déposer sur votre git, l'ensemble des sources récupérées ici :
+3. déposer sur votre git, l'ensemble des sources récupérées ici :
 https://gitlab.univ-nantes.fr/iut.info1.project/battleship-student-project-2021/-/archive/master/battleship-student-project-2021-master.zip
 
  **Vous respecterez la structure imposée en terme de dossiers/paquetages**
@@ -29,30 +29,57 @@ https://gitlab.univ-nantes.fr/iut.info1.project/battleship-student-project-2021/
   NB :le source récupéré contient un repertoire lib/ 
      contenant une archive jar `battleship-library-1.x.jar`
      
-     il faut ajouter ce .jar comme une librairie dans votre IDE préféré
+  il faut ajouter ce .jar comme une librairie dans votre IDE préféré
      
-     il s'agit de code qui vous est fourni, que vous devrez utiliser
-      mais que vous ne pouvez pas modifier
+  il s'agit de code qui vous est fourni, que vous devrez utiliser
+  mais que vous ne pouvez pas modifier
 
-2. il vous faut (terminer de) développer un modèle de données représentant 
-une flotte de bateaux ; pour cela, il vous faut précisément implémenter 
+
+### implémentation de `ships.*`
+
+2. il vous faut (terminer de) développer le modèle de données représentant 
+la flotte de bateaux ; pour cela, il vous faut coder 
 les classes suivantes (dans `src/info1/ships/`) : 
     *  `Coord` 
     *  `Ship` et (si nécessaire) modifier les classes "filles" fournies
     *  `NavyFleet`
 
 NB :des cas de tests écrit en Junit 5.4 vous 
-permettront de valider votre implémentation.
+permettront de valider votre implémentation :
+   * `CoordTest`
+   * `NavyFleetTest`
+   * `ShipTest`
 
 ![package ships](documentation/package_ships.png)
 
-3. vous pouvez maintenant utiliser la classe `info1.network.Network` pour échanger avec le serveur, 
+
+### utilisation de `info1.network.Network` ...
+
+
+vous pouvez maintenant utiliser la classe `info1.network.Network` pour échanger avec le serveur, 
 càd créer ou rejoindre une partie, puis jouer, càd effectuer un tir 
 sur une coordonnée précise.
 
 ![package network](documentation/package_network.png)
 
 Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md)
+
+
+### ... et développement d'une interface graphique
+
+Développer une interface graphique en Swing vous permettant de jouer, cad
+
+1. positionner des bateaux
+
+2. créer une flotte de bateaux
+
+3. initialiser une partie sur le serveur
+
+4. rejoindre une partie initialisée sur le serveur
+
+5. jouer via le serveur
+
+6. gagner ;-)
 
 
 
@@ -66,8 +93,4 @@ mais aussi évaluer votre travail.
 
 
 
-
-
-
-
-Image issue de https://en.wikipedia.org/wiki/French_battleship_Brennus
+_Image du bateau issue de https://en.wikipedia.org/wiki/French_battleship_Brennus_
