@@ -16,13 +16,16 @@ Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
 
 ### initialisation du projet
 
-1. créer un git spécifique à votre groupe sur le gitlab de l'université : 
+1. créez un git spécifique à votre groupe sur le gitlab de l'université : 
  https://gitlab.univ-nantes.fr/
  
-2. ajouter comme "maintainer" votre enseignant-référent et M. Arnaud Lanoix    
+2. ajoutez comme "maintainer" votre enseignant-référent et M. Arnaud Lanoix    
 
-3. déposer sur votre git, l'ensemble des sources récupérées ici :
+3. déposez sur votre git, l'ensemble des sources récupérées ici :
 https://gitlab.univ-nantes.fr/iut.info1.project/battleship-student-project-2021/-/archive/master/battleship-student-project-2021-master.zip
+OU faites un fork de ce dépot.
+
+
 
  **Vous respecterez la structure imposée en terme de dossiers/paquetages**
  
@@ -74,7 +77,7 @@ fonctionner une fois que vous avez correctement implémenter les classes du pack
 
 ### ... et développement d'une interface graphique
 
-Développer une interface graphique en Swing vous permettant de jouer, cad
+Développez une interface graphique en Swing vous permettant de jouer, cad
 
 1. positionner des bateaux
 
