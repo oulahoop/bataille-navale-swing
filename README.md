@@ -45,7 +45,7 @@ les classes suivantes (dans `src/info1/ships/`) :
     *  `NavyFleet` implémentant `INavyFleet`
     
 Les interfaces à implémenter sont présentes dans `battleship-library-1.x.jar` ; 
-elles sont sont documentées dans la ![javadoc](documentation/javadoc/index.html)
+elles sont sont documentées dans la ![javadoc](documentation/javadoc)
 
 NB :des cas de tests écrit en Junit 5.4 vous 
 permettront de valider votre implémentation :
