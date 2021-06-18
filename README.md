@@ -45,7 +45,7 @@ les classes suivantes (dans `src/info1/ships/`) :
     *  `NavyFleet` implémentant `INavyFleet`
     
 Les interfaces à implémenter sont présentes dans `battleship-library-1.x.jar` ; 
-elles sont sont documentées dans la ![javadoc](documentation/javadoc)
+elles sont sont documentées dans la javadoc fournie (documentation/javadoc).
 
 NB :des cas de tests écrit en Junit 5.4 vous 
 permettront de valider votre implémentation :
@@ -59,11 +59,13 @@ permettront de valider votre implémentation :
 ### utilisation de `info1.network.Network` ...
 
 
-vous pouvez maintenant utiliser la classe `info1.network.Network` pour échanger avec le serveur, 
+vous pouvez maintenant utiliser la classe `Network` pour échanger avec le serveur, 
 càd créer ou rejoindre une partie, puis jouer, càd effectuer un tir 
 sur une coordonnée précise.
 
 ![package network](documentation/package_network.png)
+
+La classe `Network` est documentée dans la javadoc fournie (documentation/javadoc).
 
 Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md)
 
