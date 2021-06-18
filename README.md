@@ -52,7 +52,7 @@ sur une coordonnée précise.
 
 ![package network](documentation/package_network.png)
 
-Plus de détail sur l'usage de la classe Network par ![ici](documentation/HowtoUseNetwork.md)
+Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md)
 
 
 
