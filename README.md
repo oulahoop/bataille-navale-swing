@@ -40,9 +40,12 @@ https://gitlab.univ-nantes.fr/iut.info1.project/battleship-student-project-2021/
 2. il vous faut (terminer de) développer le modèle de données représentant 
 la flotte de bateaux ; pour cela, il vous faut coder 
 les classes suivantes (dans `src/info1/ships/`) : 
-    *  `Coord` 
-    *  `Ship` et (si nécessaire) modifier les classes "filles" fournies
-    *  `NavyFleet`
+    *  `Coord` implémentant `ICoord`
+    *  `Ship` implémentant `IShip` et (si nécessaire) modifier les classes "filles" fournies
+    *  `NavyFleet` implémentant `INavyFleet`
+    
+Les interfaces à implémenter sont présentes dans `battleship-library-1.x.jar` ; 
+elles sont sont documentées dans la ![javadoc](documentation/javadoc/index.html)
 
 NB :des cas de tests écrit en Junit 5.4 vous 
 permettront de valider votre implémentation :
