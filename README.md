@@ -64,6 +64,7 @@ sur une coordonnée précise.
 
 Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md)
 
+La classe de tests `RunningGameTest` illustre également l'utilisation de `info1.network.Network`.
 
 ### ... et développement d'une interface graphique
 
