@@ -11,6 +11,8 @@ Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
  (http://37.187.38.219/api/v0) et une librairie Java 
  interfaçant le serveur vous est fournie (en partie).
 
+**En cas de questions / bugs / etc. privilégiez les _issues_ de ce dépôt git.**
+
 
 ## Travail à faire
 
