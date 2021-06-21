@@ -309,7 +309,7 @@ public class NavyFleetTest {
     }
 
     /* flotte belge =
-         1 cuirassÃ©, 2 croiseurs, 3 torpilleurs, 4 sous-marins
+         1 BAttleship©, 2 Cruiser, 3 Destroyer, 4 Submarin
     */
 
 
