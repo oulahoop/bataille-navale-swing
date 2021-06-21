@@ -20,7 +20,7 @@ Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
 
 1. créez un git spécifique à votre groupe sur le gitlab de l'université : 
  https://gitlab.univ-nantes.fr/ avec la convention de nommage suivante :
-`projetS2-2021-NUM-GROUPE-INITIALES_ENSEIGNANT` ; `exemple projetS2-03-AL`
+`projetS2-2021-NUM_GROUPE-INITIALES_ENSEIGNANT` ; `exemple projetS2-03-AL`
  
  
 
