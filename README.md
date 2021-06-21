@@ -19,8 +19,11 @@ Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
 ### initialisation du projet
 
 1. créez un git spécifique à votre groupe sur le gitlab de l'université : 
- https://gitlab.univ-nantes.fr/
+ https://gitlab.univ-nantes.fr/ avec la convention de nommage suivante :
+`projetS2-2021-NUM-GROUPE-INITIALES_ENSEIGNANT` ; `exemple projetS2-03-AL`
  
+ 
+
 2. ajoutez comme "maintainer" votre enseignant-référent et M. Arnaud Lanoix    
 
 3. déposez sur votre git, l'ensemble des sources récupérées ici :
