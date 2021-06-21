@@ -47,6 +47,17 @@ public class NavyFleet implements INavyFleet {
             return -1;
         if(taille - IShip.getCategory().getSize()< 0)
             return -2;
+        if(!liste_bateaux.isEmpty()) {
+            for (IShip bateau : liste_bateaux) {
+                for (ICoord coordBateau : bateau.getCoords()) {
+                    for (ICoord coordNewBateau : IShip.getCoords()) {
+                        if (coordBateau.equals(coordNewBateau)) {
+                            return -3;
+                        }
+                    }
+                }
+            }
+        }
         liste_bateaux.add(IShip);
         taille-=IShip.getCategory().getSize();
         return 0;
@@ -75,7 +86,25 @@ public class NavyFleet implements INavyFleet {
     @Override
     public boolean isBelgianConfiguration() {
         // TODO
-
+        if(!isComplete()){return false;}
+        try {
+            AircraftCarrier monPorteAvion = new AircraftCarrier("un porteavion", "E5", "E9");
+            Battleship monCuirasse = new Battleship("un cuirassé", "B2", "E2");
+            Submarine monSousMarin = new Submarine("un sous-marin", "G10");
+            Cruiser monCroiseur = new Cruiser("un croiseur", "B8", "B6");
+            Destroyer monTorpilleur = new Destroyer("un torpilleur", "H3", "H4");
+            Destroyer autreTorpilleur = new Destroyer("un autre torpilleur", "D9", "C9");
+            Cruiser autreCroiseur = new Cruiser("un autre croiseur", "J8", "H8");
+            List<IShip> belgiumConfig = new ArrayList<>();
+            belgiumConfig.add(monCuirasse);
+            belgiumConfig.add(monCroiseur);
+            belgiumConfig.add(autreCroiseur);
+            belgiumConfig.add(monTorpilleur);
+            if(liste_bateaux.containsAll(belgiumConfig));
+                return true;
+        } catch (BadCoordException | CoordsBadShipException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
