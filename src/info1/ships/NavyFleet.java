@@ -1,5 +1,7 @@
 package info1.ships;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +12,8 @@ import java.util.Set;
 public class NavyFleet implements INavyFleet {
 
     // TODO
+    private int taille;
+    private List<IShip> liste_bateaux;
 
 
     /**
@@ -19,42 +23,59 @@ public class NavyFleet implements INavyFleet {
      */
     public NavyFleet() {
         // TODO
+        taille = 20;
+        liste_bateaux = new ArrayList<>();
     }
 
     @Override
     public int remainingSize() {
         // TODO
-        return -1;
+        return taille;
     }
 
     @Override
     public boolean isComplete() {
         // TODO
-        return false;
+        return taille==0;
     }
 
 
     @Override
     public int add(IShip IShip) {
         // TODO
-        return -1;
+        if(liste_bateaux.contains(IShip))
+            return -1;
+        if(taille - IShip.getCategory().getSize()< 0)
+            return -2;
+        liste_bateaux.add(IShip);
+        taille-=IShip.getCategory().getSize();
+        return 0;
     }
 
     @Override
     public List<IShip> getShips() {
         // TODO
-        return null;
+        System.out.println(liste_bateaux.toString());
+        liste_bateaux.sort(IShip::compareTo);
+        return liste_bateaux;
     }
 
     @Override
     public Set<IShip> getShips(ShipCategory shipCategory) {
         // TODO
-        return null;
+        Set<IShip> set = new HashSet<>();
+        for(IShip bateau : liste_bateaux){
+            if(bateau.getCategory().equals(shipCategory)){
+                set.add(bateau);
+            }
+        }
+        return set;
     }
 
     @Override
     public boolean isBelgianConfiguration() {
         // TODO
+
         return false;
     }
 
@@ -64,10 +85,13 @@ public class NavyFleet implements INavyFleet {
         return false;
     }
 
-
     @Override
     public String toString() {
         // TODO
-        return null;
+        StringBuilder sb = new StringBuilder();
+        for(IShip bateau : liste_bateaux){
+            sb.append(bateau.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }
