@@ -5,10 +5,8 @@ import info1.network.Network;
 import info1.ships.Coord;
 
 public class GameManager {
-    Network network;
 
-
-    public GameManager(Network network) { this.network = network; }
+    public GameManager(){}
 
     public boolean join() {
         //TODO
