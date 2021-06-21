@@ -5,9 +5,9 @@ import info1.utils.GameManager;
 import info1.view.ViewManager;
 
 public class Application {
-    private ViewManager viewManager = new ViewManager();
-    private GameManager gameManager = new GameManager();
-    private Network network = new Network();
+    private final ViewManager viewManager = new ViewManager();
+    private final GameManager gameManager = new GameManager();
+    private final Network network = new Network();
 
     private static Application app;
     public Application() {
