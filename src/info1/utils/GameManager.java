@@ -53,10 +53,10 @@ public class GameManager {
                 case 0 : return false;
                 case 1 : return true;
                 case 10 :
-                    //DrowShip();
+                    //FAIRE COULER LE BATEAU
                     return true;
                 case 100 :
-                    //gameWon();
+                    //ANIMATION DE VICTOIRE
                     return true;
             }
         } catch(UnirestException | BadCoordException e) {
