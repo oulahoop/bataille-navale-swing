@@ -1,6 +1,7 @@
 package info1.ships;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,81 +27,26 @@ public abstract class Ship implements IShip {
      * @throws CoordsBadShipException si les coordonnées données ne permettent pas de définir un bateau correct :
      *  une ligne, une colonne, de la bonne taille, etc.
      */
-    public Ship(String name, String ayFront, String ayBack)
-            throws BadCoordException, CoordsBadShipException {
+    public Ship(String name, String ayFront, String ayBack) throws BadCoordException, CoordsBadShipException {
         this.name = name;
-        this.front= new Coord(ayFront);
+        this.front = new Coord(ayFront);
         this.back = new Coord(ayBack);
-        double distance = Math.sqrt(Math.pow((front.getX()-back.getX()),2) + Math.pow((front.getY()- back.getY()),2));
-        if(this.getCategory().getSize() != distance)
-            throw new CoordsBadShipException();
 
+        if(back.getX() != front.getX() && back.getY() != front.getY()) throw new CoordsBadShipException();
     }
 
 
     @Override
     public List<ICoord> getCoords() {
-        List<ICoord> coordonees = new ArrayList<>();
-        coordonees.add(front);
-        Coord intermediaire = front;
-        //vertical
-        if (back.getX() == front.getX()) {
-            if (front.getY() < back.getY()) {
-                for(int i = front.getY()+1; i < back.getY(); i++){
-                    try {
-                        StringBuilder sb =new StringBuilder();
-                        sb .append(front.getAlphaX()).append(i);
-                        System.out.println(sb);
-                        coordonees.add(new Coord(sb.toString()));
-                    } catch (BadCoordException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            if (front.getY() > back.getY()) {
-                for(int i = back.getY(); i > front.getY(); i--){
-                    try {
-                        StringBuilder sb =new StringBuilder();
-                        sb .append(front.getAlphaX()).append(i);
-                        System.out.println(sb);
-                        coordonees.add(new Coord(sb.toString()));
-                    } catch (BadCoordException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        //Horizontal
-        if(front.getY() == back.getY()){
-            if (front.getAlphaX() < back.getAlphaX()) {
-                for(int i = front.getAlphaX()+1; i < back.getAlphaX(); i++){
-                    try {
-                        StringBuilder sb =new StringBuilder();
-                        sb .append((char) ((int)front.getAlphaX()-1)).append(front.getY());
-                        System.out.println(sb);
-                        coordonees.add(new Coord(sb.toString()));
-                    } catch (BadCoordException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            if (front.getAlphaX() > back.getAlphaX()) {
-                for(int i = back.getAlphaX(); i > front.getAlphaX(); i--){
-                    try {
-                        StringBuilder sb =new StringBuilder();
-                        sb .append((char)((int)front.getAlphaX()+1)).append(front.getY());
-                        System.out.println(sb);
-                        coordonees.add(new Coord(sb.toString()));
-                    } catch (BadCoordException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-
-        coordonees.add(back);
-        return coordonees;
+        List<ICoord> coords = new ArrayList<>();
+        if(getSize() == 1) { coords.add(front); return coords; }
+        boolean reverse = false, vertical = front.getX()%back.getX()==0;
+        int start = vertical ? front.getY() : front.getX(), end = vertical ? back.getY() : back.getX();
+        if(start < end) { reverse = true; start+=end; end=start-end; start-=end; }
+        for(int i=start; i>=end; i--) {
+            try { coords.add(reverse ? 0 : coords.size(), vertical ? new Coord(String.valueOf(front.getAlphaX()) + i) : new Coord(String.valueOf((char) (i + 96)) + front.getY()));
+            } catch (BadCoordException e) { e.printStackTrace(); }
+        } return coords;
     }
 
     @Override
@@ -120,7 +66,7 @@ public abstract class Ship implements IShip {
 
     @Override
     public int getSize() {
-        return (int) Math.sqrt(Math.pow((getBack().getX()-getFront().getX()),2)+Math.pow((getBack().getY()-getFront().getY()),2));
+        return front.getX()!=back.getX() ? Math.abs(front.getX()-back.getX())+1 : Math.abs(front.getY()-back.getY())+1;
     }
 
     @Override
@@ -130,17 +76,16 @@ public abstract class Ship implements IShip {
 
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof Ship)) return false;
-        if(this.getName()==((Ship) o).getName() || this.getSize() == ((Ship) o).getSize()){
-            return true;
-        }
-        return false;
+        return o instanceof Ship && ((Ship) o).hashCode() == this.hashCode() && this.getName().equals(((Ship) o).getName());
     }
 
     @Override
     public int hashCode() {
-
-        return 0;
+        boolean vertical = front.getX()%back.getX()==0;
+        StringBuilder sb = new StringBuilder();
+        sb.append(vertical ? 0 : 1).append(vertical ? front.getX() : front.getY());
+        for(ICoord co : getCoords()) {sb.append(vertical ? co.getY() : co.getX());}
+        return Integer.parseInt(sb.toString());
     }
 
 
