@@ -51,42 +51,34 @@ public class GameManager {
         return false;
     }
 
-    public boolean shoot(Coord coord) {
+    public void shoot(Coord coord) {
         app.getViewManager().disableCell(coord);
         app.getViewManager().shootAnimation();
-        int result;
+        int result = -9999;
         try { result = Network.playOneTurn(url, game, player, coord);
         } catch (BadCoordException | UnirestException e) { e.printStackTrace(); }
 
-        /*
-        Disable button at coords -> "coord"
-        Shoot animation
-        update();
-
-        update {
-            0 : empty; waiting();
-            1 : hit; waiting();
-            10 : sunk; waiting();
-            100 : win
+        switch(result) {
+            case 0: miss(); break;
+            case 1: hit(); break;
+            case 10: sunk(); break;
+            case 100: won(); break;
         }
-         */
-
-        try {
-            switch(Network.playOneTurn(url, game, player, coord)) {
-                case 0 : return false;
-                case 1 : return true;
-                case 10 :
-                    //FAIRE COULER LE BATEAU
-                    return true;
-                case 100 :
-                    //ANIMATION DE VICTOIRE
-                    return true;
-            }
-        } catch(UnirestException | BadCoordException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
+    public void miss() {
+
+    }
+    public void hit() {
+
+    }
+    public void sunk() {
+
+    }
+    public void won() {
+
+    }
+
+
 
     public boolean gameEnded() {
         try { return Math.abs(Network.getInfo(url, game, player)) == 100;
