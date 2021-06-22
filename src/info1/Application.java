@@ -7,7 +7,6 @@ import info1.view.ViewManager;
 public class Application {
     private final ViewManager viewManager = new ViewManager();
     private final GameManager gameManager = new GameManager();
-    private final Network network = new Network();
 
     private static Application app;
     public Application() {
@@ -17,5 +16,4 @@ public class Application {
     public static Application getApp() { return app; }
     public ViewManager getViewManager() { return viewManager; }
     public GameManager getGameManager() { return gameManager; }
-    public Network getNetwork() { return network; }
 }

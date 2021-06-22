@@ -1,5 +1,6 @@
 package info1.view;
 
+import info1.Application;
 import info1.view.menus.GameMenu;
 import info1.view.menus.MainMenu;
 import info1.view.menus.SignInMenu;
@@ -17,5 +18,12 @@ public class ViewManager extends JFrame {
             case MAIN: new MainMenu(this); break;
             case GAME: new GameMenu(this); break;
         }
+    }
+
+    public void enableShoot(boolean enable) {
+        Application app = Application.getApp();
+        if(app.getGameManager().getGame() == null) return;
+
+        //TODO (Complete ViewMenus before)
     }
 }

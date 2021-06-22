@@ -6,11 +6,10 @@ import info1.network.BadIdException;
 import info1.network.Game;
 import info1.network.Network;
 import info1.network.Player;
-import info1.ships.BadCoordException;
-import info1.ships.Coord;
-import info1.ships.INavyFleet;
-import info1.ships.UncompleteFleetException;
+import info1.ships.*;
 import info1.view.Menu;
+
+import java.util.concurrent.CompletableFuture;
 
 public class GameManager {
 
@@ -19,23 +18,28 @@ public class GameManager {
     private Game game;
     private Player player;
 
-    public GameManager(){ }
+    public GameManager() {}
+    public Game getGame() { return game; }
 
     public boolean join(Game game, Player player, INavyFleet fleet) {
         try {
             Network.joinGame(url, game, player, fleet) ;
-            this.game  = game;
+            this.game = game;
             this.player = player;
             if(Network.getInfo(url, game, player) == 1 || Network.getInfo(url, game, player) == -1) return true;
-
         } catch(UnirestException | UncompleteFleetException | BadCoordException | BadIdException e) {
             e.printStackTrace();
         }
+        this.game = null;
         return false;
     }
 
     public void leave() {
-        app.getViewManager().switchTo(Menu.SIGN_IN);
+        if(gameEnded()) {
+            this.game = null;
+            this.player = null;
+            app.getViewManager().switchTo(Menu.SIGN_IN);
+        }
     }
 
     public boolean canPlay() {
@@ -48,8 +52,27 @@ public class GameManager {
     }
 
     public boolean shoot(Coord coord) {
+        app.getViewManager().disableCell(coord);
+        app.getViewManager().shootAnimation();
+        int result;
+        try { result = Network.playOneTurn(url, game, player, coord);
+        } catch (BadCoordException | UnirestException e) { e.printStackTrace(); }
+
+        /*
+        Disable button at coords -> "coord"
+        Shoot animation
+        update();
+
+        update {
+            0 : empty; waiting();
+            1 : hit; waiting();
+            10 : sunk; waiting();
+            100 : win
+        }
+         */
+
         try {
-            switch(Network.playOneTurn(url, game, player, coord)){
+            switch(Network.playOneTurn(url, game, player, coord)) {
                 case 0 : return false;
                 case 1 : return true;
                 case 10 :
@@ -66,11 +89,23 @@ public class GameManager {
     }
 
     public boolean gameEnded() {
-        try {
-            return Network.getInfo(url, game, player) == 100 || Network.getInfo(url, game, player) == -100;
-        } catch(UnirestException | BadIdException e) {
-            e.printStackTrace();
-        }
+        try { return Math.abs(Network.getInfo(url, game, player)) == 100;
+        } catch(UnirestException | BadIdException e) { e.printStackTrace(); }
         return false;
+    }
+
+    public void waiting() {
+        CompletableFuture.runAsync(() -> {
+           synchronized(this) {
+               app.getViewManager().enableShoot(canPlay());
+               try { while(!canPlay()) { wait(100); }
+               } catch(InterruptedException e) { e.printStackTrace(); }
+               app.getViewManager().enableShoot(canPlay());
+           }
+        });
+    }
+
+    public ICoord getLastCoords() {
+        return null;
     }
 }
