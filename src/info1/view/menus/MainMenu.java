@@ -3,10 +3,8 @@ package info1.view.menus;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import info1.network.BadIdException;
 import info1.network.Game;
 import info1.network.Network;
-import info1.network.Player;
 import info1.view.ViewManager;
 
 import javax.swing.*;
