@@ -34,6 +34,8 @@ public class MainMenu {
     JButton refresh = new JButton("refresh");
 
     //TODO trouver comment mettre les games (Jlist,etc...)
+    List<String> scrollList = new ArrayList<>();
+    JList<Game> scrollContent;
 
     //MainEast Component
     JPanel debug = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -90,6 +92,10 @@ public class MainMenu {
         mainCCenter.setPreferredSize(mainCNorth.getSize());
 
         //TODO ajouter dans mainCCenter les games (Jlist...)
+        refresh();
+
+        mainCCenter.setViewportView(scrollContent);
+        scrollContent.setLayoutOrientation(JList.VERTICAL);
 
         mainCenter.add(mainCNorth, BorderLayout.NORTH);
         mainCenter.add(mainCCenter, BorderLayout.CENTER);
@@ -135,5 +141,6 @@ public class MainMenu {
             games = Network.listInitializedGames(url);
         } catch (UnirestException e) { e.printStackTrace(); }
         //TODO affichage des games
+        scrollContent = new JList<Game>(games.toArray(new Game[games.size()]));
     }
 }
