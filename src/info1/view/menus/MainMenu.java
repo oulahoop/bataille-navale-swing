@@ -3,14 +3,17 @@ package info1.view.menus;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import info1.network.BadIdException;
 import info1.network.Game;
 import info1.network.Network;
+import info1.network.Player;
 import info1.view.ViewManager;
 
 import javax.swing.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainMenu {
@@ -33,7 +36,6 @@ public class MainMenu {
     JScrollPane mainCCenter = new JScrollPane();
     JButton refresh = new JButton("refresh");
 
-    //TODO trouver comment mettre les games (Jlist,etc...)
     List<String> scrollList = new ArrayList<>();
     JList<Game> scrollContent;
 
@@ -91,7 +93,6 @@ public class MainMenu {
         mainCCenter.setSize(new Dimension(mainCenter.getWidth(), mainCenter.getHeight()-mainCNorth.getHeight()));
         mainCCenter.setPreferredSize(mainCNorth.getSize());
 
-        //TODO ajouter dans mainCCenter les games (Jlist...)
         refresh();
 
         mainCCenter.setViewportView(scrollContent);
@@ -137,10 +138,11 @@ public class MainMenu {
     }
 
     public void refresh(){
+
         try {
             games = Network.listInitializedGames(url);
-        } catch (UnirestException e) { e.printStackTrace(); }
-        //TODO affichage des games
+        } catch (UnirestException e) { System.out.println(e.getMessage()); }
+        Collections.reverse(games);
         scrollContent = new JList<Game>(games.toArray(new Game[games.size()]));
     }
 }
