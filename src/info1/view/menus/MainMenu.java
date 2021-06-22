@@ -33,7 +33,7 @@ public class MainMenu {
     JScrollPane mainCCenter = new JScrollPane();
     JButton refresh = new JButton("refresh");
 
-    //TODO trouver comment mettre les games (Jlist...)
+    //TODO trouver comment mettre les games (Jlist,etc...)
 
     //MainEast Component
     JPanel debug = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -128,15 +128,12 @@ public class MainMenu {
         frame.setVisible(true);
         frame.repaint();
 
-
-
     }
 
     public void refresh(){
         try {
             games = Network.listInitializedGames(url);
         } catch (UnirestException e) { e.printStackTrace(); }
-
         //TODO affichage des games
     }
 }
