@@ -41,7 +41,7 @@ public class MainMenu {
     JPanel debug = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
     JLabel rechercher = new JLabel("Rechercher");
-    JTextField gameId = new JTextField("GAMEID");
+    JTextField gameId = new JTextField();
     JButton search = new JButton("search");
 
     //MainSouth Component
@@ -113,6 +113,7 @@ public class MainMenu {
         gameId.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.2)));
         gameId.setPreferredSize(gameId.getSize());
         gameId.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        gameId.setHorizontalAlignment(SwingConstants.CENTER);
 
         search.setSize(new Dimension((int) (mainEast.getWidth()*0.5), (int) (mainEast.getHeight()*0.2)));
         search.setPreferredSize(search.getSize());
@@ -136,11 +137,29 @@ public class MainMenu {
     }
 
     public void refresh(){
-
         try {
             games = Network.listInitializedGames(url);
         } catch (UnirestException e) { System.out.println(e.getMessage()); }
         Collections.reverse(games);
         scrollContent = new JList<Game>(games.toArray(new Game[games.size()]));
     }
+
+    public void research(String recherche){
+        List<Game> result = new ArrayList<>();
+        try {
+            games = Network.listInitializedGames(url);
+        } catch (UnirestException e) { System.out.println(e.getMessage()); }
+        Collections.reverse(games);
+
+        for(Game game : games) {
+            if(game.toString().contains(recherche)) result.add(game);
+        }
+        scrollContent = new JList<Game>(result.toArray(new Game[result.size()]));
+    }
+
+    public Game getSelectedGame(){ return scrollContent.getSelectedValue(); }
+
+    public String getGameId(){ return gameId.getText(); }
+
+
 }
