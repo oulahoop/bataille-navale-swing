@@ -2,6 +2,7 @@ package info1.view;
 
 public enum Menu {
     WELCOME,
-    SIGN_IN, MAIN,
+    SIGN_IN,
+    MAIN,
     GAME
 }
