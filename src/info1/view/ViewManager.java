@@ -17,7 +17,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class ViewManager extends JFrame {
     public ViewManager() {
-        this.setPreferredSize(new Dimension(1000, 800));
+        this.setSize(new Dimension(1000, 800));
+        this.setPreferredSize(this.getSize());
         this.pack();
         this.setVisible(true);
         new WelcomeMenu(this);
