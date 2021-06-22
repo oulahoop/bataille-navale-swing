@@ -11,9 +11,7 @@ public class OnMouseEvent implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         Application app = Application.getApp();
         if(e.getComponent().getName().equals("WelcomeMenu")) {
-            System.out.println("alerte !");
-            app.getViewManager().alert("Ceci est une alerte !", true);
-            //app.getViewManager().switchTo(Menu.SIGN_IN);
+            app.getViewManager().switchTo(Menu.SIGN_IN);
         }
     }
 
