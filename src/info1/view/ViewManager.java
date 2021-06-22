@@ -52,7 +52,7 @@ public class ViewManager extends JFrame {
                     text.setPreferredSize(new Dimension(this.getWidth(), 50));
                     text.setText(message);
                     text.setEditable(false);
-                    text.setBackground(new Color(0xff7869));
+                    text.setBackground(new Color(0xFF7869));
                     text.setHorizontalAlignment(JTextField.CENTER);
                     Border border = BorderFactory.createEmptyBorder();
                     text.setBorder(border);
