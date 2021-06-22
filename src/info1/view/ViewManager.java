@@ -16,10 +16,8 @@ import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 
 public class ViewManager extends JFrame {
-    private Dimension dimension = new Dimension(1000, 800);
-
     public ViewManager() {
-        this.setPreferredSize(dimension);
+        this.setPreferredSize(new Dimension(1000, 800));
         this.pack();
         this.setVisible(true);
         new WelcomeMenu(this);
@@ -35,7 +33,7 @@ public class ViewManager extends JFrame {
     }
 
     public void update() {
-        this.setPreferredSize(dimension);
+        this.setPreferredSize(this.getSize());
         this.pack();
         this.setVisible(true);
         repaint();
