@@ -16,4 +16,6 @@ public class Application {
     public static Application getApp() { return app; }
     public ViewManager getViewManager() { return viewManager; }
     public GameManager getGameManager() { return gameManager; }
+
+    public static void main(String[] args) { new Application(); }
 }

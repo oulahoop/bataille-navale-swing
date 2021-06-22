@@ -39,6 +39,8 @@ public class GameManager {
             this.game = null;
             this.player = null;
             app.getViewManager().switchTo(Menu.SIGN_IN);
+        } else {
+            app.getViewManager().alert("Impossible de quitter une partie en cours !", true);
         }
     }
 
@@ -52,30 +54,36 @@ public class GameManager {
     }
 
     public void shoot(Coord coord) {
-        app.getViewManager().disableCell(coord);
-        app.getViewManager().shootAnimation();
+        //app.getViewManager().shootAnimation();
         int result = -9999;
         try { result = Network.playOneTurn(url, game, player, coord);
         } catch (BadCoordException | UnirestException e) { e.printStackTrace(); }
 
         switch(result) {
-            case 0: miss(); break;
-            case 1: hit(); break;
-            case 10: sunk(); break;
-            case 100: won(); break;
+            case 0: miss(coord); break;
+            case 1: hit(coord); break;
+            case 10: sunk(coord); break;
+            case 100: won(coord); break;
         }
     }
-    public void miss() {
-
+    public void miss(Coord coord) {
+        //app.getViewManager().missAnimation();
+        //app.getViewManager().miss(coord);
+        waiting();
     }
-    public void hit() {
-
+    public void hit(Coord coord) {
+        //app.getViewManager().hitAnimation();
+        //app.getViewManager().hit(coord);
+        waiting();
     }
-    public void sunk() {
-
+    public void sunk(Coord coord) {
+        //app.getViewManager().hitAnimation();
+        //app.getViewManager().sunk(coord);
+        waiting();
     }
-    public void won() {
-
+    public void won(Coord coord) {
+        //app.getViewManager().winAnimation();
+        //app.getViewManager().sunk(coord);
     }
 
 
