@@ -64,10 +64,11 @@ public class ListenerTir implements ActionListener {
                 }
             }
         }
-    }
+
 
     private void won(Coord coord) {
         //TODO
+
     }
 
     private void sunk(Coord coord) {
