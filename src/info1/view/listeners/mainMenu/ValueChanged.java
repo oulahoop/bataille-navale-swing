@@ -3,11 +3,14 @@ package info1.view.listeners.mainMenu;
 import info1.Application;
 import info1.network.Game;
 import info1.utils.GameManager;
+import info1.view.Menu;
 import info1.view.menus.MainMenu;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 /*
     clic sur le bouton refrech =  refresh
     clic sur le bouton recherce = research(getGameid) if gameID.empty refresh
@@ -16,7 +19,7 @@ import javax.swing.event.ChangeListener;
 
  */
 
-public class ValueChanged implements ChangeListener {
+public class ValueChanged implements ListSelectionListener {
 
     private MainMenu menu;
     private GameManager gameManager;
@@ -27,11 +30,17 @@ public class ValueChanged implements ChangeListener {
     }
 
     @Override
-    public void stateChanged(ChangeEvent e) {
+    public void valueChanged(ListSelectionEvent e) {
+        System.out.println("Changement");
+        boolean joined = false;
         Game game = menu.getSelectedGame();
+
         if(JOptionPane.showConfirmDialog(Application.getApp().getViewManager(),
                 "voulez vous vraiment rejoindre cette partie ?") == 0){
-            gameManager.join(game, gameManager.getPLayer(), gameManager.getFleet());
+            joined = gameManager.join(game, gameManager.getPLayer(), gameManager.getFleet());
+        }
+        if(joined){
+            Application.getApp().getViewManager().switchTo(Menu.GAME);
         }
     }
 }

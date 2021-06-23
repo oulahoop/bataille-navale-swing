@@ -6,10 +6,12 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import info1.network.Game;
 import info1.network.Network;
 import info1.view.ViewManager;
+import info1.view.listeners.mainMenu.ValueChanged;
 
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,8 +36,7 @@ public class MainMenu {
     JScrollPane mainCCenter = new JScrollPane();
     JButton refresh = new JButton("refresh");
 
-    List<String> scrollList = new ArrayList<>();
-    JList<Game> scrollContent;
+    JList<Game> scrollList;
 
     //MainEast Component
     JPanel debug = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -93,8 +94,8 @@ public class MainMenu {
 
         refresh();
 
-        mainCCenter.setViewportView(scrollContent);
-        scrollContent.setLayoutOrientation(JList.VERTICAL);
+        mainCCenter.setViewportView(scrollList);
+        scrollList.setLayoutOrientation(JList.VERTICAL);
 
         mainCenter.add(mainCNorth, BorderLayout.NORTH);
         mainCenter.add(mainCCenter, BorderLayout.CENTER);
@@ -134,6 +135,7 @@ public class MainMenu {
         frame.setVisible(true);
         frame.repaint();
 
+        setListeners();
     }
 
     public void refresh(){
@@ -141,7 +143,7 @@ public class MainMenu {
             games = Network.listInitializedGames(url);
         } catch (UnirestException e) { System.out.println(e.getMessage()); }
         Collections.reverse(games);
-        scrollContent = new JList<Game>(games.toArray(new Game[games.size()]));
+        scrollList = new JList<Game>(games.toArray(new Game[games.size()]));
     }
 
     public void research(String recherche){
@@ -154,15 +156,15 @@ public class MainMenu {
         for(Game game : games) {
             if(game.toString().contains(recherche)) result.add(game);
         }
-        scrollContent = new JList<Game>(result.toArray(new Game[result.size()]));
+        scrollList = new JList<Game>(result.toArray(new Game[result.size()]));
     }
 
-    public Game getSelectedGame(){ return scrollContent.getSelectedValue(); }
+    public Game getSelectedGame(){ return scrollList.getSelectedValue(); }
 
     public String getGameId(){ return gameId.getText(); }
 
-    private void setlisteners(){
-
+    private void setListeners(){
+        scrollList.addListSelectionListener(new ValueChanged(this));
     }
 
 

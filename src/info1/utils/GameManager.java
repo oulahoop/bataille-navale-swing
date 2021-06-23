@@ -119,4 +119,12 @@ public class GameManager {
         });
     }
 
+    public void subscribe(){
+        try {
+            Network.suscribeNewPlayer(url, player);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
