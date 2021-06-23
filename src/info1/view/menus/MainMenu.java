@@ -47,7 +47,7 @@ public class MainMenu {
     JButton search = new JButton("search");
 
     //MainSouth Component
-    JButton quitter = new JButton("Quitter");
+    JButton quitter = new JButton("retour");
     JButton createGame = new JButton("Creer une partie");
 
 
