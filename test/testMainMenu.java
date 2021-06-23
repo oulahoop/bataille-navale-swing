@@ -2,6 +2,7 @@ import info1.Application;
 import info1.network.Player;
 import info1.ships.*;
 import info1.utils.GameManager;
+import info1.view.Menu;
 import info1.view.ViewManager;
 import info1.view.menus.MainMenu;
 
@@ -11,7 +12,7 @@ public class testMainMenu {
         Application app = new Application();
         GameManager gameManager = app.getGameManager();
 
-        gameManager.setPlayer(new Player("dudule"));
+        gameManager.setPlayer(new Player("MR.PROPRE"));
         gameManager.subscribe();
 
         NavyFleet navyFleet = new NavyFleet();
@@ -23,7 +24,7 @@ public class testMainMenu {
             }
         }
         gameManager.setFleet(navyFleet);
-        new MainMenu(app.getViewManager());
+        app.getViewManager().switchTo(Menu.MAIN);
 
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 public class MainMenu {
     String url = "http://37.187.38.219/api/v0";
     List<Game> games = new ArrayList<>();
-
+    ViewManager viewManager;
 
     JPanel main = new JPanel(new BorderLayout());
     //Main
@@ -51,6 +51,7 @@ public class MainMenu {
 
 
     public MainMenu(ViewManager frame) {
+        this.viewManager = frame;
         //main
         main.setSize(frame.getWidth()-15,frame.getHeight()-45);
         main.setPreferredSize(main.getSize());
@@ -164,7 +165,7 @@ public class MainMenu {
     public String getGameId(){ return gameId.getText(); }
 
     private void setListeners(){
-        scrollList.addListSelectionListener(new ValueChanged(this));
+        scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 
 
