@@ -2,13 +2,15 @@ package info1.view.menus;
 
 
 import info1.view.ViewManager;
-import info1.view.listeners.OnActionEvent;
+import info1.view.listeners.signInMenu.OnActionEvent;
+import info1.view.listeners.signInMenu.OnPlacerAction;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 public class SignInMenu{
@@ -19,18 +21,21 @@ public class SignInMenu{
     private JTextField name;
 
     private ArrayList<JButton> buttons;
+    private ArrayList<JComboBox<String>> rotation;
 
-    private JButton jouer;
+    private OnActionEvent controleur;
+    private OnPlacerAction ctrl;
 
     private JButton frenchComp;
     private JButton belgiumComp;
 
+    private JButton jouer;
 
     public SignInMenu(ViewManager frame) {
         JPanel principal = new JPanel();
         principal.setLayout(new GridLayout(1, 2));
 
-        OnActionEvent controleur = new OnActionEvent(this);
+        controleur = new OnActionEvent(this);
 
         JPanel droite = new JPanel();
         droite.setLayout(new GridLayout(2,1));
@@ -101,24 +106,38 @@ public class SignInMenu{
                 JButton b1 = new JButton();
                 b1.setPreferredSize(new Dimension(50, 50));
                 b1.setBackground(new Color(0x78939A));
-                b1.setName(((char) (65 + j)) + String.valueOf(i + 1));
-                b1.setTransferHandler(new TransferHandler("icon"));
+                b1.setName(((char) (65 + i)) + String.valueOf(j + 1));
                 buttons.add(b1);
                 plateau.add(b1);
             }
         }
         bateaux = new JPanel(new GridLayout(5,1));
-
-        MouseListener ml = new DragMouseAdaper();
-        String[] tab = new String[]{"AircraftCarrier", "BattleShip     ", "Cruiser         ", "Destroyer      ", "Submarine      "};
+        ctrl = new OnPlacerAction(this);
+        rotation = new ArrayList<>();
+        String[] tab = new String[]{"AircraftCarrier", "BattleShip", "Cruiser", "Destroyer", "Submarine"};
         for (int i = 0; i < 5; i++) {
-            ImageIcon ship = new ImageIcon("lib/ship.png");
+            JPanel jp = new JPanel();
+            jp.setPreferredSize(new Dimension(550,75));
+            //jp.setBackground(Color.BLACK);
+            ImageIcon ship = new ImageIcon("lib/francais/"+(i+1)+".png");
             JLabel jl = new JLabel(ship);
             jl.setText(tab[i]);
-            jl.setTransferHandler(new TransferHandler("icon"));
-            jl.addMouseListener(ml);
-            jl.setBackground(new Color(50,50,40*i));
-            bateaux.add(jl);
+            jl.setName(tab[i]);
+            jp.add(jl);
+            JComboBox<String> jcb= new JComboBox<>();
+            jcb.addItem("Haut");
+            jcb.addItem("Droite");
+            jcb.addItem("Gauche");
+            jcb.addItem("Bas");
+            jcb.setName(tab[i]);
+            rotation.add(jcb);
+            jp.add(jcb);
+            JButton jb = new JButton("Placer");
+            jb.setName(tab[i]);
+            jb.addActionListener(ctrl);
+            jp.add(jb);
+
+            bateaux.add(jp);
         }
 
 
@@ -147,7 +166,7 @@ public class SignInMenu{
 
         gauche.add(composition, BorderLayout.NORTH);
 
-        JPanel centragegauche = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel centragegauche = new JPanel(new FlowLayout());
         centragegauche.add(bateaux);
         gaugauche.add(composition,BorderLayout.NORTH);
         gaugauche.add(plateau,BorderLayout.CENTER);
@@ -167,13 +186,23 @@ public class SignInMenu{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private class DragMouseAdaper extends MouseAdapter{
+    /*private class DragMouseAdaper extends MouseAdapter{
         public void mousePressed(MouseEvent e){
-            JComponent c = (JComponent) e.getSource();
-            TransferHandler handler = c.getTransferHandler();
-            handler.exportAsDrag(c,e,TransferHandler.COPY);
+            if(e.getButton()==1) {
+                JComponent c = (JComponent) e.getSource();
+                TransferHandler handler = c.getTransferHandler();
+                handler.exportAsDrag(c, e, TransferHandler.COPY);
+                System.out.println();
+            }
+            if(e.getButton()==3){
+                //TODO changement de sens au clique droit
+            }
         }
-    }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+    }*/
 
     public JTextField getName() {
         return name;
@@ -182,6 +211,8 @@ public class SignInMenu{
     public JButton getJouer() {
         return jouer;
     }
+
+    public ArrayList<JButton> getButtons() { return buttons; }
 
     public void enableFrench(boolean b){
         frenchComp.setEnabled(b);
@@ -193,5 +224,12 @@ public class SignInMenu{
 
     public JPanel getBateauxPanel(){
         return bateaux;
+    }
+
+    public OnPlacerAction getCtrl() {
+        return ctrl;
+    }
+    public ArrayList<JComboBox<String>> getRotation(){
+        return rotation;
     }
 }
