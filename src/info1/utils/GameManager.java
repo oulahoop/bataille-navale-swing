@@ -34,7 +34,7 @@ public class GameManager {
             Network.joinGame(url, game, player, fleet) ;
             this.game = game;
             this.player = player;
-            if(Network.getInfo(url, game, player) == 1 || Network.getInfo(url, game, player) == -1) return true;
+            if(Math.abs(Network.getInfo(url, game, player)) != 100 || Network.getInfo(url, game, player) != -9999) return true;
         } catch(UnirestException | UncompleteFleetException | BadCoordException | BadIdException e) {
             e.printStackTrace();
         }
