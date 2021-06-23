@@ -1,11 +1,14 @@
 package info1.view.menus;
 
 
-import info1.ships.Coord;
 import info1.view.ViewManager;
-
+import info1.utils.GameManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+
+import info1.Application;
+import info1.view.listeners.gameMenu.ListenerTir;
 
 
 public class GameMenu{
@@ -29,35 +32,6 @@ public class GameMenu{
     JPanel grilleAdversaire;
     JButton boutonAdversaire;
     //-------------------------//
-
-    //état de la flotte//
-    JPanel etatFlotte;
-
-    //état porte-avions//
-    JLabel PA1;
-    JLabel PA2;
-    JLabel PA3;
-    JLabel PA4;
-    JLabel PA5;
-
-    //état cuirassé//
-    JLabel cuira1;
-    JLabel cuira2;
-    JLabel cuira3;
-    JLabel cuira4;
-
-    //état croiseur//
-    JLabel crois1;
-    JLabel crois2;
-    JLabel crois3;
-
-    //état torpilleur//
-    JLabel torpi1;
-    JLabel torpi2;
-
-    //état sous-marin//
-    JLabel submarine;
-    //-------------------------------//
 
     //interface de tir//
     JPanel interfaceTir;
@@ -118,7 +92,9 @@ public class GameMenu{
                 boutonJoueur = new JButton();
                 boutonJoueur.setBackground(new Color(0x78939A));
                 boutonJoueur.setPreferredSize(new Dimension(50,50));
-                boutonJoueur.setName((char)(65+i)+ "" + j+1);
+                int number = i+1;
+                boutonJoueur.setName((char)(65+j)+ "" + number);
+                boutonJoueur.setEnabled(false);
                 grilleJoueur.add(boutonJoueur);
             }
         }
@@ -158,114 +134,36 @@ public class GameMenu{
         contour = new JLabel("--J--",SwingConstants.CENTER);
         contour.setOpaque(true);
         grilleAdversaire.add(contour);
-
+        ListenerTir controleur = new ListenerTir(this);
         for(int i = 0; i < 10; i++){
             grilleAdversaire.add(new JLabel("--" +String.valueOf(i+1) + "--", SwingConstants.CENTER));
             for(int j = 0;j<10;j++){
                 boutonAdversaire = new JButton();
                 boutonAdversaire.setBackground(new Color(0x78939A));
                 boutonAdversaire.setPreferredSize(new Dimension(50,50));
-                boutonAdversaire.setName((char)(65+i)+ "" + j+1);
+                int number = i+1;
+                boutonAdversaire.setName((char)(65+j)+ "" + number);
+                boutonAdversaire.addActionListener(controleur);
                 grilleAdversaire.add(boutonAdversaire);
+
             }
         }
-
-        //settings menu etat de la flotte//
-        etatFlotte = new JPanel(new GridLayout(2,9));
-        etatFlotte.setBorder(BorderFactory.createTitledBorder("Etat de votre flotte"));
-        //porte-avions//
-        PA1 = new JLabel("P1",SwingConstants.CENTER);
-        PA1.setBackground(new Color(0x888888));
-        PA1.setOpaque(true);
-        PA2 = new JLabel("P2",SwingConstants.CENTER);
-        PA2.setBackground(new Color(0x888888));
-        PA2.setOpaque(true);
-        PA3 = new JLabel("P3",SwingConstants.CENTER);
-        PA3.setBackground(new Color(0x888888));
-        PA3.setOpaque(true);
-        PA4 = new JLabel("P4",SwingConstants.CENTER);
-        PA4.setBackground(new Color(0x888888));
-        PA4.setOpaque(true);
-        PA5 = new JLabel("P5",SwingConstants.CENTER);
-        PA5.setBackground(new Color(0x888888));
-        PA5.setOpaque(true);
-
-        etatFlotte.add(PA1);
-        etatFlotte.add(PA2);
-        etatFlotte.add(PA3);
-        etatFlotte.add(PA4);
-        etatFlotte.add(PA5);
-        etatFlotte.add(new JLabel(" "));
-
-        //croiseur//
-        crois1 = new JLabel("C1",SwingConstants.CENTER);
-        crois1.setPreferredSize(new Dimension(20,20));
-        crois1.setBackground(new Color(0x888888));
-        crois1.setOpaque(true);
-        crois2 = new JLabel("C2",SwingConstants.CENTER);
-        crois2.setPreferredSize(new Dimension(20,20));
-        crois2.setBackground(new Color(0x888888));
-        crois2.setOpaque(true);
-        crois3 = new JLabel("C3",SwingConstants.CENTER);
-        crois3.setBackground(new Color(0x888888));
-        crois3.setOpaque(true);
-
-        etatFlotte.add(crois1);
-        etatFlotte.add(crois2);
-        etatFlotte.add(crois3);
-        etatFlotte.add(new JLabel(" "));
-
-        //cuirrassé//
-        cuira1 = new JLabel("C1",SwingConstants.CENTER);
-        cuira1.setBackground(new Color(0x888888));
-        cuira1.setOpaque(true);
-        cuira2 = new JLabel("C2",SwingConstants.CENTER);
-        cuira2.setBackground(new Color(0x888888));
-        cuira2.setOpaque(true);
-        cuira3 = new JLabel("C3",SwingConstants.CENTER);
-        cuira3.setBackground(new Color(0x888888));
-        cuira3.setOpaque(true);
-        cuira4 = new JLabel("C4",SwingConstants.CENTER);
-        cuira4.setBackground(new Color(0x888888));
-        cuira4.setOpaque(true);
-
-        etatFlotte.add(cuira1);
-        etatFlotte.add(cuira2);
-        etatFlotte.add(cuira3);
-        etatFlotte.add(cuira4);
-        etatFlotte.add(new JLabel(" "));
-
-        //torpilleur//
-        torpi1 = new JLabel("T1",SwingConstants.CENTER);
-        torpi1.setBackground(new Color(0x888888));
-        torpi1.setOpaque(true);
-        torpi2 = new JLabel("T2",SwingConstants.CENTER);
-        torpi2.setBackground(new Color(0x888888));
-        torpi2.setOpaque(true);
-
-        etatFlotte.add(torpi1);
-        etatFlotte.add(torpi2);
-        etatFlotte.add(new JLabel(" "));
-
-        //sous-marin//
-        submarine = new JLabel("S1",SwingConstants.CENTER);
-        submarine.setBackground(new Color(0x888888));
-        submarine.setOpaque(true);
-
-        etatFlotte.add(submarine);
 
         //Menu de tir//
         interfaceTir = new JPanel(new GridLayout(3,1));
         interfaceTir.setBorder(BorderFactory.createTitledBorder("Interface de tir"));
         rappelDernierTir = new JLabel("dernier tir : ");
         nouveauTir = new JButton("FEU!");
+        nouveauTir.setBackground(new Color(0xff0000));
+        nouveauTir.setEnabled(false);
+        nouveauTir.setName("Tirer");
+        nouveauTir.addActionListener(controleur);
         interfaceTir.add(rappelDernierTir);
         interfaceTir.add(new JLabel());
         interfaceTir.add(nouveauTir);
 
         //mise en place de la vue//
         interfaceJoueur.add(grilleJoueur,BorderLayout.CENTER);
-        interfaceJoueur.add(etatFlotte,BorderLayout.SOUTH);
         gauche.add(interfaceJoueur);
         interfaceAdversaire.add(grilleAdversaire,BorderLayout.CENTER);
         interfaceAdversaire.add(interfaceTir, BorderLayout.SOUTH);
@@ -274,10 +172,22 @@ public class GameMenu{
         principal.add(droite);
         viewManager.setContentPane(principal);
         principal.setPreferredSize(new Dimension(1900,1080));
+        viewManager.setPreferredSize(new Dimension(1920,1080));
         viewManager.pack();
         viewManager.setResizable(false);
         viewManager.setVisible(true);
     }
+    public void listenerTir(ActionListener action){nouveauTir.addActionListener(action);}
+
+
+
+
+    public void activerTir(boolean b){
+        nouveauTir.setEnabled(b);
+    }
+
+
+
 
 
 }
