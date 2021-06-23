@@ -1,7 +1,7 @@
 import info1.ships.BadCoordException;
 import info1.ships.Coord;
 import info1.ships.ICoord;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
