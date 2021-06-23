@@ -108,4 +108,11 @@ public class GameManager {
     public ICoord getLastCoords() {
         return null;
     }
+
+    public String getUrl() {
+        return url;
+    }
+    public void setPlayer(Player p1){
+        player = p1;
+    }
 }
