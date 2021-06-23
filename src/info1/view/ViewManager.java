@@ -16,6 +16,8 @@ import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 
 public class ViewManager extends JFrame {
+    private Object menu;
+
     public ViewManager() {
         this.setSize(new Dimension(1000, 800));
         this.setPreferredSize(this.getSize());
@@ -25,13 +27,15 @@ public class ViewManager extends JFrame {
     }
 
     public void switchTo(Menu menu) {
-        switch(menu) {
-            case WELCOME: new WelcomeMenu(this); break;
-            case SIGN_IN: new SignInMenu(this); break;
-            case MAIN: new MainMenu(this); break;
-            case GAME: new GameMenu(this); break;
-        }
+        this.menu = switch(menu) {
+            case WELCOME -> new WelcomeMenu(this);
+            case SIGN_IN -> new SignInMenu(this);
+            case MAIN -> new MainMenu(this);
+            case GAME -> new GameMenu(this);
+        };
     }
+    public WelcomeMenu getWelcome() { return menu instanceof WelcomeMenu ? (WelcomeMenu) menu : null; }
+
 
     public void update() {
         this.setPreferredSize(this.getSize());

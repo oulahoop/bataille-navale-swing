@@ -161,5 +161,9 @@ public class MainMenu {
 
     public String getGameId(){ return gameId.getText(); }
 
+    private void setlisteners(){
+
+    }
+
 
 }
