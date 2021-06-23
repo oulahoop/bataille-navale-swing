@@ -48,8 +48,8 @@ public class ListenerTir implements ActionListener {
                                 won(coord);
                                 break;
                         }
-                        selected.setForeground(new Color(0x000000));
-
+                        fenetre.hit(selected);
+                        selected =null;
                         fenetre.waiting();
 
                         } catch(BadCoordException badCoordException){
@@ -57,13 +57,11 @@ public class ListenerTir implements ActionListener {
                         }
                     }
                 } else {
-                    if (((JButton) e.getSource()).getText().equals("")) {
+                    if (((JButton) e.getSource()).getText().isEmpty()) {
                         if (selected != null) {
-                            selected.setEnabled(true);
                             selected.setBackground(new Color(0x78939A));
                         }
                         selected = (JButton) e.getSource();
-                        selected.setEnabled(false);
                         selected.setBackground(new Color(0x253662));
                     }
                 }
@@ -75,20 +73,19 @@ public class ListenerTir implements ActionListener {
     }
 
     private void sunk(Coord coord) {
-        selected.setBackground(new Color(0xffa500));
-        selected.setText("|O|");
+        selected.setBackground(new Color(0xff7700));
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Bateau ennemi coulé, un pas de plus vers la victoire commandant!");
     }
 
     private void hit(Coord coord) {
-        selected.setText("O");
+        selected.setBackground(new Color(0xffcc00));
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Cible touchée!");
     }
 
     private void miss(Coord coord) {
-        selected.setText("X");
+        selected.setBackground(new Color(0xfcfcfc));
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Tir raté!");
     }

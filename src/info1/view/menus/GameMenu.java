@@ -206,4 +206,7 @@ public class GameMenu{
         });
     }
 
+    public void hit(JButton selected) {
+        selected.removeActionListener(selected.getActionListeners()[0]);
+    }
 }
