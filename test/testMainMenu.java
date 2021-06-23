@@ -8,10 +8,10 @@ public class testMainMenu {
 
     public static void main(String[] args) {
         Application app = new Application();
-        GameManager gameManager = app.getGameManager();
 
-        gameManager.setPlayer(new Player("OndiraiQueCaMarche"));
-        gameManager.subscribe();
+
+        GameManager.setPlayer(new Player("OndiraiQueCaMarche"));
+        GameManager.subscribe();
 
         NavyFleet navyFleet = new NavyFleet();
         for (int i = 1; i < 11; i++) {
@@ -21,7 +21,7 @@ public class testMainMenu {
                 e.printStackTrace();
             }
         }
-        gameManager.setFleet(navyFleet);
+        GameManager.setFleet(navyFleet);
         app.getViewManager().switchTo(Menu.MAIN);
 
     }

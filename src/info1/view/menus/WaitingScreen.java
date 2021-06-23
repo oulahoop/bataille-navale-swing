@@ -42,9 +42,8 @@ public class WaitingScreen {
         frame.update();
 
         CompletableFuture.runAsync(() -> {
-            GameManager gameManager = Application.getApp().getGameManager();
             try {
-                while(!(Math.abs(Network.getInfo(gameManager.getUrl(), gameManager.getGame(), gameManager.getPlayer())) == 10)) {
+                while(!(Math.abs(Network.getInfo(GameManager.getUrl(), GameManager.getGame(), GameManager.getPlayer())) == 10)) {
                     synchronized(this) {
                         try {
                             wait(500);

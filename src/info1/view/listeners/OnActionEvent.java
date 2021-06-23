@@ -4,6 +4,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import info1.Application;
 import info1.network.Network;
 import info1.network.Player;
+import info1.utils.GameManager;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
@@ -54,7 +55,7 @@ public class OnActionEvent implements ActionListener {
             if(!fenetre.getName().getText().equalsIgnoreCase("")){
                 //TODO verify fleet
                 Player player = new Player(fenetre.getName().getText());
-                try { if(Network.suscribeNewPlayer(app.getGameManager().getUrl(), player)) app.getGameManager().setPlayer(player);
+                try { if(Network.suscribeNewPlayer(GameManager.getUrl(), player)) GameManager.setPlayer(player);
                 } catch (UnirestException unirestException) { unirestException.printStackTrace(); }
             }else{
                 app.getViewManager().alert("Veuillez insérer un pseudo !", false);

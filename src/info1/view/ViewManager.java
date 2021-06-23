@@ -1,6 +1,7 @@
 package info1.view;
 
 import info1.Application;
+import info1.utils.GameManager;
 import info1.view.menus.*;
 
 import javax.swing.*;
@@ -45,7 +46,7 @@ public class ViewManager extends JFrame {
 
     public void enableShoot(boolean enable) {
         Application app = Application.getApp();
-        if(app.getGameManager().getGame() == null) return;
+        if(GameManager.getGame() == null) return;
     }
 
     public void alert(String message, boolean error) {

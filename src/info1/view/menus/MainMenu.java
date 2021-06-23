@@ -177,7 +177,7 @@ public class MainMenu {
     public String getGameId(){ return gameId.getText(); }
 
     private void setListeners(){
-        gameId.addKeyListener(new GameIdListener(this, viewManager));
+        gameId.addKeyListener(new GameIdListener(this));
 
         refresh.addActionListener(new MenuActionListener(this, viewManager));
         search.addActionListener(new MenuActionListener(this, viewManager));

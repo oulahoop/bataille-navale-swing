@@ -205,16 +205,15 @@ public class GameMenu{
         nouveauTir.setBackground(new Color(0x7a7a7a));
 
         CompletableFuture.runAsync(() -> {
-            GameManager gameManager = Application.getApp().getGameManager();
 
-            while(!(gameManager.canPlay() || gameManager.gameLost())) {
+            while(!(GameManager.canPlay() || GameManager.gameLost())) {
                 synchronized(this) {
                     try {
                         wait(500);
                     } catch(InterruptedException ex) { ex.printStackTrace(); }
                 }
             }
-            if(gameManager.gameLost()){
+            if(GameManager.gameLost()){
                 JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Nous sommes en déroute, nous devons vite quitter le champ de bataille");
                 Application.getApp().getViewManager().switchTo(Menu.MAIN);
             }

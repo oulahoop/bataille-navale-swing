@@ -8,63 +8,61 @@ import info1.network.Network;
 import info1.network.Player;
 import info1.ships.*;
 
+/**
+ * Classe regroupant un ensemble de methodes static qui uttilisent la classe "Network" tout en incluant la gestion des éxceptions
+ */
 public class GameManager {
 
-    private String url = "http://37.187.38.219/api/v0";
-    private Game game = null;
-    private Player player = null;
-    private NavyFleet fleet = null;
-
-    /**
-     * Constructeur de la classe GameManager
-     */
-    public GameManager() {}
+    private static final String url = "http://37.187.38.219/api/v0";
+    private static Game game = null;
+    private static Player player = null;
+    private static NavyFleet fleet = null;
 
     /**
      * Setter de l'attribut "game"
      * Est uttilisé dans le cas ou il faut rejoindre une game préalablement "get"
      * @param game La partie à stocker dans l'attribut "game"
      */
-    public void setGame(Game game) { this.game = game; }
+    public static void setGame(Game game) { GameManager.game = game; }
 
     /**
      * Setter de l'attribut "player"
      * Est uttilisé lors de la création du joueur courant
      * @param player Le joueur à stocker en dans l'attribut "player"
      */
-    public void setPlayer(Player player){ this.player = player; }
+    public static  void setPlayer(Player player){ GameManager.player = player; }
 
     /**
      * Setter de l'attribut "fleet"
      * Est uttilisé lors de la création de la "fleet" courante par le joueur courant
      * @param fleet La "fleet" à stocker dans l'attribut "fleet"
      */
-    public void setFleet(NavyFleet fleet){ this.fleet = fleet; }
+    public static  void setFleet(NavyFleet fleet){ GameManager.fleet = fleet; }
 
     /**
      * Getter de l'attribut "game"
      * @return la partie courante
      */
-    public Game getGame() { return game; }
+    public static  Game getGame() { return game; }
 
     /**
      * Getter de l'attribut "player"
      * @return le joueur courant
      */
-    public Player getPlayer() { return this.player; }
+    public static  Player getPlayer() { return player; }
 
     /**
      * Getter de l'attribut "fleet"
      * @return la "fleet" courante
      */
-    public INavyFleet getFleet() { return this.fleet;}
+    public static  INavyFleet getFleet() { return fleet;}
 
     /**
      * Getter de l'attribut "url"
      * Est uttiliser dans le cas ou les methodes de la classe "Network" sont directement appelé
      * @return L'url du serveur
      */
-    public String getUrl() { return this.url; }
+    public static String getUrl() { return url; }
 
     /**
      * Méthode qui permet de faire rejoindre une partie au joueur courant
@@ -72,16 +70,16 @@ public class GameManager {
      * @param game La partie a rejoindre
      * @return true en cas de succes, false en cas contraire
      */
-    public boolean join(Game game) {
+    public static  boolean join(Game game) {
         try {
             Network.joinGame(url, game, player, fleet) ;
-            this.game = game;
+            GameManager.game = game;
             if(Math.abs(Network.getInfo(url, game, player)) != 100 || Network.getInfo(url, game, player) != -9999) return true;
 
         } catch(UnirestException | UncompleteFleetException | BadCoordException | BadIdException e) {
             e.printStackTrace();
         }
-        this.game = null;
+        GameManager.game = null;
         return false;
     }
 
@@ -90,7 +88,7 @@ public class GameManager {
      * Permet également en gérer les exeptions de la classe "Network" à l'appel de la méthode "getInfo()"
      * @return true si c'est au tour du joueur courant, false sinon
      */
-    public boolean canPlay() {
+    public static  boolean canPlay() {
         try {
             if(Network.getInfo(url, game, player) == 10) return true;
         } catch(UnirestException | BadIdException e) {
@@ -105,7 +103,7 @@ public class GameManager {
      * @param coord La coordonnée à la quel il faut effectuer le tir
      * @return int, le résultat de la methode "playOneTurn()"
      */
-    public int shoot(Coord coord) {
+    public static  int shoot(Coord coord) {
         int result = -9999;
         try {
             result = Network.playOneTurn(url, game, player, coord);
@@ -119,7 +117,7 @@ public class GameManager {
      * Méthode qui permet d'initialiser une partie
      * Permet de également de gérer les exceptions renvoyées par la methode "initNewGame()" de la classe "Network"
      */
-    public void initialize(){
+    public static  void initialize(){
         if (player != null && fleet != null){
             try {
                 game = Network.initNewGame(url, player, fleet);
@@ -134,7 +132,7 @@ public class GameManager {
      * Permet de également de gérer les exceptions renvoyées par la methode "getInfo()" de la classe "Network"
      * @return true si la partie courante est perdu, false sinon
      */
-    public boolean gameLost() {
+    public static  boolean gameLost() {
         try {
             return Network.getInfo(url, game, player) == -100;
         } catch(UnirestException | BadIdException e) { e.printStackTrace(); }
@@ -145,7 +143,7 @@ public class GameManager {
      * Méthode qui permet de "Subscribe" un Player au serveur
      * Permet de également de gérer l'exception renvoyée par la methode "suscribeNewPlayer()" de la classe "Network"
      */
-    public void subscribe(){
+    public static void subscribe(){
         try {
             Network.suscribeNewPlayer(url, player);
         } catch (UnirestException e) {

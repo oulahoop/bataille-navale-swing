@@ -5,8 +5,8 @@ import info1.Application;
 import info1.network.Network;
 import info1.network.Player;
 import info1.ships.NavyFleet;
+import info1.utils.GameManager;
 import info1.view.Menu;
-import info1.view.menus.MainMenu;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class OnActionEvent implements ActionListener {
             fenetre.enableFrench(true);
             fenetre.enableBelgium(false);
             fenetre.getBateauxPanel().removeAll();
-            app.getGameManager().setFleet(new NavyFleet());
+            GameManager.setFleet(new NavyFleet());
             String[] boatName = new String[]{"BattleShip","Cruiser","Destroyer","Submarine"};
             for(int i = 0; i<4;i++){
                 JPanel jp = new JPanel();
@@ -65,7 +65,7 @@ public class OnActionEvent implements ActionListener {
             fenetre.enableBelgium(true);
             fenetre.enableFrench(false);
             fenetre.getBateauxPanel().removeAll();
-            app.getGameManager().setFleet(new NavyFleet());
+            GameManager.setFleet(new NavyFleet());
             String[] boatName = new String[]{"AirCraftCarrier","BattleShip","Cruiser","Destroyer","Submarine"};
             for(int i = 0; i<5;i++){
                 JPanel jp = new JPanel();
@@ -96,11 +96,11 @@ public class OnActionEvent implements ActionListener {
 
         if(nameButton.equalsIgnoreCase("Jouer")){
             if(!fenetre.getName().getText().equalsIgnoreCase("")) {
-                if (app.getGameManager().getFleet().isComplete()) {
+                if (GameManager.getFleet().isComplete()) {
                     Player player = new Player(fenetre.getName().getText());
                     try {
-                        if (Network.suscribeNewPlayer(app.getGameManager().getUrl(), player)){
-                            app.getGameManager().setPlayer(player);
+                        if (Network.suscribeNewPlayer(GameManager.getUrl(), player)){
+                            GameManager.setPlayer(player);
                             app.getViewManager().switchTo(Menu.MAIN);
                     }
                     } catch (UnirestException unirestException) {

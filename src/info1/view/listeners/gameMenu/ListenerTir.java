@@ -19,7 +19,6 @@ import java.util.concurrent.CompletableFuture;
 public class ListenerTir implements ActionListener {
     private GameMenu fenetre;
     private JButton selected;
-    private GameManager gameMan;
 
     public ListenerTir(GameMenu gm) {
         fenetre = gm;
@@ -31,10 +30,9 @@ public class ListenerTir implements ActionListener {
 
             if (nom.equalsIgnoreCase("Tirer")) {
                 if (selected != null && selected.isEnabled()) {
-                    gameMan = Application.getApp().getGameManager();
                     try {
                         Coord coord = new Coord(selected.getName());
-                        switch (gameMan.shoot(coord)) {
+                        switch (GameManager.shoot(coord)) {
                             case 0:
                                 miss(coord);
                                 break;
@@ -74,16 +72,13 @@ public class ListenerTir implements ActionListener {
 
     private void sunk(Coord coord) {
         selected.setBackground(new Color(0xff7700));
-        //JOptionPane.showMessageDialog(Application.getApp().getViewManager(),"Bateau ennemi coulé, un pas de plus vers la victoire commandant!");
     }
 
     private void hit(Coord coord) {
         selected.setBackground(new Color(0xffcc00));
-        //JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Cible touchée!");
     }
 
     private void miss(Coord coord) {
         selected.setBackground(new Color(0xfcfcfc));
-        //JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Tir raté!");
     }
 }

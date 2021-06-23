@@ -11,21 +11,14 @@ import java.awt.event.KeyListener;
 import java.util.concurrent.CompletableFuture;
 
 public class GameIdListener implements KeyListener {
-    private final ViewManager viewManager;
     private final MainMenu menu;
-    private final GameManager gameManager;
 
-    public GameIdListener(MainMenu menu, ViewManager vm){
-        this.viewManager = vm;
+    public GameIdListener(MainMenu menu){
         this.menu = menu;
-        this.gameManager = Application.getApp().getGameManager();
     }
-
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         CompletableFuture.runAsync(() -> {
@@ -37,7 +30,6 @@ public class GameIdListener implements KeyListener {
             }
         });
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
 

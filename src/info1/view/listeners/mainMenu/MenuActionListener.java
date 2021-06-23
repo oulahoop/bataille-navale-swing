@@ -14,12 +14,10 @@ public class MenuActionListener implements ActionListener {
 
     private final ViewManager viewManager;
     private final MainMenu menu;
-    private final GameManager gameManager;
 
     public MenuActionListener(MainMenu menu, ViewManager vm){
         this.viewManager = vm;
         this.menu = menu;
-        this.gameManager = Application.getApp().getGameManager();
     }
 
     @Override
@@ -35,12 +33,11 @@ public class MenuActionListener implements ActionListener {
                     menu.refresh();
                     break;
                 case "createGame" :
-                    gameManager.initialize();
-                    if(gameManager.getGame() != null){
+                    GameManager.initialize();
+                    if(GameManager.getGame() != null){
                         viewManager.switchTo(Menu.WAITING);
                     }
                     break;
-
                 case "quitter" :
                     if(JOptionPane.showConfirmDialog(Application.getApp().getViewManager(),
                             "Voulez-vous vraiment quitter ?") == JOptionPane.YES_OPTION) {

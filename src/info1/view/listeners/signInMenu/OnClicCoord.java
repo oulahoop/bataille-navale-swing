@@ -2,6 +2,7 @@ package info1.view.listeners.signInMenu;
 
 import info1.Application;
 import info1.ships.*;
+import info1.utils.GameManager;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
@@ -23,8 +24,8 @@ public class OnClicCoord implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (app.getGameManager().getFleet() == null){ app.getGameManager().setFleet(new NavyFleet()); }
-        if (!app.getGameManager().getFleet().isComplete()){
+        if (GameManager.getFleet() == null){ GameManager.setFleet(new NavyFleet()); }
+        if (!GameManager.getFleet().isComplete()){
             String xy = ((JButton)e.getSource()).getName();
             String nameBateau = placement.getBateau_a_placer();
             String nameRotation = placement.getRotation_bateau();
@@ -33,7 +34,7 @@ public class OnClicCoord implements ActionListener {
             } catch (BadCoordException | CoordsBadShipException badCoordException) {
                 badCoordException.printStackTrace();
             }
-            System.out.println(app.getGameManager().getFleet().toString());
+            System.out.println(GameManager.getFleet().toString());
         }
 
     }
@@ -44,16 +45,16 @@ public class OnClicCoord implements ActionListener {
             case "aircraftcarrier" :
                 coordFin = aidePlacement(coord,placement,5);
                 System.out.println(coord + "---->" + coordFin);
-                app.getGameManager().getFleet().add(new Battleship("nom",coord,coordFin));
-                for(IShip s : app.getGameManager().getFleet().getShips()){
+                GameManager.getFleet().add(new Battleship("nom",coord,coordFin));
+                for(IShip s : GameManager.getFleet().getShips()){
                     for(ICoord c : s.getCoords()) {
                         fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
                     }
                 }
             case "battleship":
                 coordFin = aidePlacement(coord,placement,4);
-                app.getGameManager().getFleet().add(new Battleship("nom",coord,coordFin));
-                for(IShip s : app.getGameManager().getFleet().getShips()){
+                GameManager.getFleet().add(new Battleship("nom",coord,coordFin));
+                for(IShip s : GameManager.getFleet().getShips()){
                     for(ICoord c : s.getCoords()) {
                         fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
                     }
@@ -61,8 +62,8 @@ public class OnClicCoord implements ActionListener {
                 break;
             case "cruiser":
                 coordFin = aidePlacement(coord,placement,3);
-                app.getGameManager().getFleet().add(new Cruiser("nom",coord,coordFin));
-                for(IShip s : app.getGameManager().getFleet().getShips()){
+                GameManager.getFleet().add(new Cruiser("nom",coord,coordFin));
+                for(IShip s : GameManager.getFleet().getShips()){
                     for(ICoord c : s.getCoords()) {
                         fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
                     }
@@ -70,16 +71,16 @@ public class OnClicCoord implements ActionListener {
                 break;
             case"destroyer":
                 coordFin = aidePlacement(coord,placement,2);
-                app.getGameManager().getFleet().add(new Destroyer("nom",coord,coordFin));
-                for(IShip s : app.getGameManager().getFleet().getShips()){
+                GameManager.getFleet().add(new Destroyer("nom",coord,coordFin));
+                for(IShip s : GameManager.getFleet().getShips()){
                     for(ICoord c : s.getCoords()) {
                         fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
                     }
                 }
                 break;
             case"submarine": ;
-                app.getGameManager().getFleet().add(new Submarine("nom",coord));
-                for(IShip s : app.getGameManager().getFleet().getShips()){
+                GameManager.getFleet().add(new Submarine("nom",coord));
+                for(IShip s : GameManager.getFleet().getShips()){
                     for(ICoord c : s.getCoords()) {
                         fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
                     }

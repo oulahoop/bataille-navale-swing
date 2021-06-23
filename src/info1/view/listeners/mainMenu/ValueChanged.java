@@ -26,12 +26,10 @@ public class ValueChanged implements ListSelectionListener {
 
     private final ViewManager viewManager;
     private MainMenu menu;
-    private GameManager gameManager;
 
     public ValueChanged(MainMenu menu, ViewManager vm){
         this.viewManager = vm;
         this.menu = menu;
-        this.gameManager = Application.getApp().getGameManager();
     }
 
     @Override
@@ -42,7 +40,7 @@ public class ValueChanged implements ListSelectionListener {
                 "Rejoindre la partie de : " + game.getInitiator().getName(),
                 "Answer or i will call the police",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            if(gameManager.join(game)){
+            if(GameManager.join(game)){
                 viewManager.switchTo(Menu.GAME);
             }else{
                 JOptionPane.showMessageDialog(viewManager, "La game que tu essaies de rejoindre n'est pas correctement initialisée");
