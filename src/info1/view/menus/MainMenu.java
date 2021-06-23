@@ -1,10 +1,9 @@
 package info1.view.menus;
 
-
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 import info1.network.Game;
-import info1.network.Network;
+
+import info1.utils.GameManager;
+
 import info1.view.ViewManager;
 import info1.view.listeners.mainMenu.GameIdListener;
 import info1.view.listeners.mainMenu.MenuActionListener;
@@ -13,17 +12,20 @@ import info1.view.listeners.mainMenu.ValueChanged;
 import javax.swing.*;
 
 import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class qui permet de crée la vue "Selection d'une partie / Creation d'une partie" et l'ajoute au frame "ViewManager"
+ */
 public class MainMenu {
-    String url = "http://37.187.38.219/api/v0";
-    List<Game> games = new ArrayList<>();
-    ViewManager viewManager;
+
+     private final ViewManager viewManager;
 
     JPanel main = new JPanel(new BorderLayout());
-    //Main
+    //Main components
     JPanel mainNorth = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel mainCenter = new JPanel(new BorderLayout());
     JPanel mainEast = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -32,29 +34,33 @@ public class MainMenu {
     //mainNorth
     JLabel waiting = new JLabel();
 
-    //mainCenter
+    //mainCenter components
     JPanel mainCNorth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JScrollPane mainCCenter = new JScrollPane();
     JButton refresh = new JButton("refresh");
 
     JList<Game> scrollList;
 
-    //MainEast Component
-    JPanel debug = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
+    //MainEast Components
     JLabel rechercher = new JLabel("Rechercher");
-    JTextField gameId = new JTextField();
+    JTextField gameSearch = new JTextField();
     JButton search = new JButton("search");
 
-    //MainSouth Component
+    //MainSouth Components
     JButton quitter = new JButton("retour");
     JButton createGame = new JButton("Creer une partie");
 
-
+    /**
+     * Constructeur de la classe MainMenu dans le quel est créé la vue
+     * @param frame Le viewManager servant de frame d'affichage
+     */
     public MainMenu(ViewManager frame) {
+
+        //Définition de l'attribut ViewManager
         this.viewManager = frame;
-        //main
-        main.setSize(frame.getWidth()-15,frame.getHeight()-45);
+
+        //main DEFINTION
+        main.setSize(frame.getSize());
         main.setPreferredSize(main.getSize());
 
         //mainNorth
@@ -66,9 +72,10 @@ public class MainMenu {
         waiting.setHorizontalAlignment(JTextField.CENTER);
         waiting.setBorder(BorderFactory.createEmptyBorder());
 
+        //mainNorth ADD
         mainNorth.add(waiting);
 
-        //mainSouth
+        //mainSouth DEFINITION
         mainSouth.setSize(new Dimension(main.getWidth(), (int) (main.getHeight()*0.15)));
         mainSouth.setPreferredSize(mainSouth.getSize());
 
@@ -77,32 +84,39 @@ public class MainMenu {
         createGame.setSize(new Dimension(0, mainSouth.getHeight()));
         createGame.setName("createGame");
 
+        //mainSouth ADD
         mainSouth.add(quitter);
         mainSouth.add(new JPanel());
         mainSouth.add(createGame);
         mainSouth.add(new JPanel());
 
-        //mainCenter
+        //mainCenter DEFINTION
         mainCenter.setSize(new Dimension((int) (main.getWidth()*0.70),main.getHeight()-mainNorth.getHeight()-mainSouth.getHeight()));
         mainCenter.setPreferredSize(mainCenter.getSize());
-            //mainCNorth
+
+        //mainCNorth DEFINITION
         mainCNorth.setSize(new Dimension(mainCenter.getWidth(), (int) (mainCenter.getHeight()*0.1)));
         mainCNorth.setPreferredSize(mainCNorth.getSize());
 
         refresh.setName("refresh");
         refresh.setSize(new Dimension((int) (mainCNorth.getWidth()*0.2), (int) (mainCNorth.getHeight()*0.8)));
         refresh.setPreferredSize(refresh.getSize());
+
+        //mainCNorth ADD
         mainCNorth.add(refresh);
-            //mainCCenter
+
+        //mainCCenter DEFINITION
         mainCCenter.setSize(new Dimension(mainCenter.getWidth(), mainCenter.getHeight()-mainCNorth.getHeight()));
         mainCCenter.setPreferredSize(mainCNorth.getSize());
 
+        //mise a jours de la Jlist
         refresh();
 
+        //mainCenter ADD
         mainCenter.add(mainCNorth, BorderLayout.NORTH);
         mainCenter.add(mainCCenter, BorderLayout.CENTER);
 
-        //mainEast
+        //mainEast DEFINITION
         mainEast.setSize(new Dimension((main.getWidth()-mainCenter.getWidth()),main.getHeight()-mainNorth.getHeight()-mainSouth.getHeight()));
         mainEast.setPreferredSize(mainEast.getSize());
 
@@ -113,71 +127,94 @@ public class MainMenu {
         rechercher.setHorizontalAlignment(JTextField.CENTER);
         rechercher.setBorder(BorderFactory.createEmptyBorder());
 
-        gameId.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.2)));
-        gameId.setName("gameId");
-        gameId.setPreferredSize(gameId.getSize());
-        gameId.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
-        gameId.setHorizontalAlignment(SwingConstants.CENTER);
+        gameSearch.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.2)));
+        gameSearch.setName("gameId");
+        gameSearch.setPreferredSize(gameSearch.getSize());
+        gameSearch.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        gameSearch.setHorizontalAlignment(SwingConstants.CENTER);
 
         search.setName("search");
         search.setSize(new Dimension((int) (mainEast.getWidth()*0.5), (int) (mainEast.getHeight()*0.2)));
         search.setPreferredSize(search.getSize());
 
+        //mainEast ADD
         mainEast.add(rechercher);
-        mainEast.add(gameId);
+        mainEast.add(gameSearch);
         mainEast.add(search);
 
+        //Main ADD
         main.add(mainNorth, BorderLayout.NORTH);
         main.add(mainSouth, BorderLayout.SOUTH);
         main.add(mainCenter, BorderLayout.CENTER);
         main.add(mainEast, BorderLayout.EAST);
 
         frame.setContentPane(main);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.repaint();
+        frame.update();
 
+        //Setting des differents listeners
         setListeners();
     }
 
+    /**
+     * Méthode qui permet de mettre a jour la Jlist Affichant les parties disponible sur le serveur
+     */
     public void refresh(){
-        try {
-            games = Network.listInitializedGames(url);
-        } catch (UnirestException e) { System.out.println(e.getMessage()); }
-        Collections.reverse(games);
-        scrollList = new JList<Game>(games.toArray(new Game[games.size()]));
-        viewManager.update();
+        List<Game> games = GameManager.GetGames();
+        if(games == null) return;
 
+        //reverse afin d'afficher les dernieres parties créé en haut de liste
+        Collections.reverse(games);
+
+        //Ajout des elements dans la Jlist et redefinition (attribut + Listener)
+        scrollList = new JList<>(games.toArray(new Game[0]));
         mainCCenter.setViewportView(scrollList);
         scrollList.setLayoutOrientation(JList.VERTICAL);
         scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
+
     }
 
+    /**
+     * Méthode qui permet de mettre a jour la Jlist Affichant les parties disponible sur le serveur
+     * Prend en compte la recherche pour selectionné les elements à afficher
+     * @param recherche String Argument de trie
+     */
     public void research(String recherche){
         List<Game> result = new ArrayList<>();
-        try {
-            games = Network.listInitializedGames(url);
-        } catch (UnirestException e) { System.out.println(e.getMessage()); }
+
+        List<Game> games = GameManager.GetGames();
+        if(games == null) return;
+
+        //reverse afin d'afficher les dernieres parties créé en haut de liste
         Collections.reverse(games);
 
+        //recuperation des elements de la list correspondant a la recherche
         for(Game game : games) {
             if(game.toString().toLowerCase().contains(recherche.toLowerCase())) result.add(game);
         }
-        scrollList = new JList<Game>(result.toArray(new Game[result.size()]));
-
+        //Ajout des elements dans la Jlist et redefinition (attribut + Listener)
+        scrollList = new JList<>(result.toArray(new Game[0]));
         mainCCenter.setViewportView(scrollList);
         scrollList.setLayoutOrientation(JList.VERTICAL);
         scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 
+    /**
+     * Méthode qui permet de récupérer la valeur de l'element selectionné dans l'objet Jlist "scrollList"
+     * @return Game, la partie selectionnée
+     */
     public Game getSelectedGame(){ return scrollList.getSelectedValue(); }
 
-    public String getGameId(){ return gameId.getText(); }
+    /**
+     * Méthode qui permet de récupérer le contenue du JTextField "gameSearch"
+     * @return String, le text de "gameSearch"
+     */
+    public String getGameSearch(){ return gameSearch.getText(); }
 
+    /**
+     * Méthode privée qui permet d'associer un listener au element en ayant besoin
+     */
     private void setListeners(){
-        gameId.addKeyListener(new GameIdListener(this));
+        gameSearch.addKeyListener(new GameIdListener(this));
 
         refresh.addActionListener(new MenuActionListener(this, viewManager));
         search.addActionListener(new MenuActionListener(this, viewManager));

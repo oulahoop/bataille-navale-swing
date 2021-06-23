@@ -14,12 +14,18 @@ import java.util.concurrent.CompletableFuture;
  */
 public class ViewManager extends JFrame {
 
+    /**
+     *Constructeur de la Classe ViemManager
+     * Définition des diff"rents parametre du frame
+     * */
     public ViewManager() {
         this.setSize(new Dimension(1280, 720));
         this.setPreferredSize(this.getSize());
         this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setResizable(false);
         new WelcomeMenu(this);
     }
 

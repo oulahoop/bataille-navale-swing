@@ -1,8 +1,5 @@
 package info1.view.listeners.mainMenu;
 
-import info1.Application;
-import info1.utils.GameManager;
-import info1.view.ViewManager;
 import info1.view.menus.MainMenu;
 
 import javax.swing.*;
@@ -25,7 +22,7 @@ public class GameIdListener implements KeyListener {
             synchronized(this) {
                 try {
                     wait(10);
-                    if(e.getSource() instanceof JTextField) menu.research(menu.getGameId());
+                    if(e.getSource() instanceof JTextField) menu.research(menu.getGameSearch());
                 } catch(InterruptedException ex) { ex.printStackTrace(); }
             }
         });

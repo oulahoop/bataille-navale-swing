@@ -1,11 +1,7 @@
 package info1.view.menus;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
-import info1.Application;
-import info1.network.BadIdException;
-import info1.network.Game;
-import info1.network.Network;
 import info1.utils.GameManager;
+
 import info1.view.Menu;
 import info1.view.ViewManager;
 
@@ -13,48 +9,66 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Class qui permet de crée la vue "en attente d'un adversaire" et l'ajoute au frame "ViewManager"
+ */
 public class WaitingScreen {
 
     private final ViewManager viewManager;
-    ImageIcon waiting = new ImageIcon("src/info1/utils/img/pngFiles/waiting.png");
-    JLabel waitingLabel;
+
     JPanel main = new JPanel(new GridBagLayout());
 
+    ImageIcon waitingIcon = new ImageIcon("src/info1/utils/img/waiting.png");
+    JLabel waitingLabel;
+
+    /**
+     * Constructeur de la classe WaitingScreen dans le quel est créé la vue
+     * @param frame Le viewManager servant de frame d'affichage
+     */
     public WaitingScreen(ViewManager frame) {
+        //definition de l'attribut viewManager
         this.viewManager = frame;
 
+        //Gestion du Jpanel "main"
         main.setSize(frame.getSize());
         main.setPreferredSize(main.getSize());
         main.setBackground(new Color(0x18384f));
 
-        waiting.setDescription("image");
-        Image image = waiting.getImage();
+        //Gestion de l'imageIcon (redimentionement de l'image)
+        waitingIcon.setDescription("image");
+        Image image = waitingIcon.getImage();
         Image newimg = image.getScaledInstance(main.getWidth() / 2, main.getHeight() / 4, java.awt.Image.SCALE_SMOOTH);
-        waiting = new ImageIcon(newimg);
+        waitingIcon = new ImageIcon(newimg);
 
-        waitingLabel = new JLabel(waiting);
+        //Definition et gestion du Jlabel affichant l'image
+        waitingLabel = new JLabel(waitingIcon);
         waitingLabel.setVerticalAlignment(JLabel.CENTER);
 
+        //Ajout du Jlabel dans le Jpanel
         main.add(waitingLabel);
 
+        //Gestion du frame
         frame.setContentPane(main);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.update();
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                while(!(Math.abs(Network.getInfo(GameManager.getUrl(), GameManager.getGame(), GameManager.getPlayer())) == 10)) {
-                    synchronized(this) {
-                        try {
-                            wait(500);
-                        } catch(InterruptedException ex) { ex.printStackTrace(); }
-                    }
-                }
-                viewManager.switchTo(Menu.GAME);
-            } catch(UnirestException | BadIdException e) {
-                e.printStackTrace();
-            }
-        });
+        //Uttilisation de la methode privée Waiting()
+        waiting();
+    }
 
+    /**
+     * Méthode qui permet de géré le passage au prochain affichage
+     * Déclenche le changement d'affichage des qu'un joueur rejoind la partie courante
+     */
+    private void waiting(){
+        CompletableFuture.runAsync(() -> {
+            while(GameManager.hasGuest()) {
+                synchronized(this) {
+                    try {
+                        wait(500);
+                    } catch(InterruptedException ex) { ex.printStackTrace(); }
+                }
+            }
+            viewManager.switchTo(Menu.GAME);
+        });
     }
 }

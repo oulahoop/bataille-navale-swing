@@ -8,6 +8,8 @@ import info1.network.Network;
 import info1.network.Player;
 import info1.ships.*;
 
+import java.util.List;
+
 /**
  * Classe regroupant un ensemble de methodes static qui uttilisent la classe "Network" tout en incluant la gestion des éxceptions
  */
@@ -149,5 +151,31 @@ public class GameManager {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Méthode qui permet de savoir si un joueur a rejoind la partie Courante
+     * Permet de également de gérer les exceptions renvoyées par la methode "getInfo()" de la classe "Network"
+     * @return true si un joueur a rejoind, false sinon
+     */
+    public static boolean hasGuest(){
+        try {
+            return !(Math.abs(Network.getInfo(GameManager.getUrl(), GameManager.getGame(), GameManager.getPlayer())) == 10);
+        } catch(UnirestException | BadIdException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Méthode qui permet de recupérer la liste des parties initialisées sur le serveur
+     * Permet de également de gérer l'exception renvoyée par la methode "listInitializatedGames()" de la classe "Network"
+     * @return Une liste de Partie, null si Exception
+     */
+    public static List<Game> GetGames(){
+        try {
+            return Network.listInitializedGames(url);
+        } catch(UnirestException e) { e.printStackTrace(); }
+        return null;
     }
 }

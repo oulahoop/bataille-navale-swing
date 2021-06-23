@@ -10,7 +10,7 @@ public class testMainMenu {
         Application app = new Application();
 
 
-        GameManager.setPlayer(new Player("OndiraiQueCaMarche"));
+        GameManager.setPlayer(new Player("test1"));
         GameManager.subscribe();
 
         NavyFleet navyFleet = new NavyFleet();

@@ -49,7 +49,7 @@ public class GameMenu{
         principal = new JPanel(new GridLayout(1,2));
         principal.setBorder(BorderFactory.createTitledBorder("Battleship"));
 
-        principal.setSize(viewManager.getWidth()-15,viewManager.getHeight()-45);
+        principal.setSize(viewManager.getSize());
         principal.setPreferredSize(principal.getSize());
 
         gauche = new JPanel(new FlowLayout(FlowLayout.CENTER));

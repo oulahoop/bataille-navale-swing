@@ -27,7 +27,7 @@ public class MenuActionListener implements ActionListener {
             JButton clicked = (JButton) e.getSource();
             switch (clicked.getName()){
                 case "search"  :
-                    menu.research(menu.getGameId());
+                    menu.research(menu.getGameSearch());
                     break;
                 case "refresh" :
                     menu.refresh();
