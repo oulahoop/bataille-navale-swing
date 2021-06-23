@@ -208,7 +208,7 @@ public class GameMenu{
         CompletableFuture.runAsync(() -> {
             GameManager gameManager = Application.getApp().getGameManager();
 
-            while(!gameManager.canPlay() || !gameManager.gamePerdu()) {
+            while(!(gameManager.canPlay() || gameManager.gamePerdu())) {
                 synchronized(this) {
                     try {
                         wait(500);
