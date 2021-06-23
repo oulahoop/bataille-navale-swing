@@ -152,6 +152,7 @@ public class MainMenu {
 
         mainCCenter.setViewportView(scrollList);
         scrollList.setLayoutOrientation(JList.VERTICAL);
+        scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 
     public void research(String recherche){
@@ -168,6 +169,7 @@ public class MainMenu {
 
         mainCCenter.setViewportView(scrollList);
         scrollList.setLayoutOrientation(JList.VERTICAL);
+        scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 
     public Game getSelectedGame(){ return scrollList.getSelectedValue(); }
@@ -181,8 +183,6 @@ public class MainMenu {
         search.addActionListener(new MenuActionListener(this, viewManager));
         quitter.addActionListener(new MenuActionListener(this, viewManager));
         createGame.addActionListener(new MenuActionListener(this, viewManager));
-
-        scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 
 
