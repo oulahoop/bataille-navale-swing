@@ -18,6 +18,7 @@ public class ViewManager extends JFrame {
     public ViewManager() {
         this.setSize(new Dimension(1280, 720));
         this.setPreferredSize(this.getSize());
+        this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
         new WelcomeMenu(this);
