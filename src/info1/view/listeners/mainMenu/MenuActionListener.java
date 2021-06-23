@@ -2,6 +2,7 @@ package info1.view.listeners.mainMenu;
 
 import info1.Application;
 import info1.utils.GameManager;
+import info1.view.Menu;
 import info1.view.ViewManager;
 import info1.view.menus.MainMenu;
 
@@ -33,9 +34,20 @@ public class MenuActionListener implements ActionListener {
                 case "refresh" :
                     menu.refresh();
                     break;
-                case "createGame" : break;
+                case "createGame" :
+                    gameManager.initialize();
+                    if(gameManager.getGame() != null){
+                        viewManager.switchTo(Menu.WAITING);
+                    }
+                    break;
 
-                case "quitter" : break ;
+                case "quitter" :
+                    if(JOptionPane.showConfirmDialog(Application.getApp().getViewManager(),
+                            "Voulez-vous vraiment quitter ?", "Answer or i will call the police",
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        viewManager.switchTo(Menu.SIGN_IN);
+                    }
+                    break ;
             }
         }
 

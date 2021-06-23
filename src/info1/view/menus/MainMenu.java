@@ -176,8 +176,12 @@ public class MainMenu {
 
     private void setListeners(){
         gameId.addKeyListener(new GameIdListener(this, viewManager));
+
         refresh.addActionListener(new MenuActionListener(this, viewManager));
         search.addActionListener(new MenuActionListener(this, viewManager));
+        quitter.addActionListener(new MenuActionListener(this, viewManager));
+        createGame.addActionListener(new MenuActionListener(this, viewManager));
+
         scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 

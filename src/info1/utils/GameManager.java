@@ -1,5 +1,8 @@
 package info1.utils;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import info1.Application;
 import info1.network.BadIdException;
@@ -15,15 +18,14 @@ public class GameManager {
 
     private Application app = Application.getApp();
     private String url = "http://37.187.38.219/api/v0";
-    private Game game;
-    private Player player;
-    private NavyFleet fleet;
+    private Game game = null;
+    private Player player = null;
+    private NavyFleet fleet = null;
 
     public GameManager() {}
     public Game getGame() { return game; }
     public Player getPlayer() { return this.player; }
     public INavyFleet getFleet() { return this.fleet;}
-    public ICoord getLastCoords() { return null; }
     public String getUrl() { return url; }
     public void setGame(Game game) { this.game = game; }
     public void setPlayer(Player player){ this.player = player; }
@@ -94,7 +96,15 @@ public class GameManager {
         //app.getViewManager().sunk(coord);
     }
 
-
+    public void initialize(){
+        if (player != null && fleet != null){
+            try {
+                game = Network.initNewGame(url, player, fleet);
+            } catch (UnirestException | UncompleteFleetException | BadCoordException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public boolean gameEnded() {
         try { return Math.abs(Network.getInfo(url, game, player)) == 100;
@@ -119,6 +129,35 @@ public class GameManager {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
+    }
+
+    public ICoord getLastCoords() {
+        try {
+            HttpResponse<JsonNode> response = Unirest.get(url.trim() + "/partie/joue/" + game.getId()).header("Accept", "application/json").basicAuth("root", "").asJson();
+            System.out.println(response.getStatus());
+            /*if(response.getStatus() == 200) {
+                JSONObject jObj = ((JsonNode) response.getBody()).getObject();
+                if (jObj.has("error") && jObj.getString("error").equals("partie non disponible")) {
+                    throw new BadIdException();
+                } else {
+                    String etat = jObj.getString("etat");
+                    String nom;
+                    if (etat.equals("initie")) {
+                        nom = jObj.getJSONObject("initiateur").getString("nom");
+                        return nom.equals(player.getName()) ? 1 : -1;
+                    } else if (etat.equals("joins")) {
+                        nom = jObj.getJSONObject("joueurCourant").getString("nom");
+                        return nom.equals(player.getName()) ? 10 : -10;
+                    } else {
+                        nom = jObj.getJSONObject("gagnant").getString("nom");
+                        return nom.equals(player.getName()) ? 100 : -100;
+                    }
+                }
+            } else {
+                return -9999;
+            }*/
+        } catch (UnirestException /*| BadIdException*/ e) { e.printStackTrace(); }
+        return null;
     }
 
 }
