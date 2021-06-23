@@ -6,7 +6,6 @@ import info1.view.ViewManager;
 import info1.utils.GameManager;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.concurrent.CompletableFuture;
 
 import info1.Application;
@@ -208,14 +207,14 @@ public class GameMenu{
         CompletableFuture.runAsync(() -> {
             GameManager gameManager = Application.getApp().getGameManager();
 
-            while(!(gameManager.canPlay() || gameManager.gamePerdu())) {
+            while(!(gameManager.canPlay() || gameManager.gameLost())) {
                 synchronized(this) {
                     try {
                         wait(500);
                     } catch(InterruptedException ex) { ex.printStackTrace(); }
                 }
             }
-            if(gameManager.gamePerdu()){
+            if(gameManager.gameLost()){
                 JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Nous sommes en déroute, nous devons vite quitter le champ de bataille");
                 Application.getApp().getViewManager().switchTo(Menu.MAIN);
             }

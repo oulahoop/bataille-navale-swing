@@ -1,48 +1,77 @@
 package info1.utils;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import info1.Application;
+
 import info1.network.BadIdException;
 import info1.network.Game;
 import info1.network.Network;
 import info1.network.Player;
 import info1.ships.*;
-import info1.view.Menu;
-
-import java.util.concurrent.CompletableFuture;
 
 public class GameManager {
 
-    private Application app = Application.getApp();
     private String url = "http://37.187.38.219/api/v0";
     private Game game = null;
     private Player player = null;
     private NavyFleet fleet = null;
 
+    /**
+     * Constructeur de la classe GameManager
+     */
     public GameManager() {}
-    public Game getGame() { return game; }
-    public Player getPlayer() { return this.player; }
-    public INavyFleet getFleet() { return this.fleet;}
-    public String getUrl() { return url; }
+
+    /**
+     * Setter de l'attribut "game"
+     * Est uttilisé dans le cas ou il faut rejoindre une game préalablement "get"
+     * @param game La partie à stocker dans l'attribut "game"
+     */
     public void setGame(Game game) { this.game = game; }
+
+    /**
+     * Setter de l'attribut "player"
+     * Est uttilisé lors de la création du joueur courant
+     * @param player Le joueur à stocker en dans l'attribut "player"
+     */
     public void setPlayer(Player player){ this.player = player; }
+
+    /**
+     * Setter de l'attribut "fleet"
+     * Est uttilisé lors de la création de la "fleet" courante par le joueur courant
+     * @param fleet La "fleet" à stocker dans l'attribut "fleet"
+     */
     public void setFleet(NavyFleet fleet){ this.fleet = fleet; }
 
-    public boolean join(Game game, Player player, INavyFleet fleet) {
-        try {
-            Network.joinGame(url, game, player, fleet) ;
-            this.game = game;
-            if(Math.abs(Network.getInfo(url, game, player)) != 100 || Network.getInfo(url, game, player) != -9999) return true;
-        } catch(UnirestException | UncompleteFleetException | BadCoordException | BadIdException e) {
-            e.printStackTrace();
-        }
-        this.game = null;
-        return false;
-    }
+    /**
+     * Getter de l'attribut "game"
+     * @return la partie courante
+     */
+    public Game getGame() { return game; }
 
+    /**
+     * Getter de l'attribut "player"
+     * @return le joueur courant
+     */
+    public Player getPlayer() { return this.player; }
+
+    /**
+     * Getter de l'attribut "fleet"
+     * @return la "fleet" courante
+     */
+    public INavyFleet getFleet() { return this.fleet;}
+
+    /**
+     * Getter de l'attribut "url"
+     * Est uttiliser dans le cas ou les methodes de la classe "Network" sont directement appelé
+     * @return L'url du serveur
+     */
+    public String getUrl() { return this.url; }
+
+    /**
+     * Méthode qui permet de faire rejoindre une partie au joueur courant
+     * Permet de gérer les exceptions de la class "Network" à l'appel des méthodes "joinGame()" et "getInfo()"
+     * @param game La partie a rejoindre
+     * @return true en cas de succes, false en cas contraire
+     */
     public boolean join(Game game) {
         try {
             Network.joinGame(url, game, player, fleet) ;
@@ -56,6 +85,11 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Méthode qui permet de savoir si c'est au tour du joueur courant de jouer
+     * Permet également en gérer les exeptions de la classe "Network" à l'appel de la méthode "getInfo()"
+     * @return true si c'est au tour du joueur courant, false sinon
+     */
     public boolean canPlay() {
         try {
             if(Network.getInfo(url, game, player) == 10) return true;
@@ -65,39 +99,26 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Méthode qui permet d'effectuer un tir (jouer un tour) à la Coordonnée passée en parametre
+     * Permet également en gérer les exeptions de la classe "Network" à l'appel de la méthode "playOneTurn()"
+     * @param coord La coordonnée à la quel il faut effectuer le tir
+     * @return int, le résultat de la methode "playOneTurn()"
+     */
     public int shoot(Coord coord) {
-        //app.getViewManager().shootAnimation();
         int result = -9999;
-        try { result = Network.playOneTurn(url, game, player, coord);
-        } catch (BadCoordException | UnirestException e) { e.printStackTrace(); }
+        try {
+            result = Network.playOneTurn(url, game, player, coord);
+        } catch (BadCoordException | UnirestException e) {
+            e.printStackTrace();
+        }
         return result;
-        /*switch(result) {
-            case 0: miss(coord); break;
-            case 1: hit(coord);  break;
-            case 10: sunk(coord); break;
-            case 100: won(coord); break;
-        }*/
-    }
-    public void miss(Coord coord) {
-        //app.getViewManager().missAnimation();
-        //app.getViewManager().miss(coord);
-        waiting();
-    }
-    public void hit(Coord coord) {
-        //app.getViewManager().hitAnimation();
-        //app.getViewManager().hit(coord);
-        waiting();
-    }
-    public void sunk(Coord coord) {
-        //app.getViewManager().hitAnimation();
-        //app.getViewManager().sunk(coord);
-        waiting();
-    }
-    public void won(Coord coord) {
-        //app.getViewManager().winAnimation();
-        //app.getViewManager().sunk(coord);
     }
 
+    /**
+     * Méthode qui permet d'initialiser une partie
+     * Permet de également de gérer les exceptions renvoyées par la methode "initNewGame()" de la classe "Network"
+     */
     public void initialize(){
         if (player != null && fleet != null){
             try {
@@ -108,23 +129,22 @@ public class GameManager {
         }
     }
 
-    public boolean gamePerdu() {
-        try { return Network.getInfo(url, game, player) == -100;
+    /**
+     * Méthode qui permet de savoir si la game est perdu
+     * Permet de également de gérer les exceptions renvoyées par la methode "getInfo()" de la classe "Network"
+     * @return true si la partie courante est perdu, false sinon
+     */
+    public boolean gameLost() {
+        try {
+            return Network.getInfo(url, game, player) == -100;
         } catch(UnirestException | BadIdException e) { e.printStackTrace(); }
         return false;
     }
 
-    public void waiting() {
-        CompletableFuture.runAsync(() -> {
-           synchronized(this) {
-               app.getViewManager().enableShoot(canPlay());
-               try { while(!canPlay()) { wait(100); }
-               } catch(InterruptedException e) { e.printStackTrace(); }
-               app.getViewManager().enableShoot(canPlay());
-           }
-        });
-    }
-
+    /**
+     * Méthode qui permet de "Subscribe" un Player au serveur
+     * Permet de également de gérer l'exception renvoyée par la methode "suscribeNewPlayer()" de la classe "Network"
+     */
     public void subscribe(){
         try {
             Network.suscribeNewPlayer(url, player);
@@ -132,34 +152,4 @@ public class GameManager {
             e.printStackTrace();
         }
     }
-
-    public ICoord getLastCoords() {
-        try {
-            HttpResponse<JsonNode> response = Unirest.get(url.trim() + "/partie/joue/" + game.getId()).header("Accept", "application/json").basicAuth("root", "").asJson();
-            System.out.println(response.getStatus());
-            /*if(response.getStatus() == 200) {
-                JSONObject jObj = ((JsonNode) response.getBody()).getObject();
-                if (jObj.has("error") && jObj.getString("error").equals("partie non disponible")) {
-                    throw new BadIdException();
-                } else {
-                    String etat = jObj.getString("etat");
-                    String nom;
-                    if (etat.equals("initie")) {
-                        nom = jObj.getJSONObject("initiateur").getString("nom");
-                        return nom.equals(player.getName()) ? 1 : -1;
-                    } else if (etat.equals("joins")) {
-                        nom = jObj.getJSONObject("joueurCourant").getString("nom");
-                        return nom.equals(player.getName()) ? 10 : -10;
-                    } else {
-                        nom = jObj.getJSONObject("gagnant").getString("nom");
-                        return nom.equals(player.getName()) ? 100 : -100;
-                    }
-                }
-            } else {
-                return -9999;
-            }*/
-        } catch (UnirestException /*| BadIdException*/ e) { e.printStackTrace(); }
-        return null;
-    }
-
 }
