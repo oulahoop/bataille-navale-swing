@@ -56,16 +56,6 @@ public class GameManager {
         return false;
     }
 
-    public void leave() {
-        if(gameEnded()) {
-            this.game = null;
-            this.player = null;
-            app.getViewManager().switchTo(Menu.SIGN_IN);
-        } else {
-            app.getViewManager().alert("Impossible de quitter une partie en cours !", true);
-        }
-    }
-
     public boolean canPlay() {
         try {
             if(Network.getInfo(url, game, player) == 10) return true;
@@ -118,7 +108,7 @@ public class GameManager {
         }
     }
 
-    public boolean gameEnded() {
+    public boolean gamePerdu() {
         try { return Math.abs(Network.getInfo(url, game, player)) == 100;
         } catch(UnirestException | BadIdException e) { e.printStackTrace(); }
         return false;

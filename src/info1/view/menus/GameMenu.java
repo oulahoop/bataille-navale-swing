@@ -1,6 +1,7 @@
 package info1.view.menus;
 
 
+import info1.view.Menu;
 import info1.view.ViewManager;
 import info1.utils.GameManager;
 import javax.swing.*;
@@ -214,6 +215,11 @@ public class GameMenu{
                     } catch(InterruptedException ex) { ex.printStackTrace(); }
                 }
             }
+            if(gameManager.gamePerdu()){
+                JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vous avez perdu la partie");
+                Application.getApp().getViewManager().switchTo(Menu.MAIN);
+            }
+
             nouveauTir.setEnabled(true);
             nouveauTir.setBackground(new Color(0xff0000));
         });
