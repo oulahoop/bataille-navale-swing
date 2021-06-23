@@ -6,6 +6,7 @@ import info1.utils.GameManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.concurrent.CompletableFuture;
 
 import info1.Application;
 import info1.view.listeners.gameMenu.ListenerTir;
@@ -179,10 +180,30 @@ public class GameMenu{
         viewManager.setResizable(false);
         viewManager.setVisible(true);
         viewManager.repaint();
+
+        if(! Application.getApp().getGameManager().canPlay()){
+            waiting();
+        }
     }
     public void listenerTir(ActionListener action){nouveauTir.addActionListener(action);}
 
     public void setFire(boolean b) {
         nouveauTir.setEnabled(b);
     }
+    public void waiting() {
+        setFire(false);
+        CompletableFuture.runAsync(() -> {
+            GameManager gameManager = Application.getApp().getGameManager();
+
+            while(!gameManager.canPlay()) {
+                synchronized(this) {
+                    try {
+                        wait(500);
+                    } catch(InterruptedException ex) { ex.printStackTrace(); }
+                }
+            }
+            setFire(true);
+        });
+    }
+
 }

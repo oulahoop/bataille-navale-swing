@@ -49,7 +49,8 @@ public class ListenerTir implements ActionListener {
                                 break;
                         }
                         selected.setForeground(new Color(0x000000));
-                        waiting();
+
+                        fenetre.waiting();
 
                         } catch(BadCoordException badCoordException){
                             badCoordException.printStackTrace();
@@ -67,23 +68,6 @@ public class ListenerTir implements ActionListener {
                     }
                 }
             }
-
-    private void waiting() {
-        fenetre.setFire(false);
-        CompletableFuture.runAsync(() -> {
-            GameManager gameManager = Application.getApp().getGameManager();
-
-            while(!gameManager.canPlay()) {
-                synchronized(this) {
-                    try {
-                        wait(500);
-                    } catch(InterruptedException ex) { ex.printStackTrace(); }
-                }
-            }
-            fenetre.setFire(true);
-        });
-    }
-
 
     private void won(Coord coord) {
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
