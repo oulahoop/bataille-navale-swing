@@ -31,7 +31,7 @@ public class ValueChanged implements ChangeListener {
         Game game = menu.getSelectedGame();
         if(JOptionPane.showConfirmDialog(Application.getApp().getViewManager(),
                 "voulez vous vraiment rejoindre cette partie ?") == 0){
-            gameManager.join(game, gameManager.getPLayer(), gameManager.getFleet());
+            gameManager.join(game, gameManager.getPlayer(), gameManager.getFleet());
         }
     }
 }
