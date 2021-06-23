@@ -12,7 +12,7 @@ public class testMainMenu {
         Application app = new Application();
         GameManager gameManager = app.getGameManager();
 
-        gameManager.setPlayer(new Player("MR.PROPRE"));
+        gameManager.setPlayer(new Player("test"));
         gameManager.subscribe();
 
         NavyFleet navyFleet = new NavyFleet();

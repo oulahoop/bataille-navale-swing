@@ -42,7 +42,7 @@ public class ValueChanged implements ListSelectionListener {
                 "Rejoindre la partie de : " + game.getInitiator().getName(),
                 "Answer or i will call the police",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            if(gameManager.join(game, gameManager.getPlayer(), gameManager.getFleet())){
+            if(gameManager.join(game)){
                 viewManager.switchTo(Menu.GAME);
             }else{
                 JOptionPane.showMessageDialog(viewManager, "La game que tu essaies de rejoindre n'est pas correctement initialisée");
