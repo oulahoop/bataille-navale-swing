@@ -42,8 +42,9 @@ public class ListenerTir implements ActionListener {
                             case 100:
                                 won(coord);
                                 break;}
-                        selected.setText("p");
+                        selected.setForeground(new Color(0x000000));
                         fenetre.activerTir(false);
+
 
                         } catch(BadCoordException badCoordException){
                             badCoordException.printStackTrace();
@@ -71,11 +72,13 @@ public class ListenerTir implements ActionListener {
     }
 
     private void sunk(Coord coord) {
+        selected.setBackground(new Color(0xffa500));
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Bateau ennemi coulé, un pas de plus vers la victoire commandant!");
     }
 
     private void hit(Coord coord) {
+
         selected.setText("O");
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Cible touchée!");
