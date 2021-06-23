@@ -51,8 +51,6 @@ public class ListenerTir implements ActionListener {
                         selected.setForeground(new Color(0x000000));
                         waiting();
 
-
-
                         } catch(BadCoordException badCoordException){
                             badCoordException.printStackTrace();
                         }

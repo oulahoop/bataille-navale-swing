@@ -171,6 +171,8 @@ public class GameMenu{
         principal.add(droite);
         viewManager.setContentPane(principal);
 
+        nouveauTir.setEnabled(Application.getApp().getGameManager().canPlay());
+
         principal.setSize(viewManager.getWidth()-15,viewManager.getHeight()-45);
         principal.setPreferredSize(principal.getSize());
         viewManager.pack();
