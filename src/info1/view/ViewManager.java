@@ -1,20 +1,18 @@
 package info1.view;
 
-import info1.Application;
-import info1.utils.GameManager;
 import info1.view.menus.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+
 import java.awt.*;
-import java.time.Instant;
+
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Classe qui definie le Frame de l'application dans lequel tout les affichages ont lieu
+ */
 public class ViewManager extends JFrame {
-    private Object menu;
 
     public ViewManager() {
         this.setSize(new Dimension(1280, 720));
@@ -25,18 +23,23 @@ public class ViewManager extends JFrame {
         new WelcomeMenu(this);
     }
 
+    /**
+     * Permet de changer le menu affiché dans le frame
+     * @param menu Le menu à afficher
+     */
     public void switchTo(Menu menu) {
-        this.menu = switch(menu) {
+        switch(menu) {
             case WELCOME -> new WelcomeMenu(this);
             case SIGN_IN -> new SignInMenu(this);
             case MAIN -> new MainMenu(this);
             case GAME -> new GameMenu(this);
             case WAITING -> new WaitingScreen(this);
-        };
+        }
     }
-    public WelcomeMenu getWelcome() { return menu instanceof WelcomeMenu ? (WelcomeMenu) menu : null; }
 
-
+    /**
+     * Méthode qui permet de mettre a jours la vue
+     */
     public void update() {
         this.setPreferredSize(this.getSize());
         this.pack();
@@ -44,12 +47,11 @@ public class ViewManager extends JFrame {
         repaint();
     }
 
-    public void enableShoot(boolean enable) {
-        Application app = Application.getApp();
-        if(GameManager.getGame() == null) return;
-    }
-
-    public void alert(String message, boolean error) {
+    /**
+     * Méthode qui permet l'affichage d'une "popUp"
+     * @param message Le message à afficher dans l'alert
+     */
+    public void alert(String message) {
         CompletableFuture.runAsync(() -> {
             synchronized(this) {
                 try {

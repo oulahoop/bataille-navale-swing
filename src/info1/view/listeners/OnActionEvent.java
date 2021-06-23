@@ -58,7 +58,7 @@ public class OnActionEvent implements ActionListener {
                 try { if(Network.suscribeNewPlayer(GameManager.getUrl(), player)) GameManager.setPlayer(player);
                 } catch (UnirestException unirestException) { unirestException.printStackTrace(); }
             }else{
-                app.getViewManager().alert("Veuillez insérer un pseudo !", false);
+                app.getViewManager().alert("Veuillez insérer un pseudo !");
             }
 
         }

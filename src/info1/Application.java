@@ -1,7 +1,5 @@
 package info1;
 
-import info1.network.Network;
-import info1.utils.GameManager;
 import info1.view.ViewManager;
 
 public class Application {

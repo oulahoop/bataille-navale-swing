@@ -107,10 +107,10 @@ public class OnActionEvent implements ActionListener {
                         System.out.println(unirestException.getMessage());
                     }
                 }else{
-                    app.getViewManager().alert("Veuillez finir votre flotte ! ", false);
+                    app.getViewManager().alert("Veuillez finir votre flotte ! ");
                 }
             }else{
-                app.getViewManager().alert("Veuillez insérer un pseudo !", false);
+                app.getViewManager().alert("Veuillez insérer un pseudo !");
             }
 
         }
