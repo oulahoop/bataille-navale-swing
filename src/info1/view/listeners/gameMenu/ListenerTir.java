@@ -66,7 +66,6 @@ public class ListenerTir implements ActionListener {
                         selected = (JButton) e.getSource();
                         selected.setEnabled(false);
                         selected.setBackground(new Color(0x253662));
-                        fenetre.activerTir(true);
                     }
                 }
             }
