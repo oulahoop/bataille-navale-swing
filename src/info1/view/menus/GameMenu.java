@@ -40,9 +40,8 @@ public class GameMenu{
     JLabel rappelDernierTir;
     JButton nouveauTir;
     //-------------------------------//
-    JPanel exitpanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel exitpanel = new JPanel(new BorderLayout());
     JButton exit = new JButton("quitter");
-
 
     public GameMenu(ViewManager viewManager){
 
@@ -174,10 +173,13 @@ public class GameMenu{
         interfaceTir.add(nouveauTir);
 
         //quitter
+
         exit.setPreferredSize(new Dimension(principal.getWidth()/10, principal.getHeight()/10));
         exit.addActionListener(new ExitListener(viewManager));
-        exitpanel.add(exit);
+        exitpanel.add(exit, BorderLayout.WEST);
+
         interfaceJoueur.add(exitpanel, BorderLayout.SOUTH);
+
 
         //mise en place de la vue//
         interfaceJoueur.add(grilleJoueur,BorderLayout.CENTER);
