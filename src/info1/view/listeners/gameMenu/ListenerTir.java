@@ -30,7 +30,7 @@ public class ListenerTir implements ActionListener {
         String nom = ((JButton) e.getSource()).getName();
 
             if (nom.equalsIgnoreCase("Tirer")) {
-                if (selected != null) {
+                if (selected != null && selected.isEnabled()) {
                     gameMan = Application.getApp().getGameManager();
                     try {
                         Coord coord = new Coord(selected.getName());
