@@ -20,19 +20,13 @@ public class GameManager {
     private NavyFleet fleet;
 
     public GameManager() {}
-
     public Game getGame() { return game; }
-
-    public Player getPLayer() { return this.player; }
-
+    public Player getPlayer() { return this.player; }
     public INavyFleet getFleet() { return this.fleet;}
-
     public ICoord getLastCoords() { return null; }
-
     public String getUrl() { return url; }
-
-    public void setPlayer(Player p1){ player = p1; }
-
+    public void setGame(Game game) { this.game = game; }
+    public void setPlayer(Player player){ this.player = player; }
     public void setFleet(NavyFleet fleet){ this.fleet = fleet; }
 
     public boolean join(Game game, Player player, INavyFleet fleet) {
@@ -40,7 +34,7 @@ public class GameManager {
             Network.joinGame(url, game, player, fleet) ;
             this.game = game;
             this.player = player;
-            if(Network.getInfo(url, game, player) == 1 || Network.getInfo(url, game, player) == -1) return true;
+            if(Math.abs(Network.getInfo(url, game, player)) != 100 || Network.getInfo(url, game, player) != -9999) return true;
         } catch(UnirestException | UncompleteFleetException | BadCoordException | BadIdException e) {
             e.printStackTrace();
         }
@@ -117,6 +111,14 @@ public class GameManager {
                app.getViewManager().enableShoot(canPlay());
            }
         });
+    }
+
+    public void subscribe(){
+        try {
+            Network.suscribeNewPlayer(url, player);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 
 }

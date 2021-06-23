@@ -176,6 +176,7 @@ public class GameMenu{
         viewManager.pack();
         viewManager.setResizable(false);
         viewManager.setVisible(true);
+        viewManager.repaint();
     }
     public void listenerTir(ActionListener action){nouveauTir.addActionListener(action);}
 
