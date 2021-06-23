@@ -1,7 +1,11 @@
 package info1.view.listeners.mainMenu;
 
+import info1.Application;
+import info1.network.Game;
+import info1.utils.GameManager;
 import info1.view.menus.MainMenu;
 
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 /*
@@ -15,11 +19,19 @@ import javax.swing.event.ChangeListener;
 public class ValueChanged implements ChangeListener {
 
     private MainMenu menu;
+    private GameManager gameManager;
 
-    public ValueChanged(MainMenu menu){ this.menu = menu; }
+    public ValueChanged(MainMenu menu){
+        this.menu = menu;
+        this.gameManager = Application.getApp().getGameManager();
+    }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-
+        Game game = menu.getSelectedGame();
+        if(JOptionPane.showConfirmDialog(Application.getApp().getViewManager(),
+                "voulez vous vraiment rejoindre cette partie ?") == 0){
+            gameManager.join(game, gameManager.getPLayer(), gameManager.getFleet());
+        }
     }
 }

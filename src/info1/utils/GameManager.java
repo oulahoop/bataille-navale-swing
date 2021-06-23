@@ -17,9 +17,23 @@ public class GameManager {
     private String url = "http://37.187.38.219/api/v0";
     private Game game;
     private Player player;
+    private NavyFleet fleet;
 
     public GameManager() {}
+
     public Game getGame() { return game; }
+
+    public Player getPLayer() { return this.player; }
+
+    public INavyFleet getFleet() { return this.fleet;}
+
+    public ICoord getLastCoords() { return null; }
+
+    public String getUrl() { return url; }
+
+    public void setPlayer(Player p1){ player = p1; }
+
+    public void setFleet(NavyFleet fleet){ this.fleet = fleet; }
 
     public boolean join(Game game, Player player, INavyFleet fleet) {
         try {
@@ -105,14 +119,4 @@ public class GameManager {
         });
     }
 
-    public ICoord getLastCoords() {
-        return null;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-    public void setPlayer(Player p1){
-        player = p1;
-    }
 }
