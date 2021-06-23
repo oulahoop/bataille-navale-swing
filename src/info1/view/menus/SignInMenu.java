@@ -22,6 +22,7 @@ public class SignInMenu{
 
     private ArrayList<JButton> buttons;
     private ArrayList<JComboBox<String>> rotation;
+    private ArrayList<JButton> placerButtons;
 
     private OnActionEvent controleur;
     private OnPlacerAction ctrl;
@@ -114,6 +115,7 @@ public class SignInMenu{
         bateaux = new JPanel(new GridLayout(5,1));
         ctrl = new OnPlacerAction(this);
         rotation = new ArrayList<>();
+        placerButtons = new ArrayList<>();
         String[] tab = new String[]{"AircraftCarrier", "BattleShip", "Cruiser", "Destroyer", "Submarine"};
         for (int i = 0; i < 5; i++) {
             JPanel jp = new JPanel();
@@ -135,6 +137,7 @@ public class SignInMenu{
             JButton jb = new JButton("Placer");
             jb.setName(tab[i]);
             jb.addActionListener(ctrl);
+            placerButtons.add(jb);
             jp.add(jb);
 
             bateaux.add(jp);
@@ -231,5 +234,17 @@ public class SignInMenu{
     }
     public ArrayList<JComboBox<String>> getRotation(){
         return rotation;
+    }
+
+    public ArrayList<JButton> getPlacerButtons() {
+        return placerButtons;
+    }
+
+    public void setRotation(ArrayList<JComboBox<String>> rotation) {
+        this.rotation = rotation;
+    }
+
+    public void setPlacerButtons(ArrayList<JButton> placerButtons) {
+        this.placerButtons = placerButtons;
     }
 }
