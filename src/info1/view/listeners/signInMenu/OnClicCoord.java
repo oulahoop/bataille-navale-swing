@@ -2,7 +2,6 @@ package info1.view.listeners.signInMenu;
 
 import info1.Application;
 import info1.ships.*;
-import info1.utils.GameManager;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
@@ -24,65 +23,89 @@ public class OnClicCoord implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (GameManager.getFleet() == null){ GameManager.setFleet(new NavyFleet()); }
-        if (!GameManager.getFleet().isComplete()){
+        if (app.getGameManager().getFleet() == null){ app.getGameManager().setFleet(new NavyFleet()); }
+        if (!app.getGameManager().getFleet().isComplete()){
             String xy = ((JButton)e.getSource()).getName();
             String nameBateau = placement.getBateau_a_placer();
             String nameRotation = placement.getRotation_bateau();
+            System.out.println(nameBateau + " // "+nameRotation +" CASE : "+ xy);
             try {
-                this.BatoAPlacer(nameBateau,xy,nameRotation);
+                this.BatoAPlacer(nameBateau, xy, nameRotation);
             } catch (BadCoordException | CoordsBadShipException badCoordException) {
                 badCoordException.printStackTrace();
             }
-            System.out.println(GameManager.getFleet().toString());
+            System.out.println(app.getGameManager().getFleet().toString());
         }
-
     }
 
     public void BatoAPlacer(String name,String coord,String placement) throws BadCoordException, CoordsBadShipException {
         String coordFin;
+        int number;
         switch(name.toLowerCase()){
             case "aircraftcarrier" :
                 coordFin = aidePlacement(coord,placement,5);
-                System.out.println(coord + "---->" + coordFin);
-                GameManager.getFleet().add(new Battleship("nom",coord,coordFin));
-                for(IShip s : GameManager.getFleet().getShips()){
-                    for(ICoord c : s.getCoords()) {
-                        fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
+                if(app.getGameManager().getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()<1) {
+                    System.out.println(app.getGameManager().getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER));
+                    System.out.println(coord + "-->"+ coordFin);
+                    app.getGameManager().getFleet().add(new AircraftCarrier("nom", coord, coordFin));
+                    if(app.getGameManager().getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()==1){
+                        fenetre.getPlacerButtons().get(0).setEnabled(false);
+                    }
+                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                        for (ICoord c : s.getCoords()) {
+                            System.out.println(c.toString());
+                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
+                        }
                     }
                 }
+                break;
             case "battleship":
                 coordFin = aidePlacement(coord,placement,4);
-                GameManager.getFleet().add(new Battleship("nom",coord,coordFin));
-                for(IShip s : GameManager.getFleet().getShips()){
-                    for(ICoord c : s.getCoords()) {
-                        fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
+                if (app.getGameManager().getFleet().getShips(ShipCategory.BATTLESHIP).size()<1) {
+                    app.getGameManager().getFleet().add(new Battleship("nom", coord, coordFin));
+                    fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 1 : 0).setEnabled(false);
+                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                        for (ICoord c : s.getCoords()) {
+                            System.out.println(c.toString());
+                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
+                        }
                     }
                 }
                 break;
             case "cruiser":
                 coordFin = aidePlacement(coord,placement,3);
-                GameManager.getFleet().add(new Cruiser("nom",coord,coordFin));
-                for(IShip s : GameManager.getFleet().getShips()){
-                    for(ICoord c : s.getCoords()) {
-                        fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
+                if(app.getGameManager().getFleet().getShips(ShipCategory.CRUISER).size()<2) {
+                    app.getGameManager().getFleet().add(new Cruiser("nom", coord, coordFin));
+                    if(app.getGameManager().getFleet().getShips(ShipCategory.CRUISER).size()==2){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 2 : 1).setEnabled(false);}
+                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                        for (ICoord c : s.getCoords()) {
+                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
+                        }
                     }
                 }
                 break;
             case"destroyer":
                 coordFin = aidePlacement(coord,placement,2);
-                GameManager.getFleet().add(new Destroyer("nom",coord,coordFin));
-                for(IShip s : GameManager.getFleet().getShips()){
-                    for(ICoord c : s.getCoords()) {
-                        fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
+                number = OnActionEvent.isFrancais() ? 2 : 3;
+                if(app.getGameManager().getFleet().getShips(ShipCategory.DESTROYER).size()<number) {
+                    app.getGameManager().getFleet().add(new Destroyer("nom", coord, coordFin));
+                    if(app.getGameManager().getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 3 : 2).setEnabled(false);};
+                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                        for (ICoord c : s.getCoords()) {
+                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
+                        }
                     }
                 }
                 break;
             case"submarine": ;
-                GameManager.getFleet().add(new Submarine("nom",coord));
-                for(IShip s : GameManager.getFleet().getShips()){
-                    for(ICoord c : s.getCoords()) {
-                        fenetre.getButtons().get(c.getX()-1+(c.getY()-1)*10).setBackground(Color.BLACK);
+                number = OnActionEvent.isFrancais() ? 1 : 4;
+                if(app.getGameManager().getFleet().getShips(ShipCategory.SUBMARINE).size()<number) {
+                    app.getGameManager().getFleet().add(new Submarine("nom",coord));
+                    if(app.getGameManager().getFleet().getShips(ShipCategory.SUBMARINE).size()==1){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 4 : 3).setEnabled(false);}
+                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                        for (ICoord c : s.getCoords()) {
+                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
+                        }
                     }
                 }
                 break;

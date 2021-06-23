@@ -30,6 +30,7 @@ public class OnPlacerAction implements ActionListener {
 
     private void placer(String bateauName, ActionEvent e){
         for(JComboBox<String> jcb : fenetre.getRotation()){
+            System.out.println(jcb.getName());
             if(jcb.getName().equalsIgnoreCase(bateauName)){
                 rotation_bateau = (String) jcb.getSelectedItem();
                 bateau_a_placer = ((JButton)e.getSource()).getName();
