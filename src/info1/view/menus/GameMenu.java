@@ -208,7 +208,7 @@ public class GameMenu{
         CompletableFuture.runAsync(() -> {
             GameManager gameManager = Application.getApp().getGameManager();
 
-            while(!gameManager.canPlay()) {
+            while(!gameManager.canPlay() || !gameManager.gamePerdu()) {
                 synchronized(this) {
                     try {
                         wait(500);
@@ -216,7 +216,7 @@ public class GameMenu{
                 }
             }
             if(gameManager.gamePerdu()){
-                JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vous avez perdu la partie");
+                JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Nous sommes en déroute, nous devons vite quitter le champ de bataille");
                 Application.getApp().getViewManager().switchTo(Menu.MAIN);
             }
 
