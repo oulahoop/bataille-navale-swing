@@ -1,6 +1,7 @@
 package info1.view.menus;
 
 
+import info1.ships.Coord;
 import info1.view.ViewManager;
 
 import javax.swing.*;
