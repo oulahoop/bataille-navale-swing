@@ -73,12 +73,12 @@ public class ListenerTir implements ActionListener {
 
     private void sunk(Coord coord) {
         selected.setBackground(new Color(0xffa500));
+        selected.setText("|O|");
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Bateau ennemi coulé, un pas de plus vers la victoire commandant!");
     }
 
     private void hit(Coord coord) {
-
         selected.setText("O");
         JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                 "Cible touchée!");
