@@ -17,16 +17,24 @@ public class GameManager {
     private String url = "http://37.187.38.219/api/v0";
     private Game game;
     private Player player;
+    private NavyFleet fleet;
 
     public GameManager() {}
     public Game getGame() { return game; }
+    public Player getPlayer() { return this.player; }
+    public INavyFleet getFleet() { return this.fleet;}
+    public ICoord getLastCoords() { return null; }
+    public String getUrl() { return url; }
+    public void setGame(Game game) { this.game = game; }
+    public void setPlayer(Player player){ this.player = player; }
+    public void setFleet(NavyFleet fleet){ this.fleet = fleet; }
 
     public boolean join(Game game, Player player, INavyFleet fleet) {
         try {
             Network.joinGame(url, game, player, fleet) ;
             this.game = game;
             this.player = player;
-            if(Network.getInfo(url, game, player) == 1 || Network.getInfo(url, game, player) == -1) return true;
+            if(Math.abs(Network.getInfo(url, game, player)) != 100 || Network.getInfo(url, game, player) != -9999) return true;
         } catch(UnirestException | UncompleteFleetException | BadCoordException | BadIdException e) {
             e.printStackTrace();
         }
@@ -53,18 +61,18 @@ public class GameManager {
         return false;
     }
 
-    public void shoot(Coord coord) {
+    public int shoot(Coord coord) {
         //app.getViewManager().shootAnimation();
         int result = -9999;
         try { result = Network.playOneTurn(url, game, player, coord);
         } catch (BadCoordException | UnirestException e) { e.printStackTrace(); }
-
-        switch(result) {
+        return result;
+        /*switch(result) {
             case 0: miss(coord); break;
-            case 1: hit(coord); break;
+            case 1: hit(coord);  break;
             case 10: sunk(coord); break;
             case 100: won(coord); break;
-        }
+        }*/
     }
     public void miss(Coord coord) {
         //app.getViewManager().missAnimation();
@@ -105,7 +113,12 @@ public class GameManager {
         });
     }
 
-    public ICoord getLastCoords() {
-        return null;
+    public void subscribe(){
+        try {
+            Network.suscribeNewPlayer(url, player);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
+
 }
