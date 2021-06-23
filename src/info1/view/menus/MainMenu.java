@@ -6,12 +6,13 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import info1.network.Game;
 import info1.network.Network;
 import info1.view.ViewManager;
+import info1.view.listeners.mainMenu.GameIdListener;
+import info1.view.listeners.mainMenu.MenuActionListener;
 import info1.view.listeners.mainMenu.ValueChanged;
 
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -72,7 +73,9 @@ public class MainMenu {
         mainSouth.setPreferredSize(mainSouth.getSize());
 
         quitter.setSize(new Dimension(0, mainSouth.getHeight()));
+        quitter.setName("quitter");
         createGame.setSize(new Dimension(0, mainSouth.getHeight()));
+        createGame.setName("createGame");
 
         mainSouth.add(quitter);
         mainSouth.add(new JPanel());
@@ -86,6 +89,7 @@ public class MainMenu {
         mainCNorth.setSize(new Dimension(mainCenter.getWidth(), (int) (mainCenter.getHeight()*0.1)));
         mainCNorth.setPreferredSize(mainCNorth.getSize());
 
+        refresh.setName("refresh");
         refresh.setSize(new Dimension((int) (mainCNorth.getWidth()*0.2), (int) (mainCNorth.getHeight()*0.8)));
         refresh.setPreferredSize(refresh.getSize());
         mainCNorth.add(refresh);
@@ -94,9 +98,6 @@ public class MainMenu {
         mainCCenter.setPreferredSize(mainCNorth.getSize());
 
         refresh();
-
-        mainCCenter.setViewportView(scrollList);
-        scrollList.setLayoutOrientation(JList.VERTICAL);
 
         mainCenter.add(mainCNorth, BorderLayout.NORTH);
         mainCenter.add(mainCCenter, BorderLayout.CENTER);
@@ -113,10 +114,12 @@ public class MainMenu {
         rechercher.setBorder(BorderFactory.createEmptyBorder());
 
         gameId.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.2)));
+        gameId.setName("gameId");
         gameId.setPreferredSize(gameId.getSize());
         gameId.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
         gameId.setHorizontalAlignment(SwingConstants.CENTER);
 
+        search.setName("search");
         search.setSize(new Dimension((int) (mainEast.getWidth()*0.5), (int) (mainEast.getHeight()*0.2)));
         search.setPreferredSize(search.getSize());
 
@@ -129,7 +132,7 @@ public class MainMenu {
         main.add(mainCenter, BorderLayout.CENTER);
         main.add(mainEast, BorderLayout.EAST);
 
-        frame.add(main);
+        frame.setContentPane(main);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
@@ -145,6 +148,10 @@ public class MainMenu {
         } catch (UnirestException e) { System.out.println(e.getMessage()); }
         Collections.reverse(games);
         scrollList = new JList<Game>(games.toArray(new Game[games.size()]));
+        viewManager.update();
+
+        mainCCenter.setViewportView(scrollList);
+        scrollList.setLayoutOrientation(JList.VERTICAL);
     }
 
     public void research(String recherche){
@@ -155,9 +162,12 @@ public class MainMenu {
         Collections.reverse(games);
 
         for(Game game : games) {
-            if(game.toString().contains(recherche)) result.add(game);
+            if(game.toString().toLowerCase().contains(recherche.toLowerCase())) result.add(game);
         }
         scrollList = new JList<Game>(result.toArray(new Game[result.size()]));
+
+        mainCCenter.setViewportView(scrollList);
+        scrollList.setLayoutOrientation(JList.VERTICAL);
     }
 
     public Game getSelectedGame(){ return scrollList.getSelectedValue(); }
@@ -165,6 +175,9 @@ public class MainMenu {
     public String getGameId(){ return gameId.getText(); }
 
     private void setListeners(){
+        gameId.addKeyListener(new GameIdListener(this, viewManager));
+        refresh.addActionListener(new MenuActionListener(this, viewManager));
+        search.addActionListener(new MenuActionListener(this, viewManager));
         scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
     }
 

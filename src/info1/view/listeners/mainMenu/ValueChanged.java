@@ -49,6 +49,6 @@ public class ValueChanged implements ListSelectionListener {
             }
 
         }
-        }
+    }
 
 }

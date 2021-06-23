@@ -1,10 +1,7 @@
 package info1.view;
 
 import info1.Application;
-import info1.view.menus.GameMenu;
-import info1.view.menus.MainMenu;
-import info1.view.menus.SignInMenu;
-import info1.view.menus.WelcomeMenu;
+import info1.view.menus.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -32,6 +29,7 @@ public class ViewManager extends JFrame {
             case SIGN_IN -> new SignInMenu(this);
             case MAIN -> new MainMenu(this);
             case GAME -> new GameMenu(this);
+            case WAITING -> new WaitingScreen(this);
         };
     }
     public WelcomeMenu getWelcome() { return menu instanceof WelcomeMenu ? (WelcomeMenu) menu : null; }

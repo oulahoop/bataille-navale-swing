@@ -4,5 +4,6 @@ public enum Menu {
     WELCOME,
     SIGN_IN,
     MAIN,
-    GAME
+    GAME,
+    WAITING
 }
