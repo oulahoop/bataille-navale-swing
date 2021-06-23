@@ -43,8 +43,7 @@ public class MenuActionListener implements ActionListener {
 
                 case "quitter" :
                     if(JOptionPane.showConfirmDialog(Application.getApp().getViewManager(),
-                            "Voulez-vous vraiment quitter ?", "Answer or i will call the police",
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            "Voulez-vous vraiment quitter ?") == JOptionPane.YES_OPTION) {
                         viewManager.switchTo(Menu.SIGN_IN);
                     }
                     break ;

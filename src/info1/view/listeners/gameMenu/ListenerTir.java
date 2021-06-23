@@ -68,25 +68,22 @@ public class ListenerTir implements ActionListener {
             }
 
     private void won(Coord coord) {
-        JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
-                "La flotte ennemie est en déroute nous avons gagné la guerre!");
+       JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "La flotte ennemie est en déroute, nous avons gagné la guerre!");
+       Application.getApp().getViewManager().switchTo(Menu.MAIN);
     }
 
     private void sunk(Coord coord) {
         selected.setBackground(new Color(0xff7700));
-        JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
-                "Bateau ennemi coulé, un pas de plus vers la victoire commandant!");
+        //JOptionPane.showMessageDialog(Application.getApp().getViewManager(),"Bateau ennemi coulé, un pas de plus vers la victoire commandant!");
     }
 
     private void hit(Coord coord) {
         selected.setBackground(new Color(0xffcc00));
-        JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
-                "Cible touchée!");
+        //JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Cible touchée!");
     }
 
     private void miss(Coord coord) {
         selected.setBackground(new Color(0xfcfcfc));
-        JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
-                "Tir raté!");
+        //JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Tir raté!");
     }
 }

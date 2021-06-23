@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.CompletableFuture;
 
 import info1.Application;
+import info1.view.listeners.gameMenu.ExitListener;
 import info1.view.listeners.gameMenu.ListenerTir;
 
 
@@ -39,12 +40,19 @@ public class GameMenu{
     JLabel rappelDernierTir;
     JButton nouveauTir;
     //-------------------------------//
+    JPanel exitpanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JButton exit = new JButton("quitter");
+
 
     public GameMenu(ViewManager viewManager){
 
         //settings du panel principal//
         principal = new JPanel(new GridLayout(1,2));
         principal.setBorder(BorderFactory.createTitledBorder("Battleship"));
+
+        principal.setSize(viewManager.getWidth()-15,viewManager.getHeight()-45);
+        principal.setPreferredSize(principal.getSize());
+
         gauche = new JPanel(new FlowLayout(FlowLayout.CENTER));
         interfaceJoueur = new JPanel(new BorderLayout());
 
@@ -151,16 +159,25 @@ public class GameMenu{
         }
 
         //Menu de tir//
-        interfaceTir = new JPanel(new GridLayout(2,1));
-        interfaceTir.setBorder(BorderFactory.createTitledBorder("Interface de tir"));
+        interfaceTir = new JPanel(new GridLayout(1,3));
+        //interfaceTir.setBorder(BorderFactory.createTitledBorder("Interface de tir"));
         rappelDernierTir = new JLabel("dernier tir : ");
         nouveauTir = new JButton("FEU!");
         nouveauTir.setBackground(new Color(0xff0000));
         nouveauTir.setEnabled(false);
         nouveauTir.setName("Tirer");
         nouveauTir.addActionListener(controleur);
+        nouveauTir.setPreferredSize(new Dimension(principal.getWidth()/10, principal.getHeight()/10));
+
         interfaceTir.add(rappelDernierTir);
+        interfaceTir.add(new JPanel());
         interfaceTir.add(nouveauTir);
+
+        //quitter
+        exit.setPreferredSize(new Dimension(principal.getWidth()/10, principal.getHeight()/10));
+        exit.addActionListener(new ExitListener(viewManager));
+        exitpanel.add(exit);
+        interfaceJoueur.add(exitpanel, BorderLayout.SOUTH);
 
         //mise en place de la vue//
         interfaceJoueur.add(grilleJoueur,BorderLayout.CENTER);
@@ -172,26 +189,19 @@ public class GameMenu{
         principal.add(droite);
         viewManager.setContentPane(principal);
 
-        nouveauTir.setEnabled(Application.getApp().getGameManager().canPlay());
+        waiting();
 
-        principal.setSize(viewManager.getWidth()-15,viewManager.getHeight()-45);
-        principal.setPreferredSize(principal.getSize());
+
         viewManager.pack();
         viewManager.setResizable(false);
         viewManager.setVisible(true);
         viewManager.repaint();
 
-        if(! Application.getApp().getGameManager().canPlay()){
-            waiting();
-        }
-    }
-    public void listenerTir(ActionListener action){nouveauTir.addActionListener(action);}
-
-    public void setFire(boolean b) {
-        nouveauTir.setEnabled(b);
     }
     public void waiting() {
-        setFire(false);
+        nouveauTir.setEnabled(false);
+        nouveauTir.setBackground(new Color(0x7a7a7a));
+
         CompletableFuture.runAsync(() -> {
             GameManager gameManager = Application.getApp().getGameManager();
 
@@ -202,7 +212,8 @@ public class GameMenu{
                     } catch(InterruptedException ex) { ex.printStackTrace(); }
                 }
             }
-            setFire(true);
+            nouveauTir.setEnabled(true);
+            nouveauTir.setBackground(new Color(0xff0000));
         });
     }
 
