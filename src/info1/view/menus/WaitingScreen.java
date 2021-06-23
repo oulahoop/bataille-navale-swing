@@ -1,6 +1,11 @@
 package info1.view.menus;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import info1.Application;
+import info1.network.BadIdException;
+import info1.network.Game;
+import info1.network.Network;
+import info1.utils.GameManager;
 import info1.view.Menu;
 import info1.view.ViewManager;
 
@@ -37,14 +42,19 @@ public class WaitingScreen {
         frame.update();
 
         CompletableFuture.runAsync(() -> {
-            while(Application.getApp().getGameManager().getGame().getGuest() == null){
-                synchronized(this) {
-                    try {
-                        wait(500);
-                    } catch(InterruptedException ex) { ex.printStackTrace(); }
+            GameManager gameManager = Application.getApp().getGameManager();
+            try {
+                while(!(Math.abs(Network.getInfo(gameManager.getUrl(), gameManager.getGame(), gameManager.getPlayer())) == 10)) {
+                    synchronized(this) {
+                        try {
+                            wait(500);
+                        } catch(InterruptedException ex) { ex.printStackTrace(); }
+                    }
                 }
+                viewManager.switchTo(Menu.GAME);
+            } catch(UnirestException | BadIdException e) {
+                e.printStackTrace();
             }
-            viewManager.switchTo(Menu.GAME);
         });
 
     }
