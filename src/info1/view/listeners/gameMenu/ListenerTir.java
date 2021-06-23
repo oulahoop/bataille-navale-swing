@@ -23,7 +23,6 @@ public class ListenerTir implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String nom = ((JButton) e.getSource()).getName();
-        if(gameMan.canPlay()){
 
             if (nom.equalsIgnoreCase("Tirer")) {
                 if (selected != null) {
@@ -63,7 +62,7 @@ public class ListenerTir implements ActionListener {
                     }
                 }
             }
-        }
+
 
 
     private void won(Coord coord) {

@@ -150,7 +150,7 @@ public class GameMenu{
         }
 
         //Menu de tir//
-        interfaceTir = new JPanel(new GridLayout(3,1));
+        interfaceTir = new JPanel(new GridLayout(2,1));
         interfaceTir.setBorder(BorderFactory.createTitledBorder("Interface de tir"));
         rappelDernierTir = new JLabel("dernier tir : ");
         nouveauTir = new JButton("FEU!");
@@ -159,7 +159,6 @@ public class GameMenu{
         nouveauTir.setName("Tirer");
         nouveauTir.addActionListener(controleur);
         interfaceTir.add(rappelDernierTir);
-        interfaceTir.add(new JLabel());
         interfaceTir.add(nouveauTir);
 
         //mise en place de la vue//
@@ -171,8 +170,9 @@ public class GameMenu{
         principal.add(gauche);
         principal.add(droite);
         viewManager.setContentPane(principal);
-        principal.setPreferredSize(new Dimension(1900,1080));
-        viewManager.setPreferredSize(new Dimension(1920,1080));
+
+        principal.setSize(viewManager.getWidth()-15,viewManager.getHeight()-45);
+        principal.setPreferredSize(principal.getSize());
         viewManager.pack();
         viewManager.setResizable(false);
         viewManager.setVisible(true);
