@@ -1,15 +1,20 @@
 package info1.view.listeners.gameMenu;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import info1.Application;
+import info1.network.BadIdException;
+import info1.network.Network;
 import info1.ships.BadCoordException;
 import info1.ships.Coord;
 import info1.utils.GameManager;
+import info1.view.Menu;
 import info1.view.menus.GameMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.CompletableFuture;
 
 public class ListenerTir implements ActionListener {
     private GameMenu fenetre;
@@ -41,9 +46,11 @@ public class ListenerTir implements ActionListener {
                                 break;
                             case 100:
                                 won(coord);
-                                break;}
+                                break;
+                        }
                         selected.setForeground(new Color(0x000000));
-                        fenetre.activerTir(false);
+                        waiting();
+
 
 
                         } catch(BadCoordException badCoordException){
@@ -64,6 +71,21 @@ public class ListenerTir implements ActionListener {
                 }
             }
 
+    private void waiting() {
+        fenetre.setFire(false);
+        CompletableFuture.runAsync(() -> {
+            GameManager gameManager = Application.getApp().getGameManager();
+
+            while(!gameManager.canPlay()) {
+                synchronized(this) {
+                    try {
+                        wait(500);
+                    } catch(InterruptedException ex) { ex.printStackTrace(); }
+                }
+            }
+            fenetre.setFire(true);
+        });
+    }
 
 
     private void won(Coord coord) {

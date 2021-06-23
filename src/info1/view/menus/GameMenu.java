@@ -180,15 +180,12 @@ public class GameMenu{
     }
     public void listenerTir(ActionListener action){nouveauTir.addActionListener(action);}
 
-
-
-
     public void activerTir(boolean b){
         nouveauTir.setEnabled(b);
     }
 
 
-
-
-
+    public void setFire(boolean b) {
+        nouveauTir.setEnabled(b);
+    }
 }
