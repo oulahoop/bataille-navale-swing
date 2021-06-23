@@ -53,18 +53,18 @@ public class GameManager {
         return false;
     }
 
-    public void shoot(Coord coord) {
+    public int shoot(Coord coord) {
         //app.getViewManager().shootAnimation();
         int result = -9999;
         try { result = Network.playOneTurn(url, game, player, coord);
         } catch (BadCoordException | UnirestException e) { e.printStackTrace(); }
-
-        switch(result) {
+        return result;
+        /*switch(result) {
             case 0: miss(coord); break;
-            case 1: hit(coord); break;
+            case 1: hit(coord);  break;
             case 10: sunk(coord); break;
             case 100: won(coord); break;
-        }
+        }*/
     }
     public void miss(Coord coord) {
         //app.getViewManager().missAnimation();
