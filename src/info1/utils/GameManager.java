@@ -109,7 +109,7 @@ public class GameManager {
     }
 
     public boolean gamePerdu() {
-        try { return Network.getInfo(url, game, player) == 100;
+        try { return Network.getInfo(url, game, player) == -100;
         } catch(UnirestException | BadIdException e) { e.printStackTrace(); }
         return false;
     }
