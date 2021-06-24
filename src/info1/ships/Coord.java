@@ -19,14 +19,7 @@ public class Coord implements ICoord {
         xy = xy.toUpperCase();
 
         char letter = xy.charAt(0);
-        boolean valid = false;
-        for (int i = 65; i < 75; i++) {
-            if (letter == (char) i) {
-                valid = true;
-                break;
-            }
-        }
-        if (!valid) throw new BadCoordException();
+        if((int)letter<65 || (int)letter >74) throw new BadCoordException();
 
         boolean length = (xy.length() == 3);
         int number = length ? Integer.parseInt(xy.charAt(1) +""+ xy.charAt(2)) : Integer.parseInt(String.valueOf(xy.charAt(1)));
