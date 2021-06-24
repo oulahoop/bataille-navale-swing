@@ -7,14 +7,11 @@ import info1.network.Player;
 import info1.ships.NavyFleet;
 import info1.utils.GameManager;
 import info1.view.Menu;
-import info1.view.menus.MainMenu;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class OnActionEvent implements ActionListener {
 
@@ -49,111 +46,43 @@ public class OnActionEvent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Application app = Application.getApp();
         JButton boutton = ((JButton)e.getSource());
-        String nameButton = boutton.getName();
+        String nameButton = boutton.getName() == null ? boutton.getText() : boutton.getName();
 
 
 
         //Si la perseonne veut une composition belge
         if(nameButton.equalsIgnoreCase("Belge")){
-            fenetre.enableFrench(true);
-            fenetre.enableBelgium(false);
-
-            //On retire tout dans l'affichage des bateaux, dans les listes et on fait une nouvelle flotte pour enlever la précédente
-            fenetre.getBateauxPanel().removeAll();
-            fenetre.setPlacerButtons(new ArrayList<>());
-            fenetre.setRotation(new ArrayList<>());
+            fenetre.setEnableBelgium(false);
+            fenetre.setEnableFrench(true);
             GameManager.setFleet(new NavyFleet());
-            francais=false;
-
-            //On "refait" l'affichage mais en version belge
-            String[] boatName = new String[]{"Battleship","Cruiser","Destroyer","Submarine"};
-            for(int i = 0; i<4;i++){
-                JPanel jp = new JPanel();
-                jp.setPreferredSize(new Dimension(550,75));
-                //jp.setBackground(Color.BLACK);
-                ImageIcon ship = new ImageIcon("lib/belge/"+(i+1)+".png");
-                JLabel jl = new JLabel(ship);
-                jl.setText(boatName[i]);
-                jl.setName(boatName[i]);
-                jp.add(jl);
-                JComboBox<String> jcb= new JComboBox<>();
-                jcb.addItem("Haut");
-                jcb.addItem("Droite");
-                jcb.addItem("Gauche");
-                jcb.addItem("Bas");
-                jcb.setName(boatName[i]);
-                fenetre.getRotation().add(jcb);
-                jp.add(jcb);
-                JButton jb = new JButton("Placer");
-                jb.setName(boatName[i]);
-                fenetre.getPlacerButtons().add(jb);
-                jb.addActionListener(fenetre.getCtrl());
-                jp.add(jb);
-
-                fenetre.getBateauxPanel().add(jp);
-            }
-            //On clear les background des boutons au cas ou le joueur à ajouter des bateaux avant de changer de composition
-            for(JButton b : fenetre.getButtons()){
-                b.setBackground(new Color(0x78939A));
-            }
-            //On update la vue pour que ça s'affiche
+            fenetre.setIsFrench(false);
+            fenetre.update();
+            fenetre.reset();
             app.getViewManager().update();
+            //On retire tout dans l'affichage des bateaux, dans les listes et on fait une nouvelle flotte pour enlever la précédente
+            //On clear les background des boutons au cas ou le joueur à ajouter des bateaux avant de changer de composition
+
+            //On update la vue pour que ça s'affiche
         }
 
         //Si la personne veut une composition française
-        if(nameButton.equalsIgnoreCase("Français")){
-            fenetre.enableBelgium(true);
-            fenetre.enableFrench(false);
-            //On retire tout du JPanel des bateaux à placer, des lists de bouton placé/des rotations et on refait une nouvelle flotte dans GameManager
-            fenetre.getBateauxPanel().removeAll();
-            fenetre.setPlacerButtons(new ArrayList<>());
-            fenetre.setRotation(new ArrayList<>());
-            francais = true;
+        if(nameButton.equalsIgnoreCase("Francais")){
+            fenetre.setEnableFrench(false);
+            fenetre.setEnableBelgium(true);
             GameManager.setFleet(new NavyFleet());
-
-            //On "refait" l'affichage en version française
-            String[] boatName = new String[]{"AircraftCarrier","BattleShip","Cruiser","Destroyer","Submarine"};
-            for(int i = 0; i<5;i++){
-                JPanel jp = new JPanel();
-                jp.setPreferredSize(new Dimension(550,75));
-                //jp.setBackground(Color.BLACK);
-                ImageIcon ship = new ImageIcon("lib/francais/"+(i+1)+".png");
-                JLabel jl = new JLabel(ship);
-                jl.setText(boatName[i]);
-                jl.setName(boatName[i]);
-                jp.add(jl);
-                JComboBox<String> jcb= new JComboBox<>();
-                jcb.addItem("Haut");
-                jcb.addItem("Droite");
-                jcb.addItem("Gauche");
-                jcb.addItem("Bas");
-                jcb.setName(boatName[i]);
-                fenetre.getRotation().add(jcb);
-                jp.add(jcb);
-                JButton jb = new JButton("Placer");
-                jb.setName(boatName[i]);
-                System.out.println(jb.getName());
-                fenetre.getPlacerButtons().add(jb);
-                jb.addActionListener(fenetre.getCtrl());
-                jp.add(jb);
-                fenetre.getBateauxPanel().add(jp);
-            }
-            //On clear le background des buttons si des bateaux avaient été placé avant le changement de composition
-            for(JButton b : fenetre.getButtons()){
-                b.setBackground(new Color(0x78939A));
-            }
-            //On update le tout pour l'affichage
+            fenetre.setIsFrench(true);
+            fenetre.update();
+            fenetre.reset();
             app.getViewManager().update();
-        }
-
+            }
 
         //Si la personne clique sur le bouton jouer
         if(nameButton.equalsIgnoreCase("Jouer")){
             //Il faut qu'il est mis un nom de joueur
-            if(!fenetre.getName().getText().equalsIgnoreCase("")) {
+            if(!fenetre.getPlayerName().equalsIgnoreCase("")) {
                 //Il faut qu'il est sa flotte pleine
                 if (GameManager.getFleet().isComplete()) {
-                    Player player = new Player(fenetre.getName().getText());
+                    Player player = new Player(fenetre.getPlayerName());
                     try {
                         if (Network.suscribeNewPlayer(GameManager.getUrl(), player)){
                             GameManager.setPlayer(player);
@@ -163,10 +92,10 @@ public class OnActionEvent implements ActionListener {
                         System.out.println(unirestException.getMessage());
                     }
                 }else{
-                    app.getViewManager().alert("Veuillez finir votre flotte ! ");
+                    JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Veuillez finir votre flotte ! ","Erreur de flotte",JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                app.getViewManager().alert("Veuillez insérer un pseudo !");
+                JOptionPane.showMessageDialog(Application.getApp().getViewManager(),"Veuillez insérer un pseudo !","Erreur de pseudo",JOptionPane.ERROR_MESSAGE);
             }
         }
     }

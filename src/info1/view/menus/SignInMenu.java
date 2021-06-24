@@ -1,6 +1,13 @@
 package info1.view.menus;
 
+import info1.ships.Coord;
+import info1.ships.ICoord;
 import info1.view.ViewManager;
+import info1.view.listeners.signInMenu.OnActionEvent;
+import info1.view.listeners.signInMenu.OnClicCoord;
+import info1.view.listeners.signInMenu.OnPlacerAction;
+import info1.view.listeners.signInMenu.SensListener;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +18,7 @@ import java.util.List;
 public class SignInMenu {
 
 
+    private final ViewManager frame;
     JPanel main = new JPanel(new BorderLayout());
 
     //main Components
@@ -33,7 +41,7 @@ public class SignInMenu {
 
     //mainEast Components
     JPanel mainENorth = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    JPanel mainECenter;
+    JPanel mainECenter = new JPanel(new GridLayout(5,1));
     JPanel mainESouth = new JPanel();
 
     //mainENorth Components
@@ -75,6 +83,7 @@ public class SignInMenu {
 
     public SignInMenu(ViewManager frame) {
 
+        this.frame = frame;
         //main DEFINITION
         main.setSize(frame.getSize());
         main.setPreferredSize(main.getSize());
@@ -110,7 +119,7 @@ public class SignInMenu {
                 JButton b1 = new JButton();
                 b1.setPreferredSize(new Dimension(50, 50));
                 b1.setBackground(new Color(0x78939A));
-                b1.setName(((char) (65 + i)) + String.valueOf(j + 1));
+                b1.setName(((char) (65 + j)) + String.valueOf(i + 1));
                 buttons.add(b1);
                 plateau.add(b1);
             }
@@ -165,9 +174,13 @@ public class SignInMenu {
         destroyerSens.setPreferredSize(new Dimension(150,50));
         submarinSens.setPreferredSize(new Dimension(150,50));
 
-
-
         setSensText();
+
+        aircraftSens.setName("asens");
+        battleShipSens.setName("bsens");
+        cruiserSens.setName("csens");
+        destroyerSens.setName("dsens");
+        submarinSens.setName("ssens");
 
         ship1.add(aircraftImg);
         ship1.add(aircraft);
@@ -200,6 +213,8 @@ public class SignInMenu {
         main.add(mainCenter, BorderLayout.CENTER);
         main.add(mainEast, BorderLayout.EAST);
 
+        //Set listener (on a o
+        setListener();
 
 
         frame.setContentPane(main);
@@ -215,7 +230,7 @@ public class SignInMenu {
 
     public void update(){
         setNation();
-        setSensText();
+        frame.update();
     }
 
     private void setNation(){
@@ -224,52 +239,100 @@ public class SignInMenu {
     }
 
     private void setSensText(){
-        if(aSens) aircraftSens.setText("Horizontale"); else aircraftSens.setText("Vertical");
-        if(bSens) battleShipSens.setText("Horizontale"); else battleShipSens.setText("Vertical");
-        if(cSens) cruiserSens.setText("Horizontale"); else cruiserSens.setText("Vertical");
-        if(dSens) destroyerSens.setText("Horizontale"); else destroyer.setText("Vertical");
-        if(sSens) submarinSens.setText("Horizontale"); else submarinSens.setText("Vertical");
+        if(aSens) aircraftSens.setText("Horizontal");else aircraftSens.setText("Vertical");
+        if(bSens) battleShipSens.setText("Horizontal"); else battleShipSens.setText("Vertical");
+        if(cSens) cruiserSens.setText("Horizontal"); else cruiserSens.setText("Vertical");
+        if(dSens) destroyerSens.setText("Horizontal"); else destroyerSens.setText("Vertical");
+        if(sSens) submarinSens.setText("Horizontal"); else submarinSens.setText("Vertical");
     }
 
-    public void setAircraftSens(boolean aSens) {
-        this.aSens = aSens;
-        setSensText();
+    public void setAircraftSens(boolean b) {
+        this.aSens = b;
+        System.out.println(aSens);
+        if(aSens) {aircraftSens.setText("Horizontal");}else {aircraftSens.setText("Vertical");}
     }
 
-    public void setBattleShipSens(boolean aSens) {
-        this.bSens = aSens;
-        setSensText();
+    public void setBattleShipSens(boolean b) {
+        this.bSens = b;
+        System.out.println(bSens);
+        if(bSens) {battleShipSens.setText("Horizontal");} else {battleShipSens.setText("Vertical");}
     }
 
-    public void setCruiserSens(boolean aSens) {
-        this.cSens = aSens;
-        setSensText();
+    public void setCruiserSens(boolean b) {
+        this.cSens = b;
+        System.out.println(cSens);
+        if(cSens) cruiserSens.setText("Horizontal"); else cruiserSens.setText("Vertical");
     }
 
-    public void setDestroyerSens(boolean aSens) {
-        this.dSens = aSens;
-        setSensText();
+    public void setDestroyerSens(boolean b) {
+        this.dSens = b;
+        System.out.println(dSens);
+        if(dSens) destroyerSens.setText("Horizontal"); else destroyerSens.setText("Vertical");
     }
 
-    public void setSubmarinSens(boolean aSens) {
-        this.sSens = aSens;
-        setSensText();
+    public void setSubmarinSens(boolean b) {
+        this.sSens = b;
+        System.out.println(sSens);
+        if(sSens) submarinSens.setText("Horizontal"); else submarinSens.setText("Vertical");
+    }
+
+    public void reset(){
+        for(JButton button : buttons){
+            button.setBackground(new Color(0x78939A));
+        }
+        setEnableAircraft(true);
+        setEnableBattleShip(true);
+        setEnableCruiser(true);
+        setEnableDestroyer(true);
+        setEnableSubmarin(true);
+
+        setAircraftSens(true);
+        setBattleShipSens(true);
+        setCruiserSens(true);
+        setDestroyerSens(true);
+        setSubmarinSens(true);
+
+    }
+
+    public void placeShip(List<ICoord> coords){
+        for (JButton button : buttons) {
+            for (ICoord coord : coords){
+                if(button.getName().equalsIgnoreCase(coord.toString())){
+                    button.setBackground(Color.BLACK);
+                }
+            }
+
+        }
     }
 
     public boolean getAircraftSens(){return aSens;}
 
-    public boolean getBattleShipSens(){return aSens;}
+    public boolean getBattleShipSens(){return bSens;}
 
-    public boolean getCruiserSens(){return aSens;}
+    public boolean getCruiserSens(){return cSens;}
 
-    public boolean getDestroyerSens(){return aSens;}
+    public boolean getDestroyerSens(){return dSens;}
 
-    public boolean getSubmarinSens(){return aSens;}
+    public boolean getSubmarinSens(){return sSens;}
 
+    public void setEnableBelgium(boolean b){belgium.setEnabled(b);}
 
+    public void setEnableFrench(boolean b){french.setEnabled(b);}
 
-    public void frenchFleet() {
-        mainECenter = new JPanel(new GridLayout(5,1));
+    public void setEnableAircraft(boolean b){aircraft.setEnabled(b);}
+
+    public void setEnableBattleShip(boolean b){battleShip.setEnabled(b);}
+
+    public void setEnableCruiser(boolean b){cruiser.setEnabled(b);}
+
+    public void setEnableDestroyer(boolean b){destroyer.setEnabled(b);}
+
+    public void setEnableSubmarin(boolean b){submarin.setEnabled(b);}
+
+    public String getPlayerName(){return playerName.getText();}
+
+    private void frenchFleet() {
+        mainECenter.removeAll();
         mainECenter.setSize(new Dimension(mainEast.getWidth(), mainEast.getHeight()-(mainENorth.getHeight()+mainESouth.getHeight())));
         mainECenter.setPreferredSize(mainECenter.getSize());
 
@@ -280,15 +343,40 @@ public class SignInMenu {
         mainECenter.add(ship5);
     }
 
-    public void belgianFleet(){
-        mainECenter = new JPanel(new GridLayout(5,1));
+    private void belgianFleet(){
+        mainECenter.removeAll();
         mainECenter.setSize(new Dimension(mainEast.getWidth(), mainEast.getHeight()-(mainENorth.getHeight()+mainESouth.getHeight())));
         mainECenter.setPreferredSize(mainECenter.getSize());
 
-        mainECenter.add(ship1);
         mainECenter.add(ship2);
         mainECenter.add(ship3);
         mainECenter.add(ship4);
+        mainECenter.add(ship5);
         mainECenter.add(new JPanel());
+    }
+
+    private void setListener(){
+        OnActionEvent oae = new OnActionEvent(this);
+        belgium.addActionListener(oae);
+        french.addActionListener(oae);
+        play.addActionListener(oae);
+
+        OnPlacerAction opa = new OnPlacerAction(this);
+        aircraft.addActionListener(opa);
+        battleShip.addActionListener(opa);
+        cruiser.addActionListener(opa);
+        destroyer.addActionListener(opa);
+        submarin.addActionListener(opa);
+
+        aircraftSens.addActionListener(new SensListener(this));
+        battleShipSens.addActionListener(new SensListener(this));
+        cruiserSens.addActionListener(new SensListener(this));
+        destroyerSens.addActionListener(new SensListener(this));
+        submarinSens.addActionListener(new SensListener(this));
+
+
+        for(JButton button : buttons){
+            button.addActionListener(new OnClicCoord(this,opa));
+        }
     }
 }
