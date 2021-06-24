@@ -1,11 +1,15 @@
 package info1.view.menus;
 
 
+import info1.ships.ICoord;
+import info1.ships.IShip;
 import info1.view.Menu;
 import info1.view.ViewManager;
 import info1.utils.GameManager;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import info1.Application;
@@ -30,6 +34,7 @@ public class GameMenu{
     //grille joueur//
     JPanel grilleJoueur;
     JButton boutonJoueur;
+    List<JButton> boutons = new ArrayList();
 
     //--------------------------//
 
@@ -64,11 +69,13 @@ public class GameMenu{
 
         droite = new JPanel(new FlowLayout(FlowLayout.CENTER));
         interfaceAdversaire = new JPanel(new BorderLayout());
+
         //settings grille joueur//
         grilleJoueur = new JPanel(new GridLayout(11,11));
         grilleJoueur.setBorder(BorderFactory.createTitledBorder("Votre flotte"));
 
         grilleJoueur.add(new JLabel());
+
         //ajout des lettres en haut des colonnes//
         contour = new JLabel("--A--",SwingConstants.CENTER);
         contour.setOpaque(true);
@@ -110,6 +117,7 @@ public class GameMenu{
                 int number = i+1;
                 boutonJoueur.setName((char)(65+j)+ "" + number);
                 boutonJoueur.setEnabled(false);
+                boutons.add(boutonJoueur);
                 grilleJoueur.add(boutonJoueur);
             }
         }
@@ -198,6 +206,8 @@ public class GameMenu{
         principal.add(droite);
         viewManager.setContentPane(principal);
 
+        placerBateaux();
+
         waiting();
 
 
@@ -241,5 +251,16 @@ public class GameMenu{
      */
     public void hit(JButton selected) {
         selected.removeActionListener(selected.getActionListeners()[0]);
+    }
+    public void placerBateaux(){
+        for (IShip ship : GameManager.getFleet().getShips()) {
+            for (ICoord coord : ship.getCoords()) {
+                for (JButton bouton : boutons){
+                    if(bouton.getName().equals(coord.toString())){
+                        bouton.setBackground(Color.BLACK);
+                    }
+                }
+            }
+        }
     }
 }
