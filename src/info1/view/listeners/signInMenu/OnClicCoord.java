@@ -15,6 +15,12 @@ public class OnClicCoord implements ActionListener {
     private SignInMenu fenetre;
     private OnPlacerAction placement;
 
+
+    /**
+     * Listener permettant de placer un bateau dès lorsqu'un joueur clique sur un bouton
+     * @param sim la fenetre pour modifier la vue
+     * @param opa le listener pour récupérer le bateau à placer et sa position
+     */
     public OnClicCoord(SignInMenu sim, OnPlacerAction opa){
         fenetre = sim;
         placement = opa;
@@ -23,78 +29,81 @@ public class OnClicCoord implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Pour éviter les bugs de fleet null, si elle vaut null : on en créer une nouvelle
         if (GameManager.getFleet() == null){ GameManager.setFleet(new NavyFleet()); }
+
+        //Si elle n'est pas complète alors on peut ajouter le bateau
         if (!GameManager.getFleet().isComplete()){
+
+            //On stock les informations du bateau à placer et la rotation sur le clic
             String xy = ((JButton)e.getSource()).getName();
             String nameBateau = placement.getBateau_a_placer();
             String nameRotation = placement.getRotation_bateau();
-            System.out.println(nameBateau + " // "+nameRotation +" CASE : "+ xy);
+
+            //On appelle la fonction pour placer le bateau
             try {
-                this.BatoAPlacer(nameBateau, xy, nameRotation);
+                this.BateauAPlacer(nameBateau, xy, nameRotation);
             } catch (BadCoordException | CoordsBadShipException badCoordException) {
                 badCoordException.printStackTrace();
             }
-            System.out.println(GameManager.getFleet().toString());
         }
     }
 
-    public void BatoAPlacer(String name,String coord,String placement) throws BadCoordException, CoordsBadShipException {
+    /**
+     * Permet de placer un bateau en fonction de son nom, sa coordonnée de début et de son orientation
+     * @param name nom du bateau à placer
+     * @param coord coordonnée du début du bateau
+     * @param placement l'orientation vers laquelle placer le bateau en fonction du début
+     * @throws BadCoordException
+     * @throws CoordsBadShipException
+     */
+    public void BateauAPlacer(String name,String coord,String placement) throws BadCoordException, CoordsBadShipException {
+
+        //coordFin est les coordonnées de fin
         String coordFin;
+        //number et le nombre max de bateau (il est différent si la flotte est belge ou française)
         int number;
+
         switch(name.toLowerCase()){
+            //Si le nom du bouton placer est AircraftCarrier (donc si le joueur veut placer un aircraftcarrier
             case "aircraftcarrier" :
-                coordFin = aidePlacement(coord,placement,5);
-                if(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()<1) {
-                    System.out.println(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER));
-                    System.out.println(coord + "-->"+ coordFin);
-                    GameManager.getFleet().add(new AircraftCarrier("nom", coord, coordFin));
-                    if(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()==1){
-                        fenetre.getPlacerButtons().get(0).setEnabled(false);
-                    }
-                    for (IShip s : GameManager.getFleet().getShips()) {
-                        for (ICoord c : s.getCoords()) {
-                            System.out.println(c.toString());
-                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
-                        }
-                    }
+                //Si on a la possibilité de placer le bateau
+                if(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()<1 && OnActionEvent.isFrancais()) {
+                    //On calcul la coordonné de fin
+                    coordFin = calculCoordFin(coord,placement,5);
+                    //On ajoute le bateau à la fleet
+                    boolean gauche = placement.equalsIgnoreCase("gauche");
+                    GameManager.getFleet().add(new AircraftCarrier("nom", !gauche ? coord : coordFin, !gauche ? coordFin : coord));
+                    //Si la taille maximal de cette catégorie de bateau a été atteinte, on disable la possibilité de cliquer sur le bouton
+                    if(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()==1){fenetre.getPlacerButtons().get(0).setEnabled(false);}
+                    //on fait l'affichage du bateau sur les boutons
+                    affichageButton();
                 }
                 break;
+            //Pareil que pour aircraftcarrier
             case "battleship":
-                coordFin = aidePlacement(coord,placement,4);
                 if (GameManager.getFleet().getShips(ShipCategory.BATTLESHIP).size()<1) {
+                    coordFin = calculCoordFin(coord,placement,4);
                     GameManager.getFleet().add(new Battleship("nom", coord, coordFin));
-                    fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 1 : 0).setEnabled(false);
-                    for (IShip s : GameManager.getFleet().getShips()) {
-                        for (ICoord c : s.getCoords()) {
-                            System.out.println(c.toString());
-                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
-                        }
-                    }
+                    if(GameManager.getFleet().getShips(ShipCategory.BATTLESHIP).size()==1){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 1 : 0).setEnabled(false);}
+                    affichageButton();
                 }
                 break;
             case "cruiser":
-                coordFin = aidePlacement(coord,placement,3);
                 if(GameManager.getFleet().getShips(ShipCategory.CRUISER).size()<2) {
+                    coordFin = calculCoordFin(coord,placement,3);
                     GameManager.getFleet().add(new Cruiser("nom", coord, coordFin));
                     if(GameManager.getFleet().getShips(ShipCategory.CRUISER).size()==2){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 2 : 1).setEnabled(false);}
-                    for (IShip s : GameManager.getFleet().getShips()) {
-                        for (ICoord c : s.getCoords()) {
-                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
-                        }
-                    }
+                    affichageButton();
                 }
                 break;
             case"destroyer":
-                coordFin = aidePlacement(coord,placement,2);
                 number = OnActionEvent.isFrancais() ? 2 : 3;
                 if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()<number) {
+                    coordFin = calculCoordFin(coord,placement,2);
                     GameManager.getFleet().add(new Destroyer("nom", coord, coordFin));
                     if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 3 : 2).setEnabled(false);};
-                    for (IShip s : GameManager.getFleet().getShips()) {
-                        for (ICoord c : s.getCoords()) {
-                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
-                        }
-                    }
+                    affichageButton();
                 }
                 break;
             case"submarine": ;
@@ -102,20 +111,27 @@ public class OnClicCoord implements ActionListener {
                 if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()<number) {
                     GameManager.getFleet().add(new Submarine("nom",coord));
                     if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()==number){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 4 : 3).setEnabled(false);}
-                    for (IShip s : GameManager.getFleet().getShips()) {
-                        for (ICoord c : s.getCoords()) {
-                            fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
-                        }
-                    }
+                    affichageButton();
                 }
                 break;
         }
 
     }
 
-    private String aidePlacement(String coord, String placement,int size){
-        switch (placement.toLowerCase()){
+
+    /**
+     * Fonction privé permettant à partir d'une coordonnée de départ, d'une orientation et d'une taille la coordonnée de fin
+     * @param coord coordonnée du début du bateau
+     * @param rotation sens dans lequel placer le bateau
+     * @param size taille du bateau à placer
+     * @return
+     */
+    private String calculCoordFin(String coord, String rotation,int size){
+        //Calcul du placement de la coordonnée de fin en fonction de la rotation choisi
+        switch (rotation.toLowerCase()){
             //LETTRE
+            //Lorsqu'on va vers la gauche ou la droite, c'est le caractère qui change (par exemple si la coordonnée de début est A1, pour une rotation droite,
+            //avec un aircraftcarrier (donc size de 5)
             case "droite" :
                 char a = ((char) ((int) coord.charAt(0)+size-1));
                 char b = coord.charAt(1);
@@ -125,7 +141,7 @@ public class OnClicCoord implements ActionListener {
                 char a1 = ((char) ((int) coord.charAt(0)-size+1));
                 char b1 = coord.charAt(1);
                 String s1 = coord.length()>2 ? String.valueOf(coord.charAt(2)) : "";
-                return String.valueOf(a1)+String.valueOf(b1)+String.valueOf(s1);
+                return String.valueOf(a1) + String.valueOf(b1) + s1;
             //CHIFFRE
             case "haut" :
                 char a2 = coord.charAt(0);
@@ -139,5 +155,16 @@ public class OnClicCoord implements ActionListener {
                 return String.valueOf(a3)+String.valueOf(b3);
         }
         return "";
+    }
+
+    /**
+     * Methode privée permettant d'affichier en couleur (Noir ici) le bateau
+     */
+    private void affichageButton(){
+        for (IShip s : GameManager.getFleet().getShips()) {
+            for (ICoord c : s.getCoords()) {
+                fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
+            }
+        }
     }
 }

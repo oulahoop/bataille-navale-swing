@@ -22,16 +22,9 @@ public class OnPlacerAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(((JButton)e.getSource()).getName());
-        placer(((JButton)e.getSource()).getName(),e);
-        System.out.println("Après fonction : " + rotation_bateau + " et " + bateau_a_placer);
-    }
-
-
-    private void placer(String bateauName, ActionEvent e){
+        bateau_a_placer = (((JButton)e.getSource()).getName());
         for(JComboBox<String> jcb : fenetre.getRotation()){
-            System.out.println(jcb.getName());
-            if(jcb.getName().equalsIgnoreCase(bateauName)){
+            if(jcb.getName().equalsIgnoreCase(bateau_a_placer)){
                 rotation_bateau = (String) jcb.getSelectedItem();
                 bateau_a_placer = ((JButton)e.getSource()).getName();
             }
@@ -42,10 +35,18 @@ public class OnPlacerAction implements ActionListener {
         }
     }
 
+    /**
+     * Methode permettant de get la rotation du bateau dans laquelle on veut le placer
+     * @return rotation du bateau en String
+     */
     public String getRotation_bateau() {
         return rotation_bateau;
     }
 
+    /**
+     * Methode permettant de get le nom du bateau à placer
+     * @return String du nom de la classe du bateau à placer
+     */
     public String getBateau_a_placer() {
         return bateau_a_placer;
     }
