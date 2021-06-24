@@ -1,13 +1,12 @@
 package info1.view.menus;
 
-import info1.ships.Coord;
 import info1.ships.ICoord;
+import info1.view.ConstantColor;
 import info1.view.ViewManager;
 import info1.view.listeners.signInMenu.OnActionEvent;
 import info1.view.listeners.signInMenu.OnClicCoord;
 import info1.view.listeners.signInMenu.OnPlacerAction;
 import info1.view.listeners.signInMenu.SensListener;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +18,10 @@ public class SignInMenu {
 
 
     private final ViewManager frame;
+
+    ImageIcon france = new ImageIcon("src/info1/utils/img/frFlag.png");
+    ImageIcon belgique = new ImageIcon("src/info1/utils/img/beFlag.png");
+
     JPanel main = new JPanel(new BorderLayout());
 
     //main Components
@@ -32,6 +35,7 @@ public class SignInMenu {
     // mainCNorth Components
     JButton french = new JButton("Français");
     JButton belgium = new JButton("Belge");
+
     boolean isFrench = true;
 
     //mainCCenter Components
@@ -91,13 +95,26 @@ public class SignInMenu {
         //mainCenter DEFINITION
         mainCenter.setSize(new Dimension((int) (main.getWidth()*0.55), main.getHeight()));
         mainCenter.setPreferredSize(mainCenter.getSize());
+        mainCenter.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //mainCNorth DEFINITION
         mainCNorth.setSize(new Dimension(mainCenter.getWidth(), (int) (mainCenter.getHeight()*0.1)));
         mainCNorth.setPreferredSize(mainCNorth.getSize());
+        mainCNorth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         french.setName("francais");
         belgium.setName("belge");
+
+        Image imageF = france.getImage();
+        imageF = imageF.getScaledInstance(mainCNorth.getWidth()/2, mainCNorth.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        france = new ImageIcon(imageF);
+
+        Image imageB = belgique.getImage();
+        imageB = imageB.getScaledInstance(mainCNorth.getWidth()/2, mainCNorth.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        belgique = new ImageIcon(imageB);
+
+        french.setIcon(france);
+        belgium.setIcon(belgique);
 
         mainCNorth.add(french);
         mainCNorth.add(belgium);
@@ -105,6 +122,7 @@ public class SignInMenu {
         //mainCCenter DEFINITION
         mainCCenter.setSize(new Dimension(mainCenter.getWidth(), mainCenter.getHeight()-mainCNorth.getHeight()));
         mainCCenter.setPreferredSize(mainCCenter.getSize());
+        mainCCenter.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //Definition du plateau de jeu
         plateau.add(new JLabel());
@@ -134,17 +152,21 @@ public class SignInMenu {
         //mainEast DEFINITION
         mainEast.setSize(new Dimension(main.getWidth()-mainCenter.getWidth(), main.getHeight()));
         mainEast.setPreferredSize(mainEast.getSize());
+        mainEast.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //mainENorth DEFINITION
         mainENorth.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.25)));
         mainENorth.setPreferredSize(mainENorth.getSize());
+        mainENorth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         pseudo.setSize(new Dimension(mainENorth.getWidth(), (int) (mainENorth.getHeight()*0.45)));
         pseudo.setPreferredSize(pseudo.getSize());
+        pseudo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
         pseudo.setHorizontalAlignment(SwingConstants.CENTER);
 
         playerName.setSize(new Dimension((int) (mainENorth.getWidth()*0.6), (int) (mainENorth.getHeight()*0.45)));
         playerName.setPreferredSize(playerName.getSize());
+        playerName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
 
         //mainENorth ADD
@@ -154,6 +176,7 @@ public class SignInMenu {
         //mainESouth DEFINITION
         mainESouth.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.1)));
         mainESouth.setPreferredSize(mainESouth.getSize());
+        mainESouth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         play.setPreferredSize(mainESouth.getSize());
 
@@ -161,6 +184,7 @@ public class SignInMenu {
         mainESouth.add(play);
 
         //mainECenter DEFINITION
+        mainECenter.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         aircraft.setPreferredSize(new Dimension(200,50));
         battleShip.setPreferredSize(new Dimension(200,50));
@@ -181,6 +205,12 @@ public class SignInMenu {
         cruiserSens.setName("csens");
         destroyerSens.setName("dsens");
         submarinSens.setName("ssens");
+
+        ship1.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        ship2.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        ship3.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        ship4.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        ship5.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         ship1.add(aircraftImg);
         ship1.add(aircraft);
@@ -234,8 +264,16 @@ public class SignInMenu {
     }
 
     private void setNation(){
-        if(isFrench) frenchFleet();
-        else belgianFleet();
+        if(isFrench) {
+            frenchFleet();
+            setEnableFrench(false);
+            setEnableBelgium(true);
+        }
+        else{
+            belgianFleet();
+            setEnableBelgium(false);
+            setEnableFrench(true);
+        }
     }
 
     private void setSensText(){
@@ -248,31 +286,26 @@ public class SignInMenu {
 
     public void setAircraftSens(boolean b) {
         this.aSens = b;
-        System.out.println(aSens);
         if(aSens) {aircraftSens.setText("Horizontal");}else {aircraftSens.setText("Vertical");}
     }
 
     public void setBattleShipSens(boolean b) {
         this.bSens = b;
-        System.out.println(bSens);
         if(bSens) {battleShipSens.setText("Horizontal");} else {battleShipSens.setText("Vertical");}
     }
 
     public void setCruiserSens(boolean b) {
         this.cSens = b;
-        System.out.println(cSens);
         if(cSens) cruiserSens.setText("Horizontal"); else cruiserSens.setText("Vertical");
     }
 
     public void setDestroyerSens(boolean b) {
         this.dSens = b;
-        System.out.println(dSens);
         if(dSens) destroyerSens.setText("Horizontal"); else destroyerSens.setText("Vertical");
     }
 
     public void setSubmarinSens(boolean b) {
         this.sSens = b;
-        System.out.println(sSens);
         if(sSens) submarinSens.setText("Horizontal"); else submarinSens.setText("Vertical");
     }
 

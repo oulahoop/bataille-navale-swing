@@ -4,6 +4,7 @@ import info1.network.Game;
 
 import info1.utils.GameManager;
 
+import info1.view.ConstantColor;
 import info1.view.ViewManager;
 import info1.view.listeners.mainMenu.GameIdListener;
 import info1.view.listeners.mainMenu.MenuActionListener;
@@ -62,10 +63,12 @@ public class MainMenu {
         //main DEFINTION
         main.setSize(frame.getSize());
         main.setPreferredSize(main.getSize());
+        main.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //mainNorth
         mainNorth.setSize(new Dimension(main.getWidth(), (int) (main.getHeight()*0.1)));
         mainNorth.setPreferredSize(mainNorth.getSize());
+        mainNorth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         waiting.setText("Parties en attente");
         waiting.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
@@ -78,6 +81,7 @@ public class MainMenu {
         //mainSouth DEFINITION
         mainSouth.setSize(new Dimension(main.getWidth(), (int) (main.getHeight()*0.15)));
         mainSouth.setPreferredSize(mainSouth.getSize());
+        mainSouth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         quitter.setSize(new Dimension(0, mainSouth.getHeight()));
         quitter.setName("quitter");
@@ -86,17 +90,24 @@ public class MainMenu {
 
         //mainSouth ADD
         mainSouth.add(quitter);
-        mainSouth.add(new JPanel());
+        JPanel empty1 = new JPanel();
+        empty1.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        mainSouth.add(empty1);
+
+        JPanel empty2 = new JPanel();
+        empty2.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
         mainSouth.add(createGame);
-        mainSouth.add(new JPanel());
+        mainSouth.add(empty2);
 
         //mainCenter DEFINTION
         mainCenter.setSize(new Dimension((int) (main.getWidth()*0.70),main.getHeight()-mainNorth.getHeight()-mainSouth.getHeight()));
         mainCenter.setPreferredSize(mainCenter.getSize());
+        mainCCenter.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //mainCNorth DEFINITION
         mainCNorth.setSize(new Dimension(mainCenter.getWidth(), (int) (mainCenter.getHeight()*0.1)));
         mainCNorth.setPreferredSize(mainCNorth.getSize());
+        mainCNorth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         refresh.setName("refresh");
         refresh.setSize(new Dimension((int) (mainCNorth.getWidth()*0.2), (int) (mainCNorth.getHeight()*0.8)));
@@ -108,6 +119,7 @@ public class MainMenu {
         //mainCCenter DEFINITION
         mainCCenter.setSize(new Dimension(mainCenter.getWidth(), mainCenter.getHeight()-mainCNorth.getHeight()));
         mainCCenter.setPreferredSize(mainCNorth.getSize());
+        mainCCenter.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //mise a jours de la Jlist
         refresh();
@@ -119,6 +131,7 @@ public class MainMenu {
         //mainEast DEFINITION
         mainEast.setSize(new Dimension((main.getWidth()-mainCenter.getWidth()),main.getHeight()-mainNorth.getHeight()-mainSouth.getHeight()));
         mainEast.setPreferredSize(mainEast.getSize());
+        mainEast.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         rechercher.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.3)));
         rechercher.setPreferredSize(rechercher.getSize());

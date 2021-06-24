@@ -2,11 +2,15 @@ package info1.view.menus;
 
 import info1.utils.GameManager;
 
+import info1.utils.ImagePanel;
 import info1.view.Menu;
 import info1.view.ViewManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -16,7 +20,8 @@ public class WaitingScreen {
 
     private final ViewManager viewManager;
 
-    JPanel main = new JPanel(new GridBagLayout());
+    ImagePanel main;
+    Image background;
 
     ImageIcon waitingIcon = new ImageIcon("src/info1/utils/img/waiting.png");
     JLabel waitingLabel;
@@ -29,7 +34,16 @@ public class WaitingScreen {
         //definition de l'attribut viewManager
         this.viewManager = frame;
 
+        //image DEFINITION
+        try {
+            background = ImageIO.read(new File("src/info1/utils/img/background.png"));
+            background = background.getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
         //Gestion du Jpanel "main"
+        main = new ImagePanel(background);
+        main.setLayout(new GridBagLayout());
         main.setSize(frame.getSize());
         main.setPreferredSize(main.getSize());
         main.setBackground(new Color(0x18384f));

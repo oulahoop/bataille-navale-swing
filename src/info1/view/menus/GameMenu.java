@@ -4,6 +4,7 @@ package info1.view.menus;
 import info1.ships.ICoord;
 import info1.ships.IShip;
 import info1.ships.Ship;
+import info1.view.ConstantColor;
 import info1.view.Menu;
 import info1.view.ViewManager;
 import info1.utils.GameManager;
@@ -64,12 +65,18 @@ public class GameMenu{
 
         principal.setSize(viewManager.getSize());
         principal.setPreferredSize(principal.getSize());
+        principal.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         gauche = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        gauche.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
         interfaceJoueur = new JPanel(new BorderLayout());
+        interfaceJoueur.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         droite = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        droite.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+
         interfaceAdversaire = new JPanel(new BorderLayout());
+        interfaceAdversaire.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //settings grille joueur//
         grilleJoueur = new JPanel(new GridLayout(11,11));
@@ -123,6 +130,7 @@ public class GameMenu{
 
         //Menu de tir//
         interfaceTir = new JPanel(new GridLayout(1,3));
+        interfaceTir.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
         //interfaceTir.setBorder(BorderFactory.createTitledBorder("Interface de tir"));
         rappelDernierTir = new JLabel("dernier tir : ");
         nouveauTir = new JButton("FEU!");
@@ -133,13 +141,16 @@ public class GameMenu{
         nouveauTir.setPreferredSize(new Dimension(principal.getWidth()/10, principal.getHeight()/10));
 
         interfaceTir.add(rappelDernierTir);
-        interfaceTir.add(new JPanel());
+        JPanel empty1 = new JPanel();
+        empty1.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        interfaceTir.add(empty1);
         interfaceTir.add(nouveauTir);
 
         //quitter
 
         exit.setPreferredSize(new Dimension(principal.getWidth()/10, principal.getHeight()/10));
         exit.addActionListener(new ExitListener(viewManager));
+        exitpanel.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
         exitpanel.add(exit, BorderLayout.WEST);
 
         interfaceJoueur.add(exitpanel, BorderLayout.SOUTH);
