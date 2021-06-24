@@ -2,6 +2,7 @@ package info1.view.listeners.signInMenu;
 
 import info1.Application;
 import info1.ships.*;
+import info1.utils.GameManager;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
@@ -13,7 +14,6 @@ public class OnClicCoord implements ActionListener {
 
     private SignInMenu fenetre;
     private OnPlacerAction placement;
-    private Application app = Application.getApp();
 
     public OnClicCoord(SignInMenu sim, OnPlacerAction opa){
         fenetre = sim;
@@ -23,8 +23,8 @@ public class OnClicCoord implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (app.getGameManager().getFleet() == null){ app.getGameManager().setFleet(new NavyFleet()); }
-        if (!app.getGameManager().getFleet().isComplete()){
+        if (GameManager.getFleet() == null){ GameManager.setFleet(new NavyFleet()); }
+        if (!GameManager.getFleet().isComplete()){
             String xy = ((JButton)e.getSource()).getName();
             String nameBateau = placement.getBateau_a_placer();
             String nameRotation = placement.getRotation_bateau();
@@ -34,7 +34,7 @@ public class OnClicCoord implements ActionListener {
             } catch (BadCoordException | CoordsBadShipException badCoordException) {
                 badCoordException.printStackTrace();
             }
-            System.out.println(app.getGameManager().getFleet().toString());
+            System.out.println(GameManager.getFleet().toString());
         }
     }
 
@@ -44,14 +44,14 @@ public class OnClicCoord implements ActionListener {
         switch(name.toLowerCase()){
             case "aircraftcarrier" :
                 coordFin = aidePlacement(coord,placement,5);
-                if(app.getGameManager().getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()<1) {
-                    System.out.println(app.getGameManager().getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER));
+                if(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()<1) {
+                    System.out.println(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER));
                     System.out.println(coord + "-->"+ coordFin);
-                    app.getGameManager().getFleet().add(new AircraftCarrier("nom", coord, coordFin));
-                    if(app.getGameManager().getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()==1){
+                    GameManager.getFleet().add(new AircraftCarrier("nom", coord, coordFin));
+                    if(GameManager.getFleet().getShips(ShipCategory.AIRCRAFT_CARRIER).size()==1){
                         fenetre.getPlacerButtons().get(0).setEnabled(false);
                     }
-                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                    for (IShip s : GameManager.getFleet().getShips()) {
                         for (ICoord c : s.getCoords()) {
                             System.out.println(c.toString());
                             fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
@@ -61,10 +61,10 @@ public class OnClicCoord implements ActionListener {
                 break;
             case "battleship":
                 coordFin = aidePlacement(coord,placement,4);
-                if (app.getGameManager().getFleet().getShips(ShipCategory.BATTLESHIP).size()<1) {
-                    app.getGameManager().getFleet().add(new Battleship("nom", coord, coordFin));
+                if (GameManager.getFleet().getShips(ShipCategory.BATTLESHIP).size()<1) {
+                    GameManager.getFleet().add(new Battleship("nom", coord, coordFin));
                     fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 1 : 0).setEnabled(false);
-                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                    for (IShip s : GameManager.getFleet().getShips()) {
                         for (ICoord c : s.getCoords()) {
                             System.out.println(c.toString());
                             fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
@@ -74,10 +74,10 @@ public class OnClicCoord implements ActionListener {
                 break;
             case "cruiser":
                 coordFin = aidePlacement(coord,placement,3);
-                if(app.getGameManager().getFleet().getShips(ShipCategory.CRUISER).size()<2) {
-                    app.getGameManager().getFleet().add(new Cruiser("nom", coord, coordFin));
-                    if(app.getGameManager().getFleet().getShips(ShipCategory.CRUISER).size()==2){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 2 : 1).setEnabled(false);}
-                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                if(GameManager.getFleet().getShips(ShipCategory.CRUISER).size()<2) {
+                    GameManager.getFleet().add(new Cruiser("nom", coord, coordFin));
+                    if(GameManager.getFleet().getShips(ShipCategory.CRUISER).size()==2){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 2 : 1).setEnabled(false);}
+                    for (IShip s : GameManager.getFleet().getShips()) {
                         for (ICoord c : s.getCoords()) {
                             fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
                         }
@@ -87,10 +87,10 @@ public class OnClicCoord implements ActionListener {
             case"destroyer":
                 coordFin = aidePlacement(coord,placement,2);
                 number = OnActionEvent.isFrancais() ? 2 : 3;
-                if(app.getGameManager().getFleet().getShips(ShipCategory.DESTROYER).size()<number) {
-                    app.getGameManager().getFleet().add(new Destroyer("nom", coord, coordFin));
-                    if(app.getGameManager().getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 3 : 2).setEnabled(false);};
-                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()<number) {
+                    GameManager.getFleet().add(new Destroyer("nom", coord, coordFin));
+                    if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 3 : 2).setEnabled(false);};
+                    for (IShip s : GameManager.getFleet().getShips()) {
                         for (ICoord c : s.getCoords()) {
                             fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
                         }
@@ -99,10 +99,10 @@ public class OnClicCoord implements ActionListener {
                 break;
             case"submarine": ;
                 number = OnActionEvent.isFrancais() ? 1 : 4;
-                if(app.getGameManager().getFleet().getShips(ShipCategory.SUBMARINE).size()<number) {
-                    app.getGameManager().getFleet().add(new Submarine("nom",coord));
-                    if(app.getGameManager().getFleet().getShips(ShipCategory.SUBMARINE).size()==1){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 4 : 3).setEnabled(false);}
-                    for (IShip s : app.getGameManager().getFleet().getShips()) {
+                if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()<number) {
+                    GameManager.getFleet().add(new Submarine("nom",coord));
+                    if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()==number){fenetre.getPlacerButtons().get(OnActionEvent.isFrancais() ? 4 : 3).setEnabled(false);}
+                    for (IShip s : GameManager.getFleet().getShips()) {
                         for (ICoord c : s.getCoords()) {
                             fenetre.getButtons().get(c.getX() - 1 + (c.getY() - 1) * 10).setBackground(Color.BLACK);
                         }

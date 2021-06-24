@@ -17,7 +17,6 @@ public class SignInMenu{
 
 
     private JPanel bateaux;
-
     private JTextField name;
 
     private ArrayList<JButton> buttons;
@@ -41,7 +40,7 @@ public class SignInMenu{
         JPanel droite = new JPanel();
         droite.setLayout(new GridLayout(2,1));
 
-        //LIGNE POUR PUT LE NOM
+        //TEXTFIELD D'INSCRIPTION DU NOM
         JPanel inscription = new JPanel(new BorderLayout());
         JPanel centerInscription = new JPanel(new GridLayout(10,1));
         JPanel insideCenterInscription = new JPanel();
@@ -49,6 +48,8 @@ public class SignInMenu{
         name.setPreferredSize(new Dimension(250,50));
         name.setFont(new Font(Font.SANS_SERIF,Font.BOLD,20));
         name.setBackground(new Color(0x9293FF));
+
+        //PLACEMENT DU NOM
         for(int i = 0;i<2;i++){
             JButton void1 = new JButton();
             void1.setVisible(false);
@@ -77,14 +78,7 @@ public class SignInMenu{
         jouer.setName("Jouer");
         jouer.addActionListener(controleur);
         jouer.setPreferredSize(new Dimension(250,100));
-        /*
-        JButton vide1 = new JButton();
-        JButton vide2 = new JButton();
-        vide1.setVisible(false);
-        vide2.setVisible(false);
-        clickToPlay.add(vide1);
-        clickToPlay.add(vide2);
-        */
+        //PLACEMENT DU BOUTON JOUER
         clickToPlayCenter.add(jouer);
         clickToPlay.add(clickToPlayCenter,BorderLayout.CENTER);
         clickTo.add(clickToPlay);
@@ -189,30 +183,10 @@ public class SignInMenu{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    /*private class DragMouseAdaper extends MouseAdapter{
-        public void mousePressed(MouseEvent e){
-            if(e.getButton()==1) {
-                JComponent c = (JComponent) e.getSource();
-                TransferHandler handler = c.getTransferHandler();
-                handler.exportAsDrag(c, e, TransferHandler.COPY);
-                System.out.println();
-            }
-            if(e.getButton()==3){
-                //TODO changement de sens au clique droit
-            }
-        }
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-    }*/
-
+    //GETTER ET SETTER UTILES POUR LISTENER
     public JTextField getName() {
         return name;
-    }
-
-    public JButton getJouer() {
-        return jouer;
     }
 
     public ArrayList<JButton> getButtons() { return buttons; }
@@ -232,6 +206,7 @@ public class SignInMenu{
     public OnPlacerAction getCtrl() {
         return ctrl;
     }
+
     public ArrayList<JComboBox<String>> getRotation(){
         return rotation;
     }

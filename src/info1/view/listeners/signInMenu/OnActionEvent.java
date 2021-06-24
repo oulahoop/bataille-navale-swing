@@ -5,6 +5,7 @@ import info1.Application;
 import info1.network.Network;
 import info1.network.Player;
 import info1.ships.NavyFleet;
+import info1.utils.GameManager;
 import info1.view.Menu;
 import info1.view.menus.MainMenu;
 import info1.view.menus.SignInMenu;
@@ -38,7 +39,7 @@ public class OnActionEvent implements ActionListener {
             fenetre.enableBelgium(false);
             fenetre.getBateauxPanel().removeAll();
             francais=false;
-            app.getGameManager().setFleet(new NavyFleet());
+            GameManager.setFleet(new NavyFleet());
             fenetre.setPlacerButtons(new ArrayList<>());
             fenetre.setRotation(new ArrayList<>());
             String[] boatName = new String[]{"Battleship","Cruiser","Destroyer","Submarine"};
@@ -80,7 +81,7 @@ public class OnActionEvent implements ActionListener {
             fenetre.setPlacerButtons(new ArrayList<>());
             fenetre.setRotation(new ArrayList<>());
             francais = true;
-            app.getGameManager().setFleet(new NavyFleet());
+            GameManager.setFleet(new NavyFleet());
             String[] boatName = new String[]{"AircraftCarrier","BattleShip","Cruiser","Destroyer","Submarine"};
             for(int i = 0; i<5;i++){
                 JPanel jp = new JPanel();
@@ -115,23 +116,22 @@ public class OnActionEvent implements ActionListener {
 
         if(nameButton.equalsIgnoreCase("Jouer")){
             if(!fenetre.getName().getText().equalsIgnoreCase("")) {
-                if (app.getGameManager().getFleet().isComplete()) {
+                if (GameManager.getFleet().isComplete()) {
                     Player player = new Player(fenetre.getName().getText());
                     try {
-                        if (Network.suscribeNewPlayer(app.getGameManager().getUrl(), player)){
-                            app.getGameManager().setPlayer(player);
+                        if (Network.suscribeNewPlayer(GameManager.getUrl(), player)){
+                            GameManager.setPlayer(player);
                             app.getViewManager().switchTo(Menu.MAIN);
                     }
                     } catch (UnirestException unirestException) {
                         System.out.println(unirestException.getMessage());
                     }
                 }else{
-                    app.getViewManager().alert("Veuillez finir votre flotte ! ", false);
+                    app.getViewManager().alert("Veuillez finir votre flotte ! ");
                 }
             }else{
-                app.getViewManager().alert("Veuillez insérer un pseudo !", false);
+                app.getViewManager().alert("Veuillez insérer un pseudo !");
             }
-
         }
     }
 }
