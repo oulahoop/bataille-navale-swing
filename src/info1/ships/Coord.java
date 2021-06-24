@@ -8,8 +8,6 @@ public class Coord implements ICoord {
     String xy;
 
     /**
-     * NB : LA SIGNATURE DU CONSTRUCTEUR DOIT ETRE RESPECTEE
-     *
      * constructeur d'un objet Coord
      * @param xy la coordonnée aphanumérique sous la forme d'une chaine de caractères
      * @throws BadCoordException si la chaine de caractère ne permet pas de définir une coordonnée alphanumérique
