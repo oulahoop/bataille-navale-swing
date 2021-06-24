@@ -8,7 +8,9 @@ import info1.view.ViewManager;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Listener permettant de quitter la partie en cours avant qu'elle ne soit terminée.
+ */
 public class ExitListener implements ActionListener {
 
     private final ViewManager viewManager;

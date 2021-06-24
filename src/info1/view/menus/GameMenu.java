@@ -12,6 +12,9 @@ import info1.Application;
 import info1.view.listeners.gameMenu.ExitListener;
 import info1.view.listeners.gameMenu.ListenerTir;
 
+/**
+ * Mise en place de l'interface de jeu. Contient la grille de flotte et la  grille de tir.
+ */
 
 public class GameMenu{
 
@@ -43,6 +46,10 @@ public class GameMenu{
     JPanel exitpanel = new JPanel(new BorderLayout());
     JButton exit = new JButton("quitter");
 
+    /**
+     * Constructeur de la vue GameMenu, permettant la mise en place de l interface de jeu.
+     * @param viewManager, le viewManager est la Frame commune à toutes nos fenêtres.
+     */
     public GameMenu(ViewManager viewManager){
 
         //settings du panel principal//
@@ -200,6 +207,11 @@ public class GameMenu{
         viewManager.repaint();
 
     }
+
+    /**
+     * Méthode permettant de récupérer l'info de tour pour savoir quand le joueur peut jouer.
+     * Cela permet d'empêcher au joueur de tirer à l'infini.
+     */
     public void waiting() {
         nouveauTir.setEnabled(false);
         nouveauTir.setBackground(new Color(0x7a7a7a));
@@ -223,6 +235,10 @@ public class GameMenu{
         });
     }
 
+    /**
+     * Permet de désassocier le listener du bouton courant en cas de tir réussi.
+     * @param selected, le bouton séléctionné sur la grille.
+     */
     public void hit(JButton selected) {
         selected.removeActionListener(selected.getActionListeners()[0]);
     }
