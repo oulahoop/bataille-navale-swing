@@ -42,7 +42,7 @@ public class OnClicCoord implements ActionListener {
             try {
                 this.BateauAPlacer(nameBateau, xy);
             } catch (BadCoordException | CoordsBadShipException badCoordException) {
-                badCoordException.printStackTrace();
+                JOptionPane.showMessageDialog(Application.getApp().getViewManager(),"Erreur de placement de bateau !","Erreur",JOptionPane.ERROR_MESSAGE);
             }
         }
     }
