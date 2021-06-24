@@ -3,6 +3,7 @@ package info1.view.menus;
 
 import info1.ships.ICoord;
 import info1.ships.IShip;
+import info1.ships.Ship;
 import info1.view.Menu;
 import info1.view.ViewManager;
 import info1.utils.GameManager;
@@ -74,42 +75,15 @@ public class GameMenu{
         grilleJoueur = new JPanel(new GridLayout(11,11));
         grilleJoueur.setBorder(BorderFactory.createTitledBorder("Votre flotte"));
 
-        grilleJoueur.add(new JLabel());
-
         //ajout des lettres en haut des colonnes//
-        contour = new JLabel("--A--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--B--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--C--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--D--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--E--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--F--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--G--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--H--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--I--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-        contour = new JLabel("--J--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleJoueur.add(contour);
-
+        grilleJoueur.add(new JLabel());
+        for (int i = 0; i < 10; i++) {
+            contour = new JLabel(String.valueOf((char)(65+i)),SwingConstants.CENTER);
+            contour.setOpaque(true);
+            grilleJoueur.add(contour);
+        }
         for(int i = 0; i < 10; i++){
-            grilleJoueur.add(new JLabel("--" +String.valueOf(i+1) + "--", SwingConstants.CENTER));
+            grilleJoueur.add(new JLabel(String.valueOf(i+1), SwingConstants.CENTER));
             for(int j = 0;j<10;j++){
                 boutonJoueur = new JButton();
                 boutonJoueur.setBackground(new Color(0x78939A));
@@ -127,39 +101,14 @@ public class GameMenu{
         grilleAdversaire.setBorder(BorderFactory.createTitledBorder("Cible"));
 
         grilleAdversaire.add(new JLabel());
-        contour = new JLabel("--A--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--B--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--C--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--D--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--E--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--F--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--G--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--H--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--I--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
-        contour = new JLabel("--J--",SwingConstants.CENTER);
-        contour.setOpaque(true);
-        grilleAdversaire.add(contour);
+        for (int i = 0; i < 10; i++) {
+            contour = new JLabel(String.valueOf((char)(65+i)),SwingConstants.CENTER);
+            contour.setOpaque(true);
+            grilleAdversaire.add(contour);
+        }
         ListenerTir controleur = new ListenerTir(this);
         for(int i = 0; i < 10; i++){
-            grilleAdversaire.add(new JLabel("--" +String.valueOf(i+1) + "--", SwingConstants.CENTER));
+            grilleAdversaire.add(new JLabel(String.valueOf(i+1), SwingConstants.CENTER));
             for(int j = 0;j<10;j++){
                 boutonAdversaire = new JButton();
                 boutonAdversaire.setBackground(new Color(0x78939A));

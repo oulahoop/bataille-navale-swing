@@ -7,6 +7,7 @@ import info1.network.Game;
 import info1.network.Network;
 import info1.network.Player;
 import info1.ships.*;
+import info1.ships.INavyFleet;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class GameManager {
      * Getter de l'attribut "fleet"
      * @return la "fleet" courante
      */
-    public static  INavyFleet getFleet() { return fleet;}
+    public static NavyFleet getFleet() { return fleet;}
 
     /**
      * Getter de l'attribut "url"
@@ -177,5 +178,10 @@ public class GameManager {
             return Network.listInitializedGames(url);
         } catch(UnirestException e) { e.printStackTrace(); }
         return null;
+    }
+
+    public static void init() {
+        Network.setProxy("srv-proxy-etu-2.iut-nantes.univ-nantes.prive", 3128);
+        Network.enableProxy(true);
     }
 }
