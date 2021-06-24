@@ -180,7 +180,11 @@ public class GameManager {
         return null;
     }
 
-    public static void init() {
+    /**
+     * Méthode qui permet de d'initier le proxy afin de regler les problemes due au reseau de l'iut
+     * Est utiliser si l'utilisateur est connecté sur le reseau de l'iut
+     */
+    public static void initProxy() {
         Network.setProxy("srv-proxy-etu-2.iut-nantes.univ-nantes.prive", 3128);
         Network.enableProxy(true);
     }

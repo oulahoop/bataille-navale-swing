@@ -14,7 +14,7 @@ public class Application {
         if(JOptionPane.showConfirmDialog(this.getViewManager(),
                 "Etes vous connecté sur le reseau de l'iut",
                 "proxy configuration", JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION){
-            GameManager.init();
+            GameManager.initProxy();
         }
     }
 
