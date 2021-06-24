@@ -43,6 +43,6 @@ public class Coord implements ICoord {
 
     public int hashCode() {
         boolean length = (xy.length() == 3);
-        return (int)xy.charAt(0) + (length ? Integer.parseInt(xy.charAt(1) +""+ xy.charAt(2)) : Integer.parseInt(String.valueOf(xy.charAt(1))));
+        return  Integer.parseInt( (int)xy.charAt(0) +""+ (length ? Integer.parseInt(xy.charAt(1) +""+ xy.charAt(2)) : Integer.parseInt(String.valueOf(xy.charAt(1)))));
     }
 }

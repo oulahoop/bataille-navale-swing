@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class NavyFleet implements INavyFleet {
 
-    // TODO
     private int taille;
     private List<IShip> liste_bateaux;
 
@@ -22,31 +21,26 @@ public class NavyFleet implements INavyFleet {
      * Construit une nouvelle flotte
      */
     public NavyFleet() {
-        // TODO
         taille = 20;
         liste_bateaux = new ArrayList<>();
     }
 
     @Override
     public int remainingSize() {
-        // TODO
         return taille;
     }
 
     @Override
     public boolean isComplete() {
-        // TODO
         return taille==0;
     }
 
 
     @Override
     public int add(IShip IShip) {
-        // TODO
-        if(liste_bateaux.contains(IShip))
-            return -1;
-        if(taille - IShip.getCategory().getSize()< 0)
-            return -2;
+        if(liste_bateaux.contains(IShip)) return -1;
+        if(taille - IShip.getCategory().getSize()< 0) return -2;
+
         if(!liste_bateaux.isEmpty()) {
             for (IShip bateau : liste_bateaux) {
                 for (ICoord coordBateau : bateau.getCoords()) {
@@ -71,7 +65,6 @@ public class NavyFleet implements INavyFleet {
 
     @Override
     public Set<IShip> getShips(ShipCategory shipCategory) {
-        // TODO
         Set<IShip> set = new HashSet<>();
         for(IShip bateau : liste_bateaux){
             if(bateau.getCategory().equals(shipCategory)){
@@ -83,7 +76,6 @@ public class NavyFleet implements INavyFleet {
 
     @Override
     public boolean isBelgianConfiguration() {
-        // TODO
         List<ShipCategory> config = new ArrayList<>();
         for(IShip s : liste_bateaux) { config.add(s.getCategory()); }
         return  config.remove(ShipCategory.BATTLESHIP)
@@ -100,7 +92,6 @@ public class NavyFleet implements INavyFleet {
 
     @Override
     public boolean isFrenchConfiguration() {
-        // TODO
         List<ShipCategory> config = new ArrayList<>();
         for(IShip s : liste_bateaux) { config.add(s.getCategory()); }
         return  config.remove(ShipCategory.AIRCRAFT_CARRIER)
@@ -114,7 +105,6 @@ public class NavyFleet implements INavyFleet {
 
     @Override
     public String toString() {
-        // TODO
         StringBuilder sb = new StringBuilder();
         for(IShip bateau : liste_bateaux){
             sb.append(bateau.toString()).append("\n");
