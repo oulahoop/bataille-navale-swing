@@ -21,7 +21,10 @@ public class Coord implements ICoord {
         char letter = xy.charAt(0);
         boolean valid = false;
         for (int i = 65; i < 75; i++) {
-            if(letter == (char)i ) valid = true;
+            if (letter == (char) i) {
+                valid = true;
+                break;
+            }
         }
         if (!valid) throw new BadCoordException();
 
@@ -45,7 +48,7 @@ public class Coord implements ICoord {
 
     public String toString() { return xy; }
 
-    public boolean equals(Object o) { return o instanceof Coord && ((Coord)o).hashCode() == this.hashCode(); }
+    public boolean equals(Object o) { return o instanceof Coord && o.hashCode() == this.hashCode(); }
 
     public int hashCode() {
         boolean length = (xy.length() == 3);
