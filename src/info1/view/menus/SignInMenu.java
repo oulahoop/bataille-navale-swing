@@ -1,103 +1,112 @@
 package info1.view.menus;
 
-
 import info1.view.ViewManager;
-import info1.view.listeners.signInMenu.OnActionEvent;
-import info1.view.listeners.signInMenu.OnPlacerAction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.List;
 
-public class SignInMenu{
+
+public class SignInMenu {
 
 
-    private JPanel bateaux;
-    private JTextField name;
+    JPanel main = new JPanel(new BorderLayout());
 
-    private ArrayList<JButton> buttons;
-    private ArrayList<JComboBox<String>> rotation;
-    private ArrayList<JButton> placerButtons;
+    //main Components
+    JPanel mainCenter = new JPanel(new BorderLayout());
+    JPanel mainEast = new JPanel(new BorderLayout());
 
-    private OnActionEvent controleur;
-    private OnPlacerAction ctrl;
+    //mainCenter Components
+    JPanel mainCNorth = new JPanel(new GridLayout(1,2));
+    JPanel mainCCenter = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-    private JButton frenchComp;
-    private JButton belgiumComp;
+    // mainCNorth Components
+    JButton french = new JButton("Français");
+    JButton belgium = new JButton("Belge");
+    boolean isFrench = true;
 
-    private JButton jouer;
+    //mainCCenter Components
+    JPanel plateau = new JPanel(new GridLayout(11,11));
+    List<JButton> buttons = new ArrayList<>();
+    JLabel contour;
+
+    //mainEast Components
+    JPanel mainENorth = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel mainECenter;
+    JPanel mainESouth = new JPanel();
+
+    //mainENorth Components
+    JLabel pseudo = new JLabel("Entrer un nom");
+    JTextField playerName = new JTextField();
+    JButton play = new JButton("Jouer");
+
+    //mainESouth Components
+    JPanel ship1 = new JPanel(new FlowLayout());
+    JPanel ship2 = new JPanel(new FlowLayout());
+    JPanel ship3 = new JPanel(new FlowLayout());
+    JPanel ship4 = new JPanel(new FlowLayout());
+    JPanel ship5 = new JPanel(new FlowLayout());
+
+    JLabel aircraftImg = new JLabel(new ImageIcon("src/info1/utils/img/1.png"));
+    JLabel battleShipImg = new JLabel(new ImageIcon("src/info1/utils/img/2.png"));
+    JLabel cruiserImg = new JLabel(new ImageIcon("src/info1/utils/img/3.png"));
+    JLabel destroyerImg = new JLabel(new ImageIcon("src/info1/utils/img/4.png"));
+    JLabel submarinImg = new JLabel(new ImageIcon("src/info1/utils/img/5.png"));
+
+    JButton aircraft = new JButton("Porte-avion");
+    JButton battleShip = new JButton("Cuirassé");
+    JButton cruiser = new JButton("Croiseur");
+    JButton destroyer = new JButton("Torpilleur");
+    JButton submarin = new JButton("Sous-marin");
+
+    JButton aircraftSens = new JButton("Horizontal");
+    boolean aSens = true;
+    JButton battleShipSens = new JButton("Horizontal");
+    boolean bSens = true;
+    JButton cruiserSens = new JButton("Horizontal");
+    boolean cSens = true;
+    JButton destroyerSens = new JButton("Horizontal");
+    boolean dSens = true;
+    JButton submarinSens = new JButton("Horizontal");
+    boolean sSens = true;
+
+
 
     public SignInMenu(ViewManager frame) {
-        JPanel principal = new JPanel();
-        principal.setLayout(new GridLayout(1, 2));
 
-        controleur = new OnActionEvent(this);
+        //main DEFINITION
+        main.setSize(frame.getSize());
+        main.setPreferredSize(main.getSize());
 
-        JPanel droite = new JPanel();
-        droite.setLayout(new GridLayout(2,1));
+        //mainCenter DEFINITION
+        mainCenter.setSize(new Dimension((int) (main.getWidth()*0.55), main.getHeight()));
+        mainCenter.setPreferredSize(mainCenter.getSize());
 
-        //TEXTFIELD D'INSCRIPTION DU NOM
-        JPanel inscription = new JPanel(new BorderLayout());
-        JPanel centerInscription = new JPanel(new GridLayout(10,1));
-        JPanel insideCenterInscription = new JPanel();
-        name = new JTextField();
-        name.setPreferredSize(new Dimension(250,50));
-        name.setFont(new Font(Font.SANS_SERIF,Font.BOLD,20));
-        name.setBackground(new Color(0x9293FF));
+        //mainCNorth DEFINITION
+        mainCNorth.setSize(new Dimension(mainCenter.getWidth(), (int) (mainCenter.getHeight()*0.1)));
+        mainCNorth.setPreferredSize(mainCNorth.getSize());
 
-        //PLACEMENT DU NOM
-        for(int i = 0;i<2;i++){
-            JButton void1 = new JButton();
-            void1.setVisible(false);
-            centerInscription.add(void1);
+        french.setName("francais");
+        belgium.setName("belge");
+
+        mainCNorth.add(french);
+        mainCNorth.add(belgium);
+
+        //mainCCenter DEFINITION
+        mainCCenter.setSize(new Dimension(mainCenter.getWidth(), mainCenter.getHeight()-mainCNorth.getHeight()));
+        mainCCenter.setPreferredSize(mainCCenter.getSize());
+
+        //Definition du plateau de jeu
+        plateau.add(new JLabel());
+        for (int i = 0; i < 10; i++) {
+            contour = new JLabel(String.valueOf((char)(65+i)),SwingConstants.CENTER);
+            contour.setOpaque(true);
+            plateau.add(contour);
         }
-        JPanel insideNom = new JPanel();
-        JLabel nom = new JLabel("Inscrivez votre nom de G4m3ur");
-        nom.setFont(new Font(Font.SANS_SERIF,Font.BOLD,20));
-        insideNom.add(nom);
-        centerInscription.add(insideNom);
-        insideCenterInscription.add(name);
-        centerInscription.add(insideCenterInscription);
-        inscription.add(centerInscription,BorderLayout.NORTH);
-
-
-        //BOUTTON JOUER
-        JPanel clickTo = new JPanel(new GridLayout(5,1));
-        for(int i = 0; i<3;i++){
-            JButton b1 = new JButton();
-            b1.setVisible(false);
-            clickTo.add(b1);
-        }
-        JPanel clickToPlay = new JPanel(new BorderLayout());
-        JPanel clickToPlayCenter = new JPanel();
-        jouer = new JButton("Jouer !");
-        jouer.setName("Jouer");
-        jouer.addActionListener(controleur);
-        jouer.setPreferredSize(new Dimension(250,100));
-        //PLACEMENT DU BOUTON JOUER
-        clickToPlayCenter.add(jouer);
-        clickToPlay.add(clickToPlayCenter,BorderLayout.CENTER);
-        clickTo.add(clickToPlay);
-
-        droite.add(inscription);
-        droite.add(clickToPlay);
-
-        JPanel gauche = new JPanel();
-        gauche.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-
-
-        JPanel gaugauche = new JPanel(new BorderLayout());
-
-        JPanel plateau = new JPanel();
-        plateau.setLayout(new GridLayout(10,10));
-        buttons = new ArrayList<>();
-        for(int j = 0; j<10; j++) {
-            for (int i = 0; i < 10; i++) {
+        for(int i = 0; i < 10; i++){
+            plateau.add(new JLabel(String.valueOf(i+1), SwingConstants.CENTER));
+            for(int j = 0;j<10;j++){
                 JButton b1 = new JButton();
                 b1.setPreferredSize(new Dimension(50, 50));
                 b1.setBackground(new Color(0x78939A));
@@ -106,120 +115,180 @@ public class SignInMenu{
                 plateau.add(b1);
             }
         }
-        bateaux = new JPanel(new GridLayout(5,1));
-        ctrl = new OnPlacerAction(this);
-        rotation = new ArrayList<>();
-        placerButtons = new ArrayList<>();
-        String[] tab = new String[]{"AircraftCarrier", "BattleShip", "Cruiser", "Destroyer", "Submarine"};
-        for (int i = 0; i < 5; i++) {
-            JPanel jp = new JPanel();
-            jp.setPreferredSize(new Dimension(550,75));
-            //jp.setBackground(Color.BLACK);
-            ImageIcon ship = new ImageIcon("lib/francais/"+(i+1)+".png");
-            JLabel jl = new JLabel(ship);
-            jl.setText(tab[i]);
-            jl.setName(tab[i]);
-            jp.add(jl);
-            JComboBox<String> jcb= new JComboBox<>();
-            jcb.addItem("Haut");
-            jcb.addItem("Droite");
-            jcb.addItem("Gauche");
-            jcb.addItem("Bas");
-            jcb.setName(tab[i]);
-            rotation.add(jcb);
-            jp.add(jcb);
-            JButton jb = new JButton("Placer");
-            jb.setName(tab[i]);
-            jb.addActionListener(ctrl);
-            placerButtons.add(jb);
-            jp.add(jb);
+        //mainCCenter ADD
+        mainCCenter.add(plateau);
 
-            bateaux.add(jp);
-        }
+        //mainCenter ADD
+        mainCenter.add(mainCNorth, BorderLayout.NORTH);
+        mainCenter.add(mainCCenter, BorderLayout.CENTER);
 
+        //mainEast DEFINITION
+        mainEast.setSize(new Dimension(main.getWidth()-mainCenter.getWidth(), main.getHeight()));
+        mainEast.setPreferredSize(mainEast.getSize());
 
-        JPanel composition = new JPanel();
-        JPanel compositionGauche = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel compositionDroite = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        //mainENorth DEFINITION
+        mainENorth.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.25)));
+        mainENorth.setPreferredSize(mainENorth.getSize());
 
-        frenchComp = new JButton("Compostion Française");
-        frenchComp.setPreferredSize(new Dimension(250,50));
-        frenchComp.setName("Français");
-        frenchComp.setEnabled(false);
-        frenchComp.addActionListener(controleur);
+        pseudo.setSize(new Dimension(mainENorth.getWidth(), (int) (mainENorth.getHeight()*0.45)));
+        pseudo.setPreferredSize(pseudo.getSize());
+        pseudo.setHorizontalAlignment(SwingConstants.CENTER);
 
+        playerName.setSize(new Dimension((int) (mainENorth.getWidth()*0.6), (int) (mainENorth.getHeight()*0.45)));
+        playerName.setPreferredSize(playerName.getSize());
+        playerName.setHorizontalAlignment(SwingConstants.CENTER);
 
-        belgiumComp = new JButton("Composition Belge");
-        belgiumComp.setPreferredSize(new Dimension(250,50));
-        belgiumComp.setName("Belge");
-        belgiumComp.addActionListener(controleur);
+        //mainENorth ADD
+        mainENorth.add(pseudo);
+        mainENorth.add(playerName);
 
+        //mainESouth DEFINITION
+        mainESouth.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.1)));
+        mainESouth.setPreferredSize(mainESouth.getSize());
 
-        compositionGauche.add(frenchComp);
-        compositionDroite.add(belgiumComp);
+        play.setPreferredSize(mainESouth.getSize());
 
-        composition.add(compositionGauche);
-        composition.add(belgiumComp);
+        //mainESouthADD
+        mainESouth.add(play);
 
-        gauche.add(composition, BorderLayout.NORTH);
+        //mainECenter DEFINITION
 
-        JPanel centragegauche = new JPanel(new FlowLayout());
-        centragegauche.add(bateaux);
-        gaugauche.add(composition,BorderLayout.NORTH);
-        gaugauche.add(plateau,BorderLayout.CENTER);
-        gaugauche.add(centragegauche, BorderLayout.SOUTH);
-        gauche.add(gaugauche);
+        aircraft.setPreferredSize(new Dimension(200,50));
+        battleShip.setPreferredSize(new Dimension(200,50));
+        cruiser.setPreferredSize(new Dimension(200,50));
+        destroyer.setPreferredSize(new Dimension(200,50));
+        submarin.setPreferredSize(new Dimension(200,50));
+
+        aircraftSens.setPreferredSize(new Dimension(150,50));
+        battleShipSens.setPreferredSize(new Dimension(150,50));
+        cruiserSens.setPreferredSize(new Dimension(150,50));
+        destroyerSens.setPreferredSize(new Dimension(150,50));
+        submarinSens.setPreferredSize(new Dimension(150,50));
 
 
-        principal.add(gauche);
-        principal.add(droite);
+
+        setSensText();
+
+        ship1.add(aircraftImg);
+        ship1.add(aircraft);
+        ship1.add(aircraftSens);
+
+        ship2.add(battleShipImg);
+        ship2.add(battleShip);
+        ship2.add(battleShipSens);
+
+        ship3.add(cruiserImg);
+        ship3.add(cruiser);
+        ship3.add(cruiserSens);
+
+        ship4.add(destroyerImg);
+        ship4.add(destroyer);
+        ship4.add(destroyerSens);
+
+        ship5.add(submarinImg);
+        ship5.add(submarin);
+        ship5.add(submarinSens);
+
+        setNation();
+
+        //mainEast ADD
+        mainEast.add(mainENorth, BorderLayout.NORTH);
+        mainEast.add(mainECenter, BorderLayout.CENTER);
+        mainEast.add(mainESouth, BorderLayout.SOUTH);
+
+        //main ADD
+        main.add(mainCenter, BorderLayout.CENTER);
+        main.add(mainEast, BorderLayout.EAST);
 
 
-        principal.setPreferredSize(new Dimension(1920,1080));
-        frame.setContentPane(principal);
-        frame.setPreferredSize(new Dimension(1920,1080));
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setContentPane(main);
+        frame.update();
     }
 
+    public boolean getIsFrench(){return isFrench;}
 
-    //GETTER ET SETTER UTILES POUR LISTENER
-    public JTextField getName() {
-        return name;
+    public void setIsFrench(boolean status) {
+        this.isFrench = status;
+        setNation();
     }
 
-    public ArrayList<JButton> getButtons() { return buttons; }
-
-    public void enableFrench(boolean b){
-        frenchComp.setEnabled(b);
+    public void update(){
+        setNation();
+        setSensText();
     }
 
-    public void enableBelgium(boolean b){
-        belgiumComp.setEnabled(b);
+    private void setNation(){
+        if(isFrench) frenchFleet();
+        else belgianFleet();
     }
 
-    public JPanel getBateauxPanel(){
-        return bateaux;
+    private void setSensText(){
+        if(aSens) aircraftSens.setText("Horizontale"); else aircraftSens.setText("Vertical");
+        if(bSens) battleShipSens.setText("Horizontale"); else battleShipSens.setText("Vertical");
+        if(cSens) cruiserSens.setText("Horizontale"); else cruiserSens.setText("Vertical");
+        if(dSens) destroyerSens.setText("Horizontale"); else destroyer.setText("Vertical");
+        if(sSens) submarinSens.setText("Horizontale"); else submarinSens.setText("Vertical");
     }
 
-    public OnPlacerAction getCtrl() {
-        return ctrl;
+    public void setAircraftSens(boolean aSens) {
+        this.aSens = aSens;
+        setSensText();
     }
 
-    public ArrayList<JComboBox<String>> getRotation(){
-        return rotation;
+    public void setBattleShipSens(boolean aSens) {
+        this.bSens = aSens;
+        setSensText();
     }
 
-    public ArrayList<JButton> getPlacerButtons() {
-        return placerButtons;
+    public void setCruiserSens(boolean aSens) {
+        this.cSens = aSens;
+        setSensText();
     }
 
-    public void setRotation(ArrayList<JComboBox<String>> rotation) {
-        this.rotation = rotation;
+    public void setDestroyerSens(boolean aSens) {
+        this.dSens = aSens;
+        setSensText();
     }
 
-    public void setPlacerButtons(ArrayList<JButton> placerButtons) {
-        this.placerButtons = placerButtons;
+    public void setSubmarinSens(boolean aSens) {
+        this.sSens = aSens;
+        setSensText();
+    }
+
+    public boolean getAircraftSens(){return aSens;}
+
+    public boolean getBattleShipSens(){return aSens;}
+
+    public boolean getCruiserSens(){return aSens;}
+
+    public boolean getDestroyerSens(){return aSens;}
+
+    public boolean getSubmarinSens(){return aSens;}
+
+
+
+    public void frenchFleet() {
+        mainECenter = new JPanel(new GridLayout(5,1));
+        mainECenter.setSize(new Dimension(mainEast.getWidth(), mainEast.getHeight()-(mainENorth.getHeight()+mainESouth.getHeight())));
+        mainECenter.setPreferredSize(mainECenter.getSize());
+
+        mainECenter.add(ship1);
+        mainECenter.add(ship2);
+        mainECenter.add(ship3);
+        mainECenter.add(ship4);
+        mainECenter.add(ship5);
+    }
+
+    public void belgianFleet(){
+        mainECenter = new JPanel(new GridLayout(5,1));
+        mainECenter.setSize(new Dimension(mainEast.getWidth(), mainEast.getHeight()-(mainENorth.getHeight()+mainESouth.getHeight())));
+        mainECenter.setPreferredSize(mainECenter.getSize());
+
+        mainECenter.add(ship1);
+        mainECenter.add(ship2);
+        mainECenter.add(ship3);
+        mainECenter.add(ship4);
+        mainECenter.add(new JPanel());
     }
 }
