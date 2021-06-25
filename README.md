@@ -40,6 +40,13 @@ Nous avons uttilisé la librairie 'Network' qui nous est fournie afin de :
 
 ![package network](documentation/package_network.png)
 
+Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md).
+
+### ... et développement d'une interface graphique
+
+Développez une interface graphique en Swing vous permettant de jouer
+
+
 ### Schéma de la construction des différentes vues
 
 #### Ecran de bienvenue 
@@ -57,32 +64,6 @@ Nous avons uttilisé la librairie 'Network' qui nous est fournie afin de :
 #### Ecran de jeu 
 <img src="https://imgur.com/eDNsVUI.png">
 
-Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md).
-
-
-### ... et développement d'une interface graphique
-
-Développez une interface graphique en Swing vous permettant de jouer, cad
-
-1. positionner des bateaux
-
-2. créer une flotte de bateaux
-
-3. initialiser une partie sur le serveur
-
-4. rejoindre une partie initialisée sur le serveur
-
-5. jouer via le serveur
-
-6. gagner ;-)
-
-
-
-## Remarques 
-
-Chaque groupe aura un enseignant-référent qui passera
-vous voir régulièrement afin de vous assister 
-mais aussi évaluer votre travail.
 
 
 
