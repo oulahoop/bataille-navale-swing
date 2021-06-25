@@ -90,12 +90,14 @@ public class OnActionEvent implements ActionListener {
                 if (GameManager.getFleet().isComplete()) {
                     Player player = new Player(fenetre.getPlayerName());
                     try {
-                        if (Network.suscribeNewPlayer(GameManager.getUrl(), player)){
-                            GameManager.setPlayer(player);
-                            app.switchTo(Menu.MAIN);
-                        }
+                        if(!Network.listActivePlayers(GameManager.getUrl()).contains(player)) {
+                                if (Network.suscribeNewPlayer(GameManager.getUrl(), player)) {
+                                    GameManager.setPlayer(player);
+                                    app.switchTo(Menu.MAIN);
+                                }
+                        }else{JOptionPane.showMessageDialog(app , "Ce pseudonyme est deja pris ","Erreur de pseudo",JOptionPane.ERROR_MESSAGE); }
                     } catch (UnirestException unirestException) {
-                        System.out.println(unirestException.getMessage());
+                        unirestException.printStackTrace();
                     }
                 }else{
                     JOptionPane.showMessageDialog(app , "Veuillez finir votre flotte ! ","Erreur de flotte",JOptionPane.ERROR_MESSAGE);
