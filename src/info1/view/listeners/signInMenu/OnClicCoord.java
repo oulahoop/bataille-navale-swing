@@ -15,6 +15,7 @@ public class OnClicCoord implements ActionListener {
 
     private SignInMenu fenetre;
     private OnPlacerAction placement;
+    private static int id = 0;
 
 
     /**
@@ -68,8 +69,8 @@ public class OnClicCoord implements ActionListener {
         //A l'ajout du bateau, nous regardons s'il y a eu un problème de placement
         int error;
 
+        id++;
         switch(name.toLowerCase()){
-
             //Si le nom du bouton placer est porte-avion (donc si le joueur veut placer un porte-avion)
             case "porte-avion" :
                 //Si on a la possibilité de placer le bateau
@@ -78,9 +79,9 @@ public class OnClicCoord implements ActionListener {
                     coordFin = calculCoordFin(coord, fenetre.getAircraftSens(), 5);
 
                     //On ajoute le bateau à la fleet en stockant le retour au cas ou il y aurait une erreur
-                    error = GameManager.getFleet().add(new AircraftCarrier("nom",coord,coordFin));
+                    error = GameManager.getFleet().add(new AircraftCarrier("nom" + id,coord,coordFin));
                     //S'il n'y a pas d'erreur ont le place sur les boutons, sinon on affiche un message d'erreur
-                    if (error==0) fenetre.placeShip((new AircraftCarrier("nom",coord,coordFin)).getCoords());
+                    if (error==0) fenetre.placeShip((new AircraftCarrier("nom"+ id,coord,coordFin)).getCoords());
                     else JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vos bateaux s'interchoque CHEF ! Choisissez une autre position", "Erreur de placement", JOptionPane.ERROR_MESSAGE);
 
                     //Si la taille maximal de cette catégorie de bateau a été atteinte, on enleve la possibilité de cliquer sur le bouton
@@ -91,8 +92,8 @@ public class OnClicCoord implements ActionListener {
             case "cuirassé":
                 if (GameManager.getFleet().getShips(ShipCategory.BATTLESHIP).size()<1) {
                     coordFin = calculCoordFin(coord, fenetre.getBattleShipSens(), 4);
-                    error = GameManager.getFleet().add(new Battleship("nom", coord, coordFin));
-                    if (error==0) fenetre.placeShip((new Battleship("nom",coord,coordFin)).getCoords());
+                    error = GameManager.getFleet().add(new Battleship("nom"+ id, coord, coordFin));
+                    if (error==0) fenetre.placeShip((new Battleship("nom"+ id,coord,coordFin)).getCoords());
                     else JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vos bateaux s'interchoque CHEF ! Choisissez une autre position", "Erreur de placement", JOptionPane.ERROR_MESSAGE);
                     if(GameManager.getFleet().getShips(ShipCategory.BATTLESHIP).size()==1){fenetre.setEnableBattleShip(false);}
                 }
@@ -100,8 +101,8 @@ public class OnClicCoord implements ActionListener {
             case "croiseur":
                 if(GameManager.getFleet().getShips(ShipCategory.CRUISER).size()<2) {
                     coordFin = calculCoordFin(coord, fenetre.getCruiserSens(), 3);
-                    error = GameManager.getFleet().add(new Cruiser("nom", coord, coordFin));
-                    if (error==0) fenetre.placeShip((new Cruiser("nom",coord,coordFin)).getCoords());
+                    error = GameManager.getFleet().add(new Cruiser("nom"+ id, coord, coordFin));
+                    if (error==0) fenetre.placeShip((new Cruiser("nom"+ id,coord,coordFin)).getCoords());
                     else JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vos bateaux s'interchoque CHEF ! Choisissez une autre position", "Erreur de placement", JOptionPane.ERROR_MESSAGE);
                     if(GameManager.getFleet().getShips(ShipCategory.CRUISER).size()==2){fenetre.setEnableCruiser(false);}
                 }
@@ -110,8 +111,8 @@ public class OnClicCoord implements ActionListener {
                 number = fenetre.getIsFrench() ? 2 : 3;
                 if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()<number) {
                     coordFin = calculCoordFin(coord, fenetre.getDestroyerSens(), 2);
-                    error = GameManager.getFleet().add(new Destroyer("nom", coord, coordFin));
-                    if (error==0) fenetre.placeShip((new Destroyer("nom",coord,coordFin)).getCoords());
+                    error = GameManager.getFleet().add(new Destroyer("nom"+ id, coord, coordFin));
+                    if (error==0) fenetre.placeShip((new Destroyer("nom"+ id,coord,coordFin)).getCoords());
                     else JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vos bateaux s'interchoque CHEF ! Choisissez une autre position", "Erreur de placement", JOptionPane.ERROR_MESSAGE);
                     if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.setEnableDestroyer(false);};
                 }
@@ -119,8 +120,8 @@ public class OnClicCoord implements ActionListener {
             case"sous-marin": ;
                 number = fenetre.getIsFrench() ? 1 : 4;
                 if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()<number) {
-                    error = GameManager.getFleet().add(new Submarine("nom",coord));
-                    if (error==0) fenetre.placeShip((new Submarine("nom",coord)).getCoords());
+                    error = GameManager.getFleet().add(new Submarine("nom"+ id,coord));
+                    if (error==0) fenetre.placeShip((new Submarine("nom"+ id,coord)).getCoords());
                     else JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vos bateaux s'interchoque CHEF ! Choisissez une autre position", "Erreur de placement", JOptionPane.ERROR_MESSAGE);
                     if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()==number){fenetre.setEnableSubmarin(false);}
                 }
