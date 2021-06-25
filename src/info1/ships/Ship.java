@@ -1,7 +1,6 @@
 package info1.ships;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,11 +10,9 @@ import java.util.List;
 
 public abstract class Ship implements IShip {
 
-    private String name;
-    private Coord front;
-    private Coord back;
-    private int identifiant;
-    private static int ID = 0;
+    private final String name;
+    private final Coord front;
+    private final Coord back;
     /**
      * NB : LA SIGNATURE DU CONSTRUCTEUR DOIT ETRE RESPECTEE
      *
@@ -76,7 +73,7 @@ public abstract class Ship implements IShip {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Ship && ((Ship) o).hashCode() == this.hashCode() && this.getName().equals(((Ship) o).getName());
+        return o instanceof Ship && o.hashCode() == this.hashCode() && this.getName().equals(((Ship) o).getName());
     }
 
     @Override

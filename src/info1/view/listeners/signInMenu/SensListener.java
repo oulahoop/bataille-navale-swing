@@ -7,19 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SensListener implements ActionListener {
-    private SignInMenu fenetre;
+    private final SignInMenu fenetre;
 
     public SensListener(SignInMenu sim){
             fenetre = sim;
         }
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (((JButton)e.getSource()).getName().toLowerCase()){
-            case "asens" : fenetre.setAircraftSens(!fenetre.getAircraftSens()); break;
-            case "bsens" : fenetre.setBattleShipSens(!fenetre.getBattleShipSens()); break;
-            case "csens" : fenetre.setCruiserSens(!fenetre.getCruiserSens()); break;
-            case "dsens" : fenetre.setDestroyerSens(!fenetre.getDestroyerSens()); break;
-            case "ssens" : fenetre.setSubmarinSens(!fenetre.getSubmarinSens()); break;
+        switch (((JButton) e.getSource()).getName().toLowerCase()) {
+            case "asens" -> fenetre.setAircraftSens(!fenetre.getAircraftSens());
+            case "bsens" -> fenetre.setBattleShipSens(!fenetre.getBattleShipSens());
+            case "csens" -> fenetre.setCruiserSens(!fenetre.getCruiserSens());
+            case "dsens" -> fenetre.setDestroyerSens(!fenetre.getDestroyerSens());
+            case "ssens" -> fenetre.setSubmarinSens(!fenetre.getSubmarinSens());
         }
     }
 }

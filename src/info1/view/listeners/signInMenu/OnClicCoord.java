@@ -6,15 +6,13 @@ import info1.utils.GameManager;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
-import javax.swing.text.IconView;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OnClicCoord implements ActionListener {
 
-    private SignInMenu fenetre;
-    private OnPlacerAction placement;
+    private final SignInMenu fenetre;
+    private final OnPlacerAction placement;
     private static int id = 0;
 
 
@@ -57,8 +55,8 @@ public class OnClicCoord implements ActionListener {
      * Methode permettant de placer un bateau en fonction de son nom, sa coordonnée de début et de son orientation
      * @param name nom du bateau à placer
      * @param coord coordonnée du début du bateau
-     * @throws BadCoordException
-     * @throws CoordsBadShipException
+     * @throws BadCoordException en cas de Coordonnée non valide
+     * @throws CoordsBadShipException En cas de bateau non valide
      */
     public void BateauAPlacer(String name,String coord) throws BadCoordException, CoordsBadShipException {
 
@@ -114,10 +112,10 @@ public class OnClicCoord implements ActionListener {
                     error = GameManager.getFleet().add(new Destroyer("nom"+ id, coord, coordFin));
                     if (error==0) fenetre.placeShip((new Destroyer("nom"+ id,coord,coordFin)).getCoords());
                     else JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Vos bateaux s'interchoque CHEF ! Choisissez une autre position", "Erreur de placement", JOptionPane.ERROR_MESSAGE);
-                    if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.setEnableDestroyer(false);};
+                    if(GameManager.getFleet().getShips(ShipCategory.DESTROYER).size()==number){fenetre.setEnableDestroyer(false);}
                 }
                 break;
-            case"sous-marin": ;
+            case"sous-marin":
                 number = fenetre.getIsFrench() ? 1 : 4;
                 if(GameManager.getFleet().getShips(ShipCategory.SUBMARINE).size()<number) {
                     error = GameManager.getFleet().add(new Submarine("nom"+ id,coord));
@@ -136,7 +134,7 @@ public class OnClicCoord implements ActionListener {
      * @param coord coordonnée du début du bateau
      * @param rotation sens dans lequel placer le bateau
      * @param size taille du bateau à placer
-     * @return
+     * @return la Coordonnée calculée
      */
     private String calculCoordFin(String coord, boolean rotation,int size) {
         //Si rotation est true, c'est donc un placement horizontal

@@ -2,13 +2,15 @@ package info1.utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 
 public class ImagePanel extends JPanel
 {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private Image image = null;
-    private int iWidth2;
-    private int iHeight2;
+    private final Image image;
+    private final int iWidth2;
+    private final int iHeight2;
 
     public ImagePanel(Image image)
     {

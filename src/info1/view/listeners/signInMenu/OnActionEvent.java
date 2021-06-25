@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 
 public class OnActionEvent implements ActionListener {
 
-    private SignInMenu fenetre;
+    private final SignInMenu fenetre;
 
 
     /**

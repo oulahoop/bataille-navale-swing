@@ -7,7 +7,6 @@ import info1.network.Game;
 import info1.network.Network;
 import info1.network.Player;
 import info1.ships.*;
-import info1.ships.INavyFleet;
 
 import java.util.List;
 
@@ -140,18 +139,6 @@ public class GameManager {
             return Network.getInfo(url, game, player) == -100;
         } catch(UnirestException | BadIdException e) { e.printStackTrace(); }
         return false;
-    }
-
-    /**
-     * Méthode qui permet de "Subscribe" un Player au serveur
-     * Permet de également de gérer l'exception renvoyée par la methode "suscribeNewPlayer()" de la classe "Network"
-     */
-    public static void subscribe(){
-        try {
-            Network.suscribeNewPlayer(url, player);
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

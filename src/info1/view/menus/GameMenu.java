@@ -3,7 +3,7 @@ package info1.view.menus;
 
 import info1.ships.ICoord;
 import info1.ships.IShip;
-import info1.ships.Ship;
+
 import info1.view.ConstantColor;
 import info1.view.Menu;
 import info1.view.ViewManager;
@@ -41,7 +41,7 @@ public class GameMenu{
     //grille joueur//
     JPanel grilleJoueur;
     JButton boutonJoueur;
-    List<JButton> boutons = new ArrayList();
+    List<JButton> boutons = new ArrayList<>();
 
     //--------------------------//
 

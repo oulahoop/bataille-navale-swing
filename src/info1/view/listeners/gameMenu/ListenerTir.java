@@ -1,9 +1,8 @@
 package info1.view.listeners.gameMenu;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
+
 import info1.Application;
-import info1.network.BadIdException;
-import info1.network.Network;
+
 import info1.ships.BadCoordException;
 import info1.ships.Coord;
 import info1.utils.GameManager;
@@ -15,13 +14,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Listener permettant au joueur de tirer sur la grille adverse. 
  */
 public class ListenerTir implements ActionListener {
-    private GameMenu fenetre;
+    private final GameMenu fenetre;
     private JButton selected;
 
     public ListenerTir(GameMenu gm) {
@@ -31,7 +29,7 @@ public class ListenerTir implements ActionListener {
     /**
      * Mise en place du listener, il récupère l'information du bouton sélectionné,
      * actionne le bouton de tir qui récupère la coordonnée du bouton afin de tirer au meme endroit chez l'adversaire.
-     * @param e
+     * @param e L'evenement
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -42,19 +40,10 @@ public class ListenerTir implements ActionListener {
                     try {
                         Coord coord = new Coord(selected.getName());
                         switch (GameManager.shoot(coord)) {
-                            case 0:
-                                miss();
-                                break;
-                            case 1:
-                                hit();
-                                break;
-                            case 10:
-                                System.out.println("sunk");
-                                sunk();
-                                break;
-                            case 100:
-                                won();
-                                break;
+                            case 0 -> miss();
+                            case 1 -> hit();
+                            case 10 -> sunk();
+                            case 100 -> won();
                         }
                         fenetre.hit(selected);
                         selected =null;

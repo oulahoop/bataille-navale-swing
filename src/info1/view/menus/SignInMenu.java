@@ -579,7 +579,7 @@ public class SignInMenu {
         french.addActionListener(oae);
         play.addActionListener(oae);
 
-        OnPlacerAction opa = new OnPlacerAction(this);
+        OnPlacerAction opa = new OnPlacerAction();
         aircraft.addActionListener(opa);
         battleShip.addActionListener(opa);
         cruiser.addActionListener(opa);

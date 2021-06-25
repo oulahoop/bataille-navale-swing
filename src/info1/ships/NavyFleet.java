@@ -12,7 +12,7 @@ import java.util.Set;
 public class NavyFleet implements INavyFleet {
 
     private int taille;
-    private List<IShip> liste_bateaux;
+    private final List<IShip> liste_bateaux;
 
 
     /**

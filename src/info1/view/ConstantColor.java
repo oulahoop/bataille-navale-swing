@@ -1,7 +1,5 @@
 package info1.view;
 
-import java.awt.*;
-
 public enum ConstantColor {
     BACKGROUND(0x154086),
     //grille CASE

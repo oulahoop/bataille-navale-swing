@@ -238,6 +238,7 @@ public class MainMenu {
         mainCCenter.setViewportView(scrollList);
         scrollList.setLayoutOrientation(JList.VERTICAL);
         scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
+        scrollList.setBackground(new Color(ConstantColor.LIST.getColor()));
     }
 
     /**
