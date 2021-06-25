@@ -428,7 +428,7 @@ public class SignInMenu {
      */
     public void reset(){
         for(JButton button : buttons){
-            button.setBackground(new Color(0x78939A));
+            button.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
         }
         setEnableAircraft(true);
         setEnableBattleShip(true);
