@@ -49,6 +49,7 @@ public class ListenerTir implements ActionListener {
                                 hit();
                                 break;
                             case 10:
+                                System.out.println("sunk");
                                 sunk();
                                 break;
                             case 100:
@@ -66,6 +67,7 @@ public class ListenerTir implements ActionListener {
                 } else {
                     if (((JButton) e.getSource()).getText().isEmpty()) {
                         if (selected != null) {
+                            selected.setIcon(null);
                             selected.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
                         }
                         selected = (JButton) e.getSource();
@@ -98,9 +100,7 @@ public class ListenerTir implements ActionListener {
         Image image = get.getImage();
         image = image.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
         get = new ImageIcon(image);
-
         selected.setIcon(get);
-
         selected.setBackground(new Color(ConstantColor.SUNK.getColor()));
     }
 
@@ -108,6 +108,13 @@ public class ListenerTir implements ActionListener {
      * Change la couleur de la case à laquelle un bateau est touché.
      */
     private void hit() {
+        ImageIcon get = new ImageIcon("src/info1/utils/img/boom.png");
+        Image image = get.getImage();
+        image = image.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
+        get = new ImageIcon(image);
+
+        selected.setIcon(get);
+
         selected.setBackground(new Color(ConstantColor.HIT.getColor()));
     }
 

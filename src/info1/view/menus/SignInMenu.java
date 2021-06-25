@@ -141,7 +141,7 @@ public class SignInMenu {
             for(int j = 0;j<10;j++){
                 JButton b1 = new JButton();
                 b1.setPreferredSize(new Dimension(50, 50));
-                b1.setBackground(new Color(0x78939A));
+                b1.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
                 b1.setName(((char) (65 + j)) + String.valueOf(i + 1));
                 buttons.add(b1);
                 plateau.add(b1);

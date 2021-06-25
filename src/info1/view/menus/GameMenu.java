@@ -93,7 +93,7 @@ public class GameMenu{
             grilleJoueur.add(new JLabel(String.valueOf(i+1), SwingConstants.CENTER));
             for(int j = 0;j<10;j++){
                 boutonJoueur = new JButton();
-                boutonJoueur.setBackground(new Color(0x78939A));
+                boutonJoueur.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
                 boutonJoueur.setPreferredSize(new Dimension(50,50));
                 int number = i+1;
                 boutonJoueur.setName((char)(65+j)+ "" + number);
@@ -118,7 +118,7 @@ public class GameMenu{
             grilleAdversaire.add(new JLabel(String.valueOf(i+1), SwingConstants.CENTER));
             for(int j = 0;j<10;j++){
                 boutonAdversaire = new JButton();
-                boutonAdversaire.setBackground(new Color(0x78939A));
+                boutonAdversaire.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
                 boutonAdversaire.setPreferredSize(new Dimension(50,50));
                 int number = i+1;
                 boutonAdversaire.setName((char)(65+j)+ "" + number);
@@ -134,7 +134,7 @@ public class GameMenu{
         //interfaceTir.setBorder(BorderFactory.createTitledBorder("Interface de tir"));
         rappelDernierTir = new JLabel("dernier tir : ");
         nouveauTir = new JButton("FEU!");
-        nouveauTir.setBackground(new Color(0xff0000));
+        nouveauTir.setBackground(new Color(ConstantColor.FIREENABLE.getColor()));
         nouveauTir.setEnabled(false);
         nouveauTir.setName("Tirer");
         nouveauTir.addActionListener(controleur);
@@ -184,7 +184,7 @@ public class GameMenu{
      */
     public void waiting() {
         nouveauTir.setEnabled(false);
-        nouveauTir.setBackground(new Color(0x7a7a7a));
+        nouveauTir.setBackground(new Color(ConstantColor.FIREDISABLE.getColor()));
 
         CompletableFuture.runAsync(() -> {
 
@@ -201,7 +201,7 @@ public class GameMenu{
             }
 
             nouveauTir.setEnabled(true);
-            nouveauTir.setBackground(new Color(0xff0000));
+            nouveauTir.setBackground(new Color(ConstantColor.FIREENABLE.getColor()));
         });
     }
 
