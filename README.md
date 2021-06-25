@@ -45,10 +45,10 @@ Nous avons uttilisé la librairie 'Network' qui nous est fournie afin de :
 #### Ecran de bienvenue 
 <img src="https://imgur.com/EafB1qL.png">
 
-#### Ecran de gestion de flotte et de creation de joueur
+#### Ecran de gestion de flotte et de création de joueur
 <img src="https://imgur.com/HYXGRb0.png">
 
-#### Ecran de recherche de partie ou de creation de partie
+#### Ecran de recherche de partie ou de création de partie
 <img src="https://imgur.com/YR7AkeT.png">
 
 #### Ecran d'attente de joueur lorsque l'on créer une partie
