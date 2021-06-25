@@ -40,10 +40,21 @@ Nous avons uttilisé la librairie 'Network' qui nous est fournie afin de :
 
 ![package network](documentation/package_network.png)
 
+### Schéma de la construction des différentes vues
+
+#### Ecran de bienvenue 
 <img src="https://imgur.com/EafB1qL.png">
+
+#### Ecran de gestion de flotte et de creation de joueur
 <img src="https://imgur.com/HYXGRb0.png">
+
+#### Ecran de recherche de partie ou de creation de partie
 <img src="https://imgur.com/YR7AkeT.png">
+
+#### Ecran d'attente de joueur lorsque l'on créer une partie
 <img src="https://imgur.com/lIwVGwZ.png">
+
+#### Ecran de jeu 
 <img src="https://imgur.com/eDNsVUI.png">
 
 Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md).
