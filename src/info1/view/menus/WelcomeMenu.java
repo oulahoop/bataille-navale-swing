@@ -7,10 +7,13 @@ import info1.view.listeners.welcomeMenu.OnMouseEvent;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe qui permet la creation de la vue "Welcome", et l'affiche dans le frame "ViewManager"
+ */
 public class WelcomeMenu {
 
     Image image;
@@ -19,6 +22,10 @@ public class WelcomeMenu {
     ImageIcon welcomeIcon = new ImageIcon("src/info1/utils/img/welcome.png");
     JLabel welcomeLabel;
 
+    /**
+     * Constructeur de la classe, dans le quel est créé la vue
+     * @param frame le frame dans le quel s'afficher la vue
+     */
     public WelcomeMenu(ViewManager frame) {
         //image DEFINITION
         try {

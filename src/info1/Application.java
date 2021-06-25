@@ -1,14 +1,11 @@
 package info1;
 
 import info1.utils.GameManager;
-import info1.utils.ImagePanel;
+
 import info1.view.ViewManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+
 
 public class Application {
     private final ViewManager viewManager = new ViewManager();

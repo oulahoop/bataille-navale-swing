@@ -3,11 +3,9 @@ package info1.view;
 import info1.view.menus.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Classe qui definie le Frame de l'application dans lequel tout les affichages ont lieu

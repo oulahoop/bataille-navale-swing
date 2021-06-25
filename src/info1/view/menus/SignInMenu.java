@@ -13,7 +13,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Classe dans la quel est creer la vue "Sign In"
+ */
 public class SignInMenu {
 
 
@@ -84,7 +86,10 @@ public class SignInMenu {
     boolean sSens = true;
 
 
-
+    /**
+     * Constructeur de la classe dans le quel la vue est créé et ajouter au frame
+     * @param frame le Framdans le quel sera affiché la vue
+     */
     public SignInMenu(ViewManager frame) {
 
         this.frame = frame;
@@ -251,18 +256,33 @@ public class SignInMenu {
         frame.update();
     }
 
+    /**
+     * Getter de l'attribut is french
+     * @return boolean
+     */
     public boolean getIsFrench(){return isFrench;}
 
+    /**
+     * Methode qui permet de Set la valeur de l'attribut "isFrench" et mettre a jour la vue en fonction
+     * @param status l'etat voulu
+     */
     public void setIsFrench(boolean status) {
         this.isFrench = status;
         setNation();
     }
 
+    /**
+     * Methode public qui permet d'update la vue
+     */
     public void update(){
         setNation();
+        setSensText();
         frame.update();
     }
 
+    /**
+     * Methode privé qui permet de mettre a jours les boutons "french" et "belgium"
+     */
     private void setNation(){
         if(isFrench) {
             frenchFleet();
@@ -276,6 +296,9 @@ public class SignInMenu {
         }
     }
 
+    /**
+     * Methode privé qui permet l'initialisation des textes des boutons
+     */
     private void setSensText(){
         if(aSens) aircraftSens.setText("Horizontal");else aircraftSens.setText("Vertical");
         if(bSens) battleShipSens.setText("Horizontal"); else battleShipSens.setText("Vertical");
@@ -284,31 +307,54 @@ public class SignInMenu {
         if(sSens) submarinSens.setText("Horizontal"); else submarinSens.setText("Vertical");
     }
 
+    /**
+     * Methode qui permet de Set l'attribut "aSens" et met a jour la vue
+     * @param b la valeur que doit prendre l'attribut
+     */
     public void setAircraftSens(boolean b) {
         this.aSens = b;
         if(aSens) {aircraftSens.setText("Horizontal");}else {aircraftSens.setText("Vertical");}
     }
 
+    /**
+     * Methode qui permet de Set l'attribut "bSens" et met a jour la vue
+     * @param b la valeur que doit prendre l'attribut
+     */
     public void setBattleShipSens(boolean b) {
         this.bSens = b;
         if(bSens) {battleShipSens.setText("Horizontal");} else {battleShipSens.setText("Vertical");}
     }
 
+    /**
+     * Methode qui permet de Set l'attribut "cSens" et met a jour la vue
+     * @param b la valeur que doit prendre l'attribut
+     */
     public void setCruiserSens(boolean b) {
         this.cSens = b;
         if(cSens) cruiserSens.setText("Horizontal"); else cruiserSens.setText("Vertical");
     }
 
+    /**
+     * Methode qui permet de Set l'attribut "dSens" et met a jour la vue
+     * @param b la valeur que doit prendre l'attribut
+     */
     public void setDestroyerSens(boolean b) {
         this.dSens = b;
         if(dSens) destroyerSens.setText("Horizontal"); else destroyerSens.setText("Vertical");
     }
 
+    /**
+     * Methode qui permet de Set l'attribut "sSens" et met a jour la vue
+     * @param b la valeur que doit prendre l'attribut
+     */
     public void setSubmarinSens(boolean b) {
         this.sSens = b;
         if(sSens) submarinSens.setText("Horizontal"); else submarinSens.setText("Vertical");
     }
 
+    /**
+     * Methode qui permet de reset la grile et les valeur des boutons de choix de bateau
+     */
     public void reset(){
         for(JButton button : buttons){
             button.setBackground(new Color(0x78939A));
@@ -327,6 +373,10 @@ public class SignInMenu {
 
     }
 
+    /**
+     * Methode qui permet de changer les sur les quel le bateau est placé
+     * @param coords Liste de coordonnées occupées par le bateau
+     */
     public void placeShip(List<ICoord> coords){
         for (JButton button : buttons) {
             for (ICoord coord : coords){
@@ -338,32 +388,88 @@ public class SignInMenu {
         }
     }
 
+    /**
+     * Getter de l'attribut "aSens"
+     * @return la valeur de "aSens"
+     */
     public boolean getAircraftSens(){return aSens;}
 
+    /**
+     * Getter de l'attribut "bSens"
+     * @return la valeur de "bSens"
+     */
     public boolean getBattleShipSens(){return bSens;}
 
+    /**
+     * Getter de l'attribut "cSens"
+     * @return la valeur de "cSens"
+     */
     public boolean getCruiserSens(){return cSens;}
 
+    /**
+     * Getter de l'attribut "dSens"
+     * @return la valeur de "dSens"
+     */
     public boolean getDestroyerSens(){return dSens;}
 
+    /**
+     * Getter de l'attribut "sSens"
+     * @return la valeur de "sSens"
+     */
     public boolean getSubmarinSens(){return sSens;}
 
-    public void setEnableBelgium(boolean b){belgium.setEnabled(b);}
 
+    /**
+     * Methode qui permet de Set l'etat du bouton "belgium"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
+    public void setEnableBelgium(boolean b){ belgium.setEnabled(b); }
+
+    /**
+     * Methode qui permet de Set l'etat du bouton "french"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
     public void setEnableFrench(boolean b){french.setEnabled(b);}
 
-    public void setEnableAircraft(boolean b){aircraft.setEnabled(b);}
+    /**
+     * Methode qui permet de Set l'etat du bouton "aircraft"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
+    public void setEnableAircraft(boolean b){ aircraft.setEnabled(b); }
 
+    /**
+     * Methode qui permet de Set l'etat du bouton "battleship"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
     public void setEnableBattleShip(boolean b){battleShip.setEnabled(b);}
 
+    /**
+     * Methode qui permet de Set l'etat du bouton "cruiser"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
     public void setEnableCruiser(boolean b){cruiser.setEnabled(b);}
 
+    /**
+     * Methode qui permet de Set l'etat du bouton "destroyer"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
     public void setEnableDestroyer(boolean b){destroyer.setEnabled(b);}
 
+    /**
+     * Methode qui permet de Set l'etat du bouton "submarin"
+     * @param b l'etat du bouton, true si activer, false sinon
+     */
     public void setEnableSubmarin(boolean b){submarin.setEnabled(b);}
 
+    /**
+     * Méthode qui permet de récupérer le texte du "JTextArea" "playerName"
+     * @return
+     */
     public String getPlayerName(){return playerName.getText();}
 
+    /**
+     * Methode privé qui permet l'affichage de la flotte française
+     */
     private void frenchFleet() {
         mainECenter.removeAll();
         mainECenter.setSize(new Dimension(mainEast.getWidth(), mainEast.getHeight()-(mainENorth.getHeight()+mainESouth.getHeight())));
@@ -376,6 +482,9 @@ public class SignInMenu {
         mainECenter.add(ship5);
     }
 
+    /**
+     * Methode privé qui permet l'affichage de la flotte belge
+     */
     private void belgianFleet(){
         mainECenter.removeAll();
         mainECenter.setSize(new Dimension(mainEast.getWidth(), mainEast.getHeight()-(mainENorth.getHeight()+mainESouth.getHeight())));
@@ -385,9 +494,14 @@ public class SignInMenu {
         mainECenter.add(ship3);
         mainECenter.add(ship4);
         mainECenter.add(ship5);
-        mainECenter.add(new JPanel());
+        JPanel empty = new JPanel();
+        empty.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        mainECenter.add(empty);
     }
 
+    /**
+     * Méthode privée qui permet d'associer un listener au element en ayant besoin
+     */
     private void setListener(){
         OnActionEvent oae = new OnActionEvent(this);
         belgium.addActionListener(oae);
