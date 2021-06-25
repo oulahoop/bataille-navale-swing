@@ -40,11 +40,11 @@ Nous avons uttilisé la librairie 'Network' qui nous est fournie afin de :
 
 ![package network](documentation/package_network.png)
 
-<img src="https://imgur.com/EafB1qL">
-<img src="www.imgur.com/">
-<img src="www.imgur.com/">
-<img src="www.imgur.com/">
-<img src="www.imgur.com/">
+<img src="https://imgur.com/EafB1qL.png">
+<img src="https://imgur.com/HYXGRb0.png">
+<img src="https://imgur.com/YR7AkeT.png">
+<img src="https://imgur.com/lIwVGwZ.png">
+<img src="https://imgur.com/eDNsVUI.png">
 
 Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md).
 
