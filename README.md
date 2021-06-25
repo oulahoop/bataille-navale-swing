@@ -4,81 +4,50 @@
 
 ## Présentation rapide 
 
-Il va s'agir de développer une application cliente permettant de jouer 
+Notre projet conciste a développer une application cliente permettant de jouer 
 en réseau à la bataille navale : https://fr.wikipedia.org/wiki/Bataille_navale_(jeu)
 
-Un serveur de jeu est accessible en ligne sous la forme d'une API Rest
+Un serveur de jeu nous est accessible en ligne sous la forme d'une API Rest
  (http://37.187.38.219/api/v0) et une librairie Java 
  interfaçant le serveur vous est fournie (en partie).
 
-**En cas de questions / bugs / etc. privilégiez les _issues_ de ce dépôt git.**
+Notre equipe est composée de 4 membres : 
 
+   - ADAM Jérémy
+   - BERVOAS Nicolas
+   - BROIS Sylvain
+   - CAUBERE Maël
 
 ## Travail à faire
 
 ### initialisation du projet
 
-1. créez un git spécifique à votre groupe sur le gitlab de l'université : 
- https://gitlab.univ-nantes.fr/ avec la convention de nommage suivante :
-`projetS2-2021-NUM_GROUPE-INITIALES_ENSEIGNANT` ; `exemple projetS2-03-AL`
- 
- 
-
-2. ajoutez comme "maintainer" votre enseignant-référent et M. Arnaud Lanoix    
-
-3. déposez sur votre git, l'ensemble des sources récupérées ici :
-https://gitlab.univ-nantes.fr/iut.info1.project/battleship-student-project-2021/-/archive/master/battleship-student-project-2021-master.zip
-OU faites un fork de ce dépot.
-
-
-
- **Vous respecterez la structure imposée en terme de dossiers/paquetages**
- 
-  NB :le source récupéré contient un repertoire lib/ 
-     contenant une archive jar `battleship-library-1.x.jar`
-     
-  il faut ajouter ce .jar comme une librairie dans votre IDE préféré
-     
-  il s'agit de code qui vous est fourni, que vous devrez utiliser
-  mais que vous ne pouvez pas modifier
-
+   Le depot Git porte le nom suivant : projetS2-2021-19-JFB
 
 ### implémentation de `ships.*`
 
-2. il vous faut (terminer de) développer le modèle de données représentant 
-la flotte de bateaux ; pour cela, il vous faut coder 
-les classes suivantes (dans `src/info1/ships/`) : 
-    *  `Coord` implémentant `ICoord`
-    *  `Ship` implémentant `IShip` et (si nécessaire) modifier les classes "filles" fournies
-    *  `NavyFleet` implémentant `INavyFleet`
-    
-Les interfaces à implémenter sont présentes dans `battleship-library-1.x.jar` ; 
-elles sont sont documentées dans la javadoc fournie (documentation/javadoc).
-
-NB :des cas de tests écrit en Junit 5.4 vous 
-permettront de valider votre implémentation :
-   * `CoordTest`
-   * `NavyFleetTest`
-   * `ShipTest`
+   Nous avons fini l'implémentation des differenes classes du paquage 'ships'
 
 ![package ships](documentation/package_ships.png)
 
-
 ### utilisation de `info1.network.Network` ...
 
-
-vous pouvez maintenant utiliser la classe `Network` pour échanger avec le serveur, 
-càd créer ou rejoindre une partie, puis jouer, càd effectuer un tir 
-sur une coordonnée précise.
+Nous avons uttilisé la librairie 'Network' qui nous est fournie afin de : 
+   - initialiser un joueur
+   - initialiser une partie
+   - rejoindre une partie 
+   - Jouer un tour en effectuant un tir
 
 ![package network](documentation/package_network.png)
 
-La classe `Network` est documentée dans la javadoc fournie (documentation/javadoc).
+<img src="https://imgur.com/EafB1qL">
+<img src="www.imgur.com/">
+<img src="www.imgur.com/">
+<img src="www.imgur.com/">
+<img src="www.imgur.com/">
 
 Plus de détail sur l'usage de la classe Network dans ![HowToUseNetwork](documentation/HowtoUseNetwork.md).
 
-La classe de tests `RunningGameTest` illustre également l'utilisation de `info1.network.Network` ; elle devrait 
-fonctionner une fois que vous avez correctement implémenter les classes du package `ships.*`.s
 
 ### ... et développement d'une interface graphique
 
