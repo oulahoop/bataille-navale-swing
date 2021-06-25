@@ -9,6 +9,7 @@ import info1.view.listeners.signInMenu.OnPlacerAction;
 import info1.view.listeners.signInMenu.SensListener;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,18 +131,34 @@ public class SignInMenu {
         mainCCenter.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         //Definition du plateau de jeu
-        plateau.add(new JLabel());
+        JLabel empty = new JLabel();
+        empty.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
+        empty.setOpaque(true);
+        plateau.add(empty);
         for (int i = 0; i < 10; i++) {
             contour = new JLabel(String.valueOf((char)(65+i)),SwingConstants.CENTER);
+            //ESTHETIQUE
+            contour.setBackground(new Color(ConstantColor.GRILLELABEL.getColor()));
+            contour.setForeground(new Color(ConstantColor.GRILLELABELTEXT.getColor()));
+            contour.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
             contour.setOpaque(true);
             plateau.add(contour);
         }
         for(int i = 0; i < 10; i++){
-            plateau.add(new JLabel(String.valueOf(i+1), SwingConstants.CENTER));
+            JLabel grilleLabel = new JLabel(String.valueOf(i+1), SwingConstants.CENTER);
+            //ESTHETIQUE
+            grilleLabel.setBackground(new Color(ConstantColor.GRILLELABEL.getColor()));
+            grilleLabel.setForeground(new Color(ConstantColor.GRILLELABELTEXT.getColor()));
+            grilleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+            grilleLabel.setOpaque(true);
+            plateau.add(grilleLabel);
             for(int j = 0;j<10;j++){
                 JButton b1 = new JButton();
                 b1.setPreferredSize(new Dimension(50, 50));
+                //ESTHETIQUE
                 b1.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
+                b1.setBorder(new LineBorder(new Color(ConstantColor.BACKGROUND.getColor())));
+
                 b1.setName(((char) (65 + j)) + String.valueOf(i + 1));
                 buttons.add(b1);
                 plateau.add(b1);
@@ -166,12 +183,20 @@ public class SignInMenu {
 
         pseudo.setSize(new Dimension(mainENorth.getWidth(), (int) (mainENorth.getHeight()*0.45)));
         pseudo.setPreferredSize(pseudo.getSize());
+
+        //ESTHETIQUE
         pseudo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        pseudo.setForeground(new Color(ConstantColor.LABELTEXT.getColor()));
+
         pseudo.setHorizontalAlignment(SwingConstants.CENTER);
 
         playerName.setSize(new Dimension((int) (mainENorth.getWidth()*0.6), (int) (mainENorth.getHeight()*0.45)));
         playerName.setPreferredSize(playerName.getSize());
+        //ESTHETIQUE
         playerName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        playerName.setBackground(new Color(ConstantColor.JTEXTAREA.getColor()));
+        playerName.setForeground(new Color(ConstantColor.JTEXTAREATEXT.getColor()));
+
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
 
         //mainENorth ADD
@@ -184,6 +209,11 @@ public class SignInMenu {
         mainESouth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         play.setPreferredSize(mainESouth.getSize());
+
+        //ESTHETIQUE
+        play.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        play.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        play.setBackground(new Color(ConstantColor.BUTTON.getColor()));
 
         //mainESouthADD
         mainESouth.add(play);
@@ -202,6 +232,47 @@ public class SignInMenu {
         cruiserSens.setPreferredSize(new Dimension(150,50));
         destroyerSens.setPreferredSize(new Dimension(150,50));
         submarinSens.setPreferredSize(new Dimension(150,50));
+
+        //ESTHETIQUE
+        aircraft.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        aircraft.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        aircraft.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        battleShip.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        battleShip.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        battleShip.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        cruiser.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        cruiser.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        cruiser.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        destroyer.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        destroyer.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        destroyer.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        submarin.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        submarin.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        submarin.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        aircraftSens.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        aircraftSens.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        aircraftSens.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        battleShipSens.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        battleShipSens.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        battleShipSens.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        cruiserSens.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        cruiserSens.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        cruiserSens.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        destroyerSens.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        destroyerSens.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        destroyerSens.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        submarinSens.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        submarinSens.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        submarinSens.setBackground(new Color(ConstantColor.BUTTON.getColor()));
 
         setSensText();
 
@@ -463,7 +534,7 @@ public class SignInMenu {
 
     /**
      * Méthode qui permet de récupérer le texte du "JTextArea" "playerName"
-     * @return
+     * @return nom rentré par le joueur
      */
     public String getPlayerName(){return playerName.getText();}
 

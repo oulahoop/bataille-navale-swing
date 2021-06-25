@@ -17,6 +17,7 @@ public class ViewManager extends JFrame {
      * Définition des diff"rents parametre du frame
      * */
     public ViewManager() {
+        super("BATTLESHIP");
         this.setSize(new Dimension(1280, 720));
         this.setPreferredSize(this.getSize());
         this.setLocationRelativeTo(null);

@@ -38,17 +38,17 @@ public class MainMenu {
     //mainCenter components
     JPanel mainCNorth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     JScrollPane mainCCenter = new JScrollPane();
-    JButton refresh = new JButton("refresh");
+    JButton refresh = new JButton("Rafraichir");
 
     JList<Game> scrollList;
 
     //MainEast Components
-    JLabel rechercher = new JLabel("Rechercher");
+    JLabel rechercher = new JLabel("");
     JTextField gameSearch = new JTextField();
-    JButton search = new JButton("search");
+    JButton search = new JButton("Rechercher");
 
     //MainSouth Components
-    JButton quitter = new JButton("retour");
+    JButton quitter = new JButton("Retour");
     JButton createGame = new JButton("Creer une partie");
 
     /**
@@ -71,7 +71,10 @@ public class MainMenu {
         mainNorth.setBackground(new Color(ConstantColor.BACKGROUND.getColor()));
 
         waiting.setText("Parties en attente");
+        //ESTHETIQUE
         waiting.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        waiting.setForeground(new Color(ConstantColor.LABELTEXT.getColor()));
+
         waiting.setHorizontalAlignment(JTextField.CENTER);
         waiting.setBorder(BorderFactory.createEmptyBorder());
 
@@ -87,6 +90,16 @@ public class MainMenu {
         quitter.setName("quitter");
         createGame.setSize(new Dimension(0, mainSouth.getHeight()));
         createGame.setName("createGame");
+
+        //ESTHETIQUE
+
+        quitter.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        quitter.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        quitter.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
+        createGame.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        createGame.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        createGame.setBackground(new Color(ConstantColor.BUTTON.getColor()));
 
         //mainSouth ADD
         mainSouth.add(quitter);
@@ -113,6 +126,10 @@ public class MainMenu {
         refresh.setSize(new Dimension((int) (mainCNorth.getWidth()*0.2), (int) (mainCNorth.getHeight()*0.8)));
         refresh.setPreferredSize(refresh.getSize());
 
+        refresh.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        refresh.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        refresh.setBackground(new Color(ConstantColor.BUTTON.getColor()));
+
         //mainCNorth ADD
         mainCNorth.add(refresh);
 
@@ -136,19 +153,30 @@ public class MainMenu {
         rechercher.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.3)));
         rechercher.setPreferredSize(rechercher.getSize());
 
+        //ESTHETIQUE
         rechercher.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        rechercher.setForeground(new Color(ConstantColor.LABELTEXT.getColor()));
+
         rechercher.setHorizontalAlignment(JTextField.CENTER);
         rechercher.setBorder(BorderFactory.createEmptyBorder());
 
         gameSearch.setSize(new Dimension(mainEast.getWidth(), (int) (mainEast.getHeight()*0.2)));
         gameSearch.setName("gameId");
         gameSearch.setPreferredSize(gameSearch.getSize());
+        //ESTHETIQUE
         gameSearch.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        gameSearch.setBackground(new Color(ConstantColor.JTEXTAREA.getColor()));
+        gameSearch.setForeground(new Color(ConstantColor.JTEXTAREATEXT.getColor()));
+
         gameSearch.setHorizontalAlignment(SwingConstants.CENTER);
 
         search.setName("search");
         search.setSize(new Dimension((int) (mainEast.getWidth()*0.5), (int) (mainEast.getHeight()*0.2)));
         search.setPreferredSize(search.getSize());
+        //ESTHETIQUE
+        search.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        search.setForeground(new Color(ConstantColor.BUTTONFOREGROUND.getColor()));
+        search.setBackground(new Color(ConstantColor.BUTTON.getColor()));
 
         //mainEast ADD
         mainEast.add(rechercher);
@@ -183,6 +211,7 @@ public class MainMenu {
         mainCCenter.setViewportView(scrollList);
         scrollList.setLayoutOrientation(JList.VERTICAL);
         scrollList.addListSelectionListener(new ValueChanged(this, viewManager));
+        scrollList.setBackground(new Color(ConstantColor.LIST.getColor()));
 
     }
 
