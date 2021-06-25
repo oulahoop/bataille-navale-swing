@@ -7,6 +7,7 @@ import info1.network.Player;
 import info1.ships.NavyFleet;
 import info1.utils.GameManager;
 import info1.view.Menu;
+import info1.view.ViewManager;
 import info1.view.menus.SignInMenu;
 
 import javax.swing.*;
@@ -16,7 +17,6 @@ import java.awt.event.ActionListener;
 public class OnActionEvent implements ActionListener {
 
     private SignInMenu fenetre;
-    private static boolean francais = true;
 
 
     /**
@@ -29,22 +29,14 @@ public class OnActionEvent implements ActionListener {
 
 
     /**
-     * Si la composition choisi est française ou non
-     * @return true si elle est français, false si non
-     */
-    public static boolean isFrancais() {
-        return francais;
-    }
-
-    /**
-     * Sur l'événement d'un bouton pressé, il change la composition si
-     * c'est un de ces boutons cliqués
-     * ou il lance la vue suivante si le bouton jouer est cliqué
+     * Sur l'événement d'un bouton pressé, il change la composition si c'est un de ces boutons cliqués
+     * ou il lance la vue suivante si le bouton jouer est cliqué et que les conditions sont respectées
      * @param e L'action performé sur le bouton (clique)
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        Application app = Application.getApp();
+        //On récupère des variables pour simplifier la visibilité
+        ViewManager app = Application.getApp().getViewManager();
         JButton boutton = ((JButton)e.getSource());
         String nameButton = boutton.getName() == null ? boutton.getText() : boutton.getName();
 
@@ -52,28 +44,42 @@ public class OnActionEvent implements ActionListener {
 
         //Si la perseonne veut une composition belge
         if(nameButton.equalsIgnoreCase("Belge")){
+
+            //On met les boutons
             fenetre.setEnableBelgium(false);
             fenetre.setEnableFrench(true);
-            GameManager.setFleet(new NavyFleet());
-            fenetre.setIsFrench(false);
-            fenetre.update();
-            fenetre.reset();
-            app.getViewManager().update();
-            //On retire tout dans l'affichage des bateaux, dans les listes et on fait une nouvelle flotte pour enlever la précédente
-            //On clear les background des boutons au cas ou le joueur à ajouter des bateaux avant de changer de composition
 
-            //On update la vue pour que ça s'affiche
+            //On clear l'ancienne flotte
+            GameManager.setFleet(new NavyFleet());
+
+            //On affiche la flotte belge
+            fenetre.setIsFrench(false);
+            //On reset la vue (le plateau de jeu, les boutons de placement..)
+            fenetre.reset();
+
+            //On update la vue
+            fenetre.update();
+            app.update();
         }
 
         //Si la personne veut une composition française
         if(nameButton.equalsIgnoreCase("Francais")){
+            //On active et desactive les boutons de choix
             fenetre.setEnableFrench(false);
             fenetre.setEnableBelgium(true);
+
+            //On clear l'ancienne flotte
             GameManager.setFleet(new NavyFleet());
+
+            //On affiche la flotte française
             fenetre.setIsFrench(true);
-            fenetre.update();
+
+            //On reset la vue (plateau de jeu, bouton de placement..)
             fenetre.reset();
-            app.getViewManager().update();
+
+            //On update la vue
+            fenetre.update();
+            app.update();
             }
 
         //Si la personne clique sur le bouton jouer
@@ -86,16 +92,16 @@ public class OnActionEvent implements ActionListener {
                     try {
                         if (Network.suscribeNewPlayer(GameManager.getUrl(), player)){
                             GameManager.setPlayer(player);
-                            app.getViewManager().switchTo(Menu.MAIN);
+                            app.switchTo(Menu.MAIN);
                         }
                     } catch (UnirestException unirestException) {
                         System.out.println(unirestException.getMessage());
                     }
                 }else{
-                    JOptionPane.showMessageDialog(Application.getApp().getViewManager(), "Veuillez finir votre flotte ! ","Erreur de flotte",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(app , "Veuillez finir votre flotte ! ","Erreur de flotte",JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(Application.getApp().getViewManager(),"Veuillez insérer un pseudo !","Erreur de pseudo",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(app,"Veuillez insérer un pseudo !","Erreur de pseudo",JOptionPane.ERROR_MESSAGE);
             }
         }
     }
