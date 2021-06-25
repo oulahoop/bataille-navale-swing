@@ -7,6 +7,7 @@ import info1.network.Network;
 import info1.ships.BadCoordException;
 import info1.ships.Coord;
 import info1.utils.GameManager;
+import info1.view.ConstantColor;
 import info1.view.Menu;
 import info1.view.menus.GameMenu;
 
@@ -42,16 +43,16 @@ public class ListenerTir implements ActionListener {
                         Coord coord = new Coord(selected.getName());
                         switch (GameManager.shoot(coord)) {
                             case 0:
-                                miss(coord);
+                                miss();
                                 break;
                             case 1:
-                                hit(coord);
+                                hit();
                                 break;
                             case 10:
-                                sunk(coord);
+                                sunk();
                                 break;
                             case 100:
-                                won(coord);
+                                won();
                                 break;
                         }
                         fenetre.hit(selected);
@@ -65,19 +66,25 @@ public class ListenerTir implements ActionListener {
                 } else {
                     if (((JButton) e.getSource()).getText().isEmpty()) {
                         if (selected != null) {
-                            selected.setBackground(new Color(0x78939A));
+                            selected.setBackground(new Color(ConstantColor.BASECOLOR.getColor()));
                         }
                         selected = (JButton) e.getSource();
-                        selected.setBackground(new Color(0x253662));
+
+                        ImageIcon get = new ImageIcon("src/info1/utils/img/scope.png");
+                        Image image = get.getImage();
+                        image = image.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
+                        get = new ImageIcon(image);
+
+                        selected.setIcon(get);
+                        selected.setBackground(new Color(ConstantColor.SCOPED.getColor()));
                     }
                 }
             }
 
     /**
      * Affiche le message de victoire et renvoie au menu principal.
-     * @param coord , la coordonnée du tir qui coule le dernier bateau.
      */
-    private void won(Coord coord) {
+    private void won() {
        JOptionPane.showMessageDialog(Application.getApp().getViewManager(),
                "La flotte ennemie est en déroute, nous avons gagné la guerre!");
        Application.getApp().getViewManager().switchTo(Menu.MAIN);
@@ -85,25 +92,37 @@ public class ListenerTir implements ActionListener {
 
     /**
      * Change la couleur de la case à laquelle un bateau a été coulé.
-     * @param coord , la coordonnée du tir qui coule le bateau.
      */
-    private void sunk(Coord coord) {
-        selected.setBackground(new Color(0xff7700));
+    private void sunk() {
+        ImageIcon get = new ImageIcon("src/info1/utils/img/skull.png");
+        Image image = get.getImage();
+        image = image.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
+        get = new ImageIcon(image);
+
+        selected.setIcon(get);
+
+        selected.setBackground(new Color(ConstantColor.SUNK.getColor()));
     }
 
     /**
      * Change la couleur de la case à laquelle un bateau est touché.
-     * @param coord , la coordonnée du tir qui touche un bateau.
      */
-    private void hit(Coord coord) {
-        selected.setBackground(new Color(0xffcc00));
+    private void hit() {
+        selected.setBackground(new Color(ConstantColor.HIT.getColor()));
     }
 
     /**
      * Change la couleur de la case à laquelle un tir est raté.
-     * @param coord , la coordonnée du tir raté.
      */
-    private void miss(Coord coord) {
-        selected.setBackground(new Color(0xfcfcfc));
+    private void miss() {
+        ImageIcon get = new ImageIcon("src/info1/utils/img/goutte.png");
+        Image image = get.getImage();
+        image = image.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
+        get = new ImageIcon(image);
+        selected.setIcon(get);
+
+        selected.setBackground(new Color(ConstantColor.MISSED.getColor()));
+
+        //selected.setBackground(new Color(ConstantColor.MISSED.getColor()));
     }
 }
