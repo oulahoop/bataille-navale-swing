@@ -27,7 +27,10 @@ public class OnClicCoord implements ActionListener {
         placement = opa;
     }
 
-
+    /**
+     * Listener qui récupère le clique sur un bouton du plateau de jeu et place le bateau si possible
+     * @param e l'action récupéré
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         //Pour éviter les bugs de fleet null, si elle vaut null : on en créer une nouvelle
